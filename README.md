@@ -12,10 +12,10 @@ A free, self-updating portfolio site built with Streamlit. Every repository I ow
 ## Add or feature a project
 
 1. Star the repo on GitHub. It appears within a day, or straight away if you reboot the app from the Streamlit Community Cloud dashboard.
-2. Optionally add an entry to `projects.json` keyed by the repo name (`title`, `domain`, `result`, `stack`, and `homepage` for a live demo link).
+2. Optionally add an entry to `projects.json` keyed by the repo name (`title`, `domain`, `also`, `result`, `stack`, and `homepage` for a live demo link). `also` lists extra domains: they show after the main one on the card and count for the domain filter, while the card keeps the main domain's colour.
 3. Add the name to `featured_order` to control its position. The first `lead_count` names (2 by default here) get large lead cards.
 
-Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Customer analytics`. Anything else shows as `Data science`.
+Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Customer analytics`. `Analytics engineering` is light slate. A repo with no curated domain, and no keyword match, shows as `Data science` (also slate).
 
 ## Deploy on Streamlit Community Cloud (free)
 

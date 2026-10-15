@@ -71,13 +71,15 @@ DOMAINS = {
     "Energy & industry": ("energy", "#e5736b"),
     "Finance": ("finance", "#7fa6d1"),
     "Customer analytics": ("customer", "#f0c96a"),
-    "Data science": ("general", "#6f86a3"),
+    "Analytics engineering": ("analytics", "#9fb1c7"),
+    "Data science": ("general", "#6f86a3"),  # catch-all for repos with no curated domain
 }
 DOMAIN_KEYWORDS = [
     ("Applied AI", {"rag", "llm", "llms", "agent", "agents", "langgraph", "langchain", "gpt", "chatbot", "nlp", "genai", "openai"}),
     ("Energy & industry", {"grid", "energy", "load", "solar", "ev", "maintenance", "turbofan", "cmapss", "power", "utility", "rul"}),
     ("Finance", {"loan", "credit", "default", "fraud", "bank", "finance", "financial", "risk", "churn", "lending"}),
     ("Customer analytics", {"segment", "segmentation", "customer", "customers", "uplift", "marketing", "criteo", "recommendation", "rfm"}),
+    ("Analytics engineering", {"dbt", "metricflow", "dagster", "warehouse", "elt"}),
 ]
 
 ACRONYMS = {"rag": "RAG", "llm": "LLM", "ml": "ML", "ai": "AI", "ev": "EV", "api": "API", "sql": "SQL",
@@ -190,6 +192,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 .pc-domain { font-size: .86rem; font-weight: 600; display: flex; align-items: center; gap: 7px; margin-bottom: .3rem; }
 .pc-domain i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.pc-also { color: var(--muted); font-weight: 500; }
 .pc-title { font-family: var(--display); font-weight: 600; color: var(--ink); letter-spacing: -0.01em;
   font-size: 1.45rem; line-height: 1.2; margin: 0 0 .55rem 0; padding: 0; }
 .pc-result { color: var(--ink); font-size: 1rem; margin: 0 0 .5rem 0; }
@@ -391,6 +394,11 @@ def ago(iso: str | None) -> str:
     return f"Updated {years} year{'s' if years > 1 else ''} ago"
 
 
+def secondary_domains(c: dict, domain: str) -> list[str]:
+    """Extra domains from projects.json ("also"). They count for the filter; the card keeps one colour."""
+    return [d for d in c.get("also", []) if d in DOMAINS and d != domain]
+
+
 def build_projects() -> tuple[list[dict], bool]:
     """Merge live starred repos with curated metadata. Returns (projects, live?)."""
     cur = load_curation()
@@ -404,10 +412,12 @@ def build_projects() -> tuple[list[dict], bool]:
     if live:
         for r in repos:
             c = curated.get(r["name"], {})
+            domain = c.get("domain") or classify(r["name"], r.get("description") or "", " ".join(r.get("topics") or []))
             projects.append({
                 "name": r["name"],
                 "title": c.get("title") or prettify(r["name"]),
-                "domain": c.get("domain") or classify(r["name"], r.get("description") or "", " ".join(r.get("topics") or [])),
+                "domain": domain,
+                "also": secondary_domains(c, domain),
                 "result": c.get("result", ""),
                 "description": r.get("description") or "",
                 "stack": c.get("stack") or [t.replace("-", " ") for t in (r.get("topics") or [])][:6],
@@ -424,9 +434,10 @@ def build_projects() -> tuple[list[dict], bool]:
         for name, c in curated.items():
             if name.startswith("_"):
                 continue
+            domain = c.get("domain") or classify(name)
             projects.append({
                 "name": name, "title": c.get("title") or prettify(name),
-                "domain": c.get("domain") or classify(name), "result": c.get("result", ""),
+                "domain": domain, "also": secondary_domains(c, domain), "result": c.get("result", ""),
                 "description": "", "stack": c.get("stack", []), "language": "", "stars": 0,
                 "updated": None, "url": f"https://github.com/{GITHUB_USER}/{name}",
                 "homepage": c.get("homepage", ""), "branch": c.get("branch", "main"),
@@ -664,10 +675,11 @@ def card_html(p: dict, lead: bool = False) -> str:
     meta = [x for x in (p["language"], f"★ {p['stars']}" if p["stars"] else "", ago(p["updated"])) if x]
     meta_html = "".join(f"<span>{html.escape(m)}</span>" for m in meta)
     desc = p["description"]
+    also = "".join(f'<span class="pc-also">· {html.escape(d)}</span>' for d in p["also"])
     show_desc = bool(desc) and not p["result"]  # curated result replaces the repo blurb
     return f"""
 <div class="pc{' lead' if lead else ''}">
-  <div class="pc-domain" style="color:{colour}"><i style="background:{colour}"></i>{html.escape(p['domain'])}</div>
+  <div class="pc-domain" style="color:{colour}"><i style="background:{colour}"></i>{html.escape(p['domain'])}{also}</div>
   <h3 class="pc-title">{html.escape(p['title'])}</h3>
   {f'<p class="pc-result">{html.escape(p["result"])}</p>' if p['result'] else ''}
   {f'<p class="pc-desc">{html.escape(desc)}</p>' if show_desc else ''}
@@ -702,9 +714,9 @@ def projects_section() -> None:
         st.markdown('<p class="note">Live details from GitHub are unavailable right now, so this is the saved project list.</p>',
                     unsafe_allow_html=True)
 
-    domains_present = [d for d in DOMAINS if any(p["domain"] == d for p in projects)]
-    f1, f2, f3 = st.columns([1.15, 2.6, 0.95], gap="medium", vertical_alignment="bottom")
-    query = f1.text_input("Search", placeholder="Try XGBoost, RAG or Snowflake")
+    domains_present = [d for d in DOMAINS if any(d == p["domain"] or d in p["also"] for p in projects)]
+    f1, f2, f3 = st.columns([1.0, 3.0, 0.9], gap="medium", vertical_alignment="bottom")
+    query = f1.text_input("Search", placeholder="Try RAG or Snowflake")
     picked = f2.pills("Domain", domains_present, selection_mode="multi", default=None)
     sort = f3.selectbox("Sort by", ["Featured", "Recently updated", "Most stars"])
 
@@ -712,9 +724,9 @@ def projects_section() -> None:
     if query:
         q = query.lower()
         shown = [p for p in shown if q in " ".join(
-            [p["title"], p["name"], p["result"], p["description"], p["language"], p["domain"], *p["stack"]]).lower()]
+            [p["title"], p["name"], p["result"], p["description"], p["language"], p["domain"], *p["also"], *p["stack"]]).lower()]
     if picked:
-        shown = [p for p in shown if p["domain"] in picked]
+        shown = [p for p in shown if {p["domain"], *p["also"]} & set(picked)]
 
     if sort == "Featured":
         shown = sorted(shown, key=lambda p: (p["order"], -(dt.datetime.fromisoformat(

@@ -1,5 +1,5 @@
 {
-  "_how_to_use": "Every repo you own and have starred on GitHub shows up in the app automatically. Add an entry here (keyed by repo name) to give it a nicer title, a domain, a headline result and a stack. 'featured_order' sets the order in the default view; the first 'lead_count' of them get large lead cards.",
+  "_how_to_use": "Every repo you own and have starred on GitHub shows up in the app automatically. Add an entry here (keyed by repo name) to give it a nicer title, a domain, optional extra domains ('also', used by the domain filter), a headline result and a stack. 'featured_order' sets the order in the default view; the first 'lead_count' of them get large lead cards.",
   "featured_order": [
     "semantic-rca",
     "grid-stress-simulator",
@@ -12,8 +12,11 @@
   "projects": {
     "semantic-rca": {
       "title": "Automated Root Cause Analysis",
-      "domain": "Data science",
-      "result": "When a KPI drops, it works out why by crawling the dbt Semantic Layer in 8 to 11 warehouse statements, then splits the change across causes with Owen values and bootstrap intervals. On planted test data it found all four incidents with the right mechanism and sign, and blamed none of the decoys.",
+      "domain": "Analytics engineering",
+      "also": [
+        "Customer analytics"
+      ],
+      "result": "When a KPI drops, it works out why by crawling the dbt Semantic Layer in 8 to 11 warehouse statements, then splits the change across causes with Owen values and bootstrap intervals. On its showcase dataset it finds all four planted incidents with the right mechanism and sign. A benchmark over randomly planted incidents now scores recall and precision across many datasets, and is guiding the next round of improvements.",
       "stack": [
         "dbt Semantic Layer",
         "MetricFlow",
@@ -26,6 +29,9 @@
     "michelin-rag": {
       "title": "Tire Industry Report Analyst",
       "domain": "Applied AI",
+      "also": [
+        "Energy & industry"
+      ],
       "result": "A LangGraph agent that answers questions over 1,250 pages of tire-industry annual reports with page citations. It got 40 of 41 test questions right and refused every off-topic and prompt-injection attempt.",
       "stack": [
         "LangGraph",
@@ -38,6 +44,9 @@
     "snowpark-customer-segmentation": {
       "title": "Customer Segmentation",
       "domain": "Customer analytics",
+      "also": [
+        "Applied AI"
+      ],
       "result": "Segments 4,261 customers by predicted next-quarter value and buying style. The top 20% capture 71% of next-quarter revenue, against 56% for standard RFM. Includes Segment Assistant, an LLM chat app for exploring the segments.",
       "stack": [
         "Snowpark",
