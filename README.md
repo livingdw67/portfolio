@@ -13,7 +13,7 @@ A free, self-updating portfolio site built with Streamlit. Every repository I ow
 
 1. Star the repo on GitHub. It appears within a day, or straight away if you reboot the app from the Streamlit Community Cloud dashboard.
 2. Optionally add an entry to `projects.json` keyed by the repo name (`title`, `domain`, `result`, `stack`, and `homepage` for a live demo link).
-3. Add the name to `featured_order` to control its position. The first name gets the large lead card.
+3. Add the name to `featured_order` to control its position. The first `lead_count` names (2 by default here) get large lead cards.
 
 Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Customer analytics`. Anything else shows as `Data science`.
 
@@ -41,4 +41,4 @@ streamlit run streamlit_app.py
 
 ## Personalise
 
-Name, role, intro, principles, experience, toolkit and contact links live at the top of `streamlit_app.py`. Colours and fonts are CSS variables in the `:root` block just below them.
+Name, role, credentials, intro, principles, experience, toolkit and contact links live at the top of `streamlit_app.py`. Colours and fonts follow the personal brand guide (`Branding/brand-guide.md`): the Streamlit theme is in `.streamlit/config.toml`, and the page's own styles use the CSS variables in the `:root` block below the settings.

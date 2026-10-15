@@ -16,6 +16,9 @@ import re
 import time
 from pathlib import Path
 
+import altair as alt
+import numpy as np
+import pandas as pd
 import requests
 import streamlit as st
 
@@ -24,7 +27,8 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 GITHUB_USER = "livingdw67"
 NAME = "Daniel Livingston"
-ROLE = "Senior Data Scientist"
+ROLE = "Data Scientist"
+CREDENTIALS = ["M.S. Applied Statistics", "AWS Certified ML"]  # pills beside your name
 LOCATION = "Greer, SC"
 LINKEDIN = "https://www.linkedin.com/in/daniel-w-livingston"
 EMAIL = ""  # optional, e.g. "you@example.com"; shown in the footer when set
@@ -32,7 +36,8 @@ REFRESH = dt.timedelta(hours=24)  # how often to re-check GitHub for repos and R
 RETRY_AFTER_FAILURE = dt.timedelta(minutes=15)  # pause before asking GitHub again after it fails
 
 INTRO = (
-    "Ten-plus years building machine learning for finance and energy, from "
+    "Ten-plus years building machine learning for finance, energy, manufacturing "
+    "and heavy industry, from "
     "revenue-driving recommenders to enterprise feature stores. Lately: LLM "
     "agents, RAG and production ML on Snowflake."
 )
@@ -40,7 +45,8 @@ INTRO = (
 PRINCIPLES = [
     ("Decisions over metrics", "Models tuned to the business cost of an error, not a leaderboard score."),
     ("Built to be questioned", "Interpretable models and fair-lending compliance from the first draft."),
-    ("Platforms that scale", "Layered Snowflake architectures and reproducible deployments."),
+    ("Platforms that scale", "Five-schema Snowflake architectures (“Data Canon”), Dagster pipelines "
+                             "and reproducible deployments."),
 ]
 
 EXPERIENCE = [
@@ -59,12 +65,13 @@ TOOLKIT = [
 ]
 
 # Domain -> (css slug, colour). The colour runs down the left edge of each card.
+# Brand support colours, so teal (action) and amber (highlight) keep their jobs.
 DOMAINS = {
-    "Applied AI": ("ai", "#1F7A5C"),
-    "Energy & industry": ("energy", "#B8691B"),
-    "Finance": ("finance", "#2B3F8C"),
-    "Customer analytics": ("customer", "#8A3B6E"),
-    "Data science": ("general", "#5B6785"),
+    "Applied AI": ("ai", "#a99bd6"),
+    "Energy & industry": ("energy", "#e5736b"),
+    "Finance": ("finance", "#7fa6d1"),
+    "Customer analytics": ("customer", "#f0c96a"),
+    "Data science": ("general", "#6f86a3"),
 }
 DOMAIN_KEYWORDS = [
     ("Applied AI", {"rag", "llm", "llms", "agent", "agents", "langgraph", "langchain", "gpt", "chatbot", "nlp", "genai", "openai"}),
@@ -83,25 +90,33 @@ HERE = Path(__file__).parent
 # ---------------------------------------------------------------------------
 st.set_page_config(
     page_title=f"{NAME}, data science projects",
-    page_icon=":material/insights:",
+    page_icon=str(HERE / "assets" / "favicon.png"),  # teal D on navy with the amber dot
     layout="wide",
     initial_sidebar_state="collapsed",
 )
 
 CSS = """
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --ink: #16213E;
-  --muted: #5B6785;
-  --paper: #F4F6FA;
-  --surface: #FFFFFF;
-  --line: #D9DEE8;
-  --indigo: #2B3F8C;
-  --palmetto: #1F7A5C;
-  --display: 'Bricolage Grotesque', 'IBM Plex Sans', system-ui, sans-serif;
-  --body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Brand colours (Branding/brand-guide.md): navy ground, teal for the main line and the
+     primary action, amber for the one thing to look at */
+  --ink: #f2f5f9;
+  --muted: #9fb1c7;
+  --faint: #6f86a3;
+  --paper: #0e1a2b;
+  --surface: #16283f;
+  --line: #2b3f58;
+  --border: #3a5373;
+  --muted-line: #3c5a7d;
+  --teal: #5fc4c0;
+  --teal-hover: #79d7d3;
+  --on-teal: #0e1a2b;
+  --amber: #f0a742;
+  /* Brand type (Branding/brand-guide.md): Segoe UI, Open Sans where it isn't installed; headings at 600 */
+  --body: 'Segoe UI', 'Open Sans', system-ui, -apple-system, sans-serif;
+  --display: var(--body);
 }
 
 /* Streamlit chrome off */
@@ -118,22 +133,26 @@ header[data-testid="stHeader"], #MainMenu, footer, [data-testid="stToolbar"],
   padding-left: 1.5rem; padding-right: 1.5rem;
 }
 
-a { color: var(--indigo); }
+a { color: var(--teal); }
 a:focus-visible, button:focus-visible, input:focus-visible {
-  outline: 3px solid var(--palmetto) !important; outline-offset: 2px;
+  outline: 3px solid var(--teal) !important; outline-offset: 2px;
 }
 
 /* ---------- Hero ---------- */
-.hero-id { display: flex; align-items: center; gap: 14px; margin-bottom: 1.6rem; }
+.hero-id { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 1.6rem; }
 .hero-id img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--surface);
-  box-shadow: 0 0 0 1px var(--line); }
+  box-shadow: 0 0 0 1px var(--border); }
 .hero-id .who { font-size: .95rem; color: var(--muted); line-height: 1.35; }
 .hero-id .who strong { color: var(--ink); font-weight: 600; display: block; }
+.creds { display: flex; flex-wrap: wrap; gap: 6px; }
+.creds span { font-size: .8rem; padding: .16rem .65rem; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--muted); }
 .hero h1 {
-  font-family: var(--display); font-weight: 800; color: var(--ink);
-  font-size: clamp(2.5rem, 5.6vw, 4.25rem); line-height: 1.02; letter-spacing: -0.035em;
-  margin: 0 0 1.25rem 0; padding: 0; max-width: 13ch;
+  font-family: var(--display); font-weight: 600; color: var(--ink);
+  font-size: clamp(2.25rem, 4.8vw, 3.5rem); line-height: 1.1; letter-spacing: -0.02em;
+  margin: 0; padding: 0; max-width: 14ch;
 }
+.hero .rule { width: 64px; height: 3px; background: var(--amber); border-radius: 2px; margin: 1.3rem 0 1.2rem 0; }
 .hero .intro { font-size: 1.15rem; color: var(--ink); max-width: 36rem; margin: 0 0 1.75rem 0; }
 .principles { display: grid; gap: .9rem; margin: 0 0 2rem 0; max-width: 36rem; }
 .principles div { border-left: 2px solid var(--line); padding-left: 14px; }
@@ -141,83 +160,64 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .principles dd { margin: 0; color: var(--muted); font-size: .97rem; }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; }
 .cta a { text-decoration: none; font-weight: 500; font-size: .97rem; padding: .62rem 1.05rem;
-  border-radius: 10px; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
-.cta a.primary { background: var(--ink); border-color: var(--ink); color: #fff; }
-.cta a:hover { border-color: var(--ink); }
-.cta a.primary:hover { background: #22305a; }
+  border-radius: 6px; border: 1px solid var(--border); color: var(--ink); background: var(--surface); }
+.cta a.primary { background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600; }
+.cta a:hover { border-color: var(--teal); color: var(--ink); }
+.cta a.primary:hover { background: var(--teal-hover); color: var(--on-teal); }
 
-/* The decision curve: the one moment of motion on the page */
-.curve-wrap { padding-top: 4.5rem; }
-.curve svg { width: 100%; height: auto; display: block; overflow: visible; }
-.curve .axis { stroke: var(--line); stroke-width: 1.5; }
-.curve .threshold { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 5 6; }
-.curve .ghost { fill: none; stroke: #C9D0DE; stroke-width: 2; }
-.curve .main { fill: none; stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round;
-  stroke-dasharray: 620; stroke-dashoffset: 620; animation: draw 1.6s cubic-bezier(.6,.05,.3,1) .25s forwards; }
-.curve .drop { stroke: var(--palmetto); stroke-width: 1.5; stroke-dasharray: 2 4;
-  opacity: 0; animation: appear .4s ease-out 1.55s forwards; }
-.curve .act { fill: var(--palmetto); opacity: 0; transform-origin: 268px 150px;
-  animation: pop .45s cubic-bezier(.3,1.6,.5,1) 1.45s forwards; }
-.curve .act-ring { fill: none; stroke: var(--palmetto); stroke-width: 1.5; opacity: 0;
-  animation: appear .4s ease-out 1.6s forwards; }
-.curve text { font-family: var(--body); font-size: 13px; fill: var(--muted); }
-.curve text.act-label { fill: var(--palmetto); font-weight: 600; opacity: 0;
-  animation: appear .4s ease-out 1.65s forwards; }
-.curve-caption { color: var(--muted); font-size: .92rem; margin-top: .5rem; max-width: 26rem; }
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes appear { to { opacity: 1; } }
-@keyframes pop { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: scale(1); } }
-@media (prefers-reduced-motion: reduce) {
-  .curve .main { animation: none; stroke-dashoffset: 0; }
-  .curve .drop, .curve .act, .curve .act-ring, .curve text.act-label { animation: none; opacity: 1; }
-}
+/* The cost curve beside the hero */
+.st-key-cost-curve { padding-top: 2.25rem; gap: .4rem; }
+.st-key-cost-curve .curve-title { font-weight: 600; color: var(--ink); margin: 0; }
+.st-key-cost-curve .curve-sub { color: var(--muted); font-size: .9rem; margin: 0; }
+.curve-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: .45rem; font-size: .84rem; color: var(--muted); }
+.curve-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.st-key-cost-curve [data-testid="stMetricValue"] { font-size: 1.9rem; }
+.st-key-cost-curve [data-testid="stCaptionContainer"] { max-width: 30rem; }
 
 /* ---------- Section headings ---------- */
 .section-head { margin: 5rem 0 1.25rem 0; }
-.section-head h2 { font-family: var(--display); font-weight: 700; font-size: clamp(1.7rem, 3vw, 2.2rem);
-  letter-spacing: -0.02em; color: var(--ink); margin: 0 0 .35rem 0; padding: 0; }
+.section-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3vw, 2.2rem);
+  letter-spacing: -0.01em; color: var(--ink); margin: 0 0 .35rem 0; padding: 0; }
 .section-head p { color: var(--muted); margin: 0; max-width: 40rem; }
 
 /* ---------- Filters ---------- */
-[data-testid="stTextInput"] input { border-radius: 10px; background: var(--surface); }
-[data-testid="stTextInput"] div[data-baseweb="input"] { border-radius: 10px; background: var(--surface); }
 [data-testid="stWidgetLabel"] p { font-size: .88rem; color: var(--muted); font-weight: 500; }
 
 /* ---------- Project cards ---------- */
 [class*="st-key-card-"] {
-  background: var(--surface); border: 1px solid var(--line); border-left: 5px solid var(--muted);
-  border-radius: 14px; padding: 1.35rem 1.4rem 1.1rem 1.4rem; gap: .5rem;
+  background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--faint);
+  border-radius: 10px; padding: 1.35rem 1.4rem 1.1rem 1.4rem; gap: .5rem;
 }
-[class*="st-key-card-ai-"]       { border-left-color: #1F7A5C; }
-[class*="st-key-card-energy-"]   { border-left-color: #B8691B; }
-[class*="st-key-card-finance-"]  { border-left-color: #2B3F8C; }
-[class*="st-key-card-customer-"] { border-left-color: #8A3B6E; }
 .pc-domain { font-size: .86rem; font-weight: 600; display: flex; align-items: center; gap: 7px; margin-bottom: .3rem; }
 .pc-domain i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-.pc-title { font-family: var(--display); font-weight: 700; color: var(--ink); letter-spacing: -0.015em;
+.pc-title { font-family: var(--display); font-weight: 600; color: var(--ink); letter-spacing: -0.01em;
   font-size: 1.45rem; line-height: 1.2; margin: 0 0 .55rem 0; padding: 0; }
 .pc-result { color: var(--ink); font-size: 1rem; margin: 0 0 .5rem 0; }
 .pc-desc { color: var(--muted); font-size: .93rem; margin: 0 0 .7rem 0; }
 .pc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: .2rem 0 .75rem 0; }
 .pc-chips span { font-size: .8rem; padding: .18rem .6rem; border-radius: 999px;
   background: var(--paper); border: 1px solid var(--line); color: var(--ink); }
-.pc-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .84rem; color: var(--muted); margin-bottom: .2rem; }
+.pc { padding-bottom: 1.25rem; }  /* Streamlit pulls the next element 1rem up under markdown */
+.pc-meta { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: .84rem; color: var(--muted); }
 .lead .pc-title { font-size: clamp(1.7rem, 3.2vw, 2.3rem); }
 .lead .pc-result { font-size: 1.12rem; max-width: 46rem; }
 .lead .pc-desc { max-width: 46rem; }
 
 /* Buttons */
 .stButton button, .stLinkButton a {
-  border-radius: 10px; font-weight: 500; border: 1px solid var(--line); min-height: 2.5rem;
+  border-radius: 6px; font-weight: 500; border: 1px solid var(--border); min-height: 2.5rem;
   background: var(--surface); color: var(--ink);
 }
-.stButton button:hover, .stLinkButton a:hover { border-color: var(--ink); color: var(--ink); }
+.stButton button:hover, .stLinkButton a:hover { border-color: var(--teal); color: var(--ink); }
 .stButton button[kind="primary"], .stButton button[data-testid="stBaseButton-primary"] {
-  background: var(--ink); border-color: var(--ink); color: #fff;
+  background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600;
 }
-.stButton button[data-testid="stBaseButton-primary"]:hover { background: #22305a; color: #fff; }
+.stButton button[data-testid="stBaseButton-primary"] p { color: var(--on-teal); }
+.stButton button[data-testid="stBaseButton-primary"]:hover {
+  background: var(--teal-hover); border-color: var(--teal-hover); color: var(--on-teal);
+}
 
-.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px;
+.empty { background: var(--surface); border: 1px dashed var(--border); border-radius: 10px;
   padding: 2rem; color: var(--muted); }
 .note { color: var(--muted); font-size: .88rem; margin: .25rem 0 1rem 0; }
 
@@ -225,9 +225,9 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .timeline { border-left: 2px solid var(--line); margin-left: 6px; padding-left: 26px; }
 .tl-item { position: relative; padding-bottom: 1.9rem; max-width: 46rem; }
 .tl-item::before { content: ""; position: absolute; left: -33px; top: .45rem; width: 12px; height: 12px;
-  border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); }
+  border-radius: 50%; background: var(--paper); border: 2px solid var(--muted); }
 .tl-when { color: var(--muted); font-size: .9rem; }
-.tl-org { font-family: var(--display); font-weight: 700; font-size: 1.3rem; color: var(--ink); margin: .1rem 0 .1rem 0; }
+.tl-org { font-family: var(--display); font-weight: 600; font-size: 1.3rem; color: var(--ink); margin: .1rem 0 .1rem 0; }
 .tl-role { font-weight: 500; color: var(--ink); }
 .tl-item p { color: var(--ink); margin: .35rem 0 0 0; }
 
@@ -240,19 +240,19 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 /* ---------- Footer ---------- */
 .foot { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--line);
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; align-items: flex-end; }
-.foot h2 { font-family: var(--display); font-weight: 700; font-size: 1.8rem; letter-spacing: -0.02em;
+.foot h2 { font-family: var(--display); font-weight: 600; font-size: 1.8rem; letter-spacing: -0.01em;
   margin: 0 0 .4rem 0; padding: 0; color: var(--ink); }
 .foot p { color: var(--muted); margin: 0; }
-.foot .small { font-size: .84rem; }
+.foot .small { font-size: .84rem; color: var(--faint); }
 
 /* ---------- README dialog ---------- */
-div[role="dialog"] { border-radius: 16px; }
+div[role="dialog"] { border-radius: 10px; }
 div[role="dialog"] img { max-width: 100%; height: auto; }
 div[role="dialog"] h1, div[role="dialog"] h2, div[role="dialog"] h3 { font-family: var(--display); letter-spacing: -0.01em; }
 
 @media (max-width: 640px) {
   [data-testid="stMainBlockContainer"], .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 1.75rem; }
-  .curve-wrap { padding-top: .5rem; }
+  .st-key-cost-curve { padding-top: .5rem; }
   .toolkit { grid-template-columns: 1fr; }
   .toolkit dt { padding-bottom: .1rem; }
   .toolkit dd { border-top: none; padding-top: 0; }
@@ -261,7 +261,9 @@ div[role="dialog"] h1, div[role="dialog"] h2, div[role="dialog"] h3 { font-famil
 }
 </style>
 """
-st.markdown(CSS, unsafe_allow_html=True)
+DOMAIN_CSS = "".join(f'[class*="st-key-card-{slug}-"] {{ border-left-color: {colour}; }}'
+                     for slug, colour in DOMAINS.values())
+st.markdown(CSS + f"<style>{DOMAIN_CSS}</style>", unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------------------
@@ -350,8 +352,8 @@ def fetch_readme(repo: str, branch: str) -> tuple[str, str] | None:
     r.raise_for_status()
 
 
-@st.cache_data(show_spinner=False)
 def load_curation() -> dict:
+    # Not cached: the file is tiny, and caching would hide pushed edits until the app restarts.
     path = HERE / "projects.json"
     if not path.exists():
         return {"featured_order": [], "projects": {}}
@@ -480,6 +482,7 @@ def open_writeup(p: dict) -> None:
 # ---------------------------------------------------------------------------
 def hero() -> None:
     left, right = st.columns([1.45, 1], gap="large")
+    creds = "".join(f"<span>{html.escape(c)}</span>" for c in CREDENTIALS)
     principles = "".join(
         f"<div><dt>{html.escape(t)}</dt><dd>{html.escape(d)}</dd></div>" for t, d in PRINCIPLES
     )
@@ -490,8 +493,10 @@ def hero() -> None:
   <div class="hero-id">
     <img src="https://github.com/{GITHUB_USER}.png?size=160" alt="Photo of {html.escape(NAME)}">
     <div class="who"><strong>{html.escape(NAME)}</strong>{html.escape(ROLE)}, {html.escape(LOCATION)}</div>
+    {f'<div class="creds">{creds}</div>' if creds else ''}
   </div>
   <h1>Models that change the decision.</h1>
+  <div class="rule"></div>
   <p class="intro">{html.escape(INTRO)}</p>
   <dl class="principles">{principles}</dl>
   <div class="cta">
@@ -503,30 +508,154 @@ def hero() -> None:
 """,
             unsafe_allow_html=True,
         )
-    with right:
-        st.markdown(
-            """
-<div class="curve-wrap">
-<div class="curve" role="img" aria-label="A risk curve falling over time. Where it crosses the decision threshold, a marker says act here.">
-<svg viewBox="0 0 420 270" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <line class="axis" x1="20" y1="250" x2="410" y2="250"/>
-  <line class="axis" x1="20" y1="20" x2="20" y2="250"/>
-  <path class="ghost" d="M20,40 C140,46 200,110 250,175 S350,238 410,242"/>
-  <line class="threshold" x1="20" y1="150" x2="410" y2="150"/>
-  <text x="410" y="140" text-anchor="end">Decision threshold</text>
-  <path class="main" d="M20,30 C130,32 210,80 268,150 S352,234 410,238"/>
-  <line class="drop" x1="268" y1="150" x2="268" y2="250"/>
-  <circle class="act-ring" cx="268" cy="150" r="13"/>
-  <circle class="act" cx="268" cy="150" r="6.5"/>
-  <text class="act-label" x="278" y="268">Act here</text>
-  <text x="26" y="268">Time</text>
-</svg>
-</div>
-<p class="curve-caption">Each project below ends in a call someone has to make: which engine to pull, which loan to approve, which customer to keep.</p>
-</div>
-""",
-            unsafe_allow_html=True,
-        )
+    with right, st.container(key="cost-curve"):
+        decision_chart()
+
+
+# ---------------------------------------------------------------------------
+# Hero chart: what a decision threshold costs
+# ---------------------------------------------------------------------------
+# An illustrative lending book, not a client result. A calibrated model's default risk follows
+# Beta(0.5, 3.5), a 12.5% default rate. With calibrated scores the cheapest threshold is
+# COST_FP / (COST_FP + COST_FN), whatever the score distribution: here 0.25, not the usual 0.50.
+BOOK = 1_000         # loan applications
+COST_FN = 3_000      # lost on a loan that defaults (a missed default)
+COST_FP = 1_000      # profit given up on a good borrower who is turned away
+RISK_BETA = (0.5, 3.5)
+OPTIMUM = COST_FP / (COST_FP + COST_FN)
+USUAL = 0.5
+SERIES = ["Total cost", "Missed defaults", "Good loans turned away"]
+DASHES = [[1, 0], [6, 4], [2, 3]]  # solid, dashed, dotted: identity never rests on colour alone
+
+
+@st.cache_data(show_spinner=False)
+def cost_curve() -> pd.DataFrame:
+    """Expected cost of wrong calls at each threshold (decline when risk >= threshold)."""
+    a, b = RISK_BETA
+    risk = np.linspace(0.0005, 0.9995, 4000)
+    share = risk ** (a - 1) * (1 - risk) ** (b - 1)
+    share /= share.sum()  # share of applicants at each predicted risk
+    t = np.round(np.arange(0, 1.0001, 0.01), 2)
+    approved = np.searchsorted(risk, t)  # applicants below the threshold are approved
+    defaults = np.concatenate([[0], np.cumsum(risk * share)])
+    good = np.concatenate([[0], np.cumsum((1 - risk) * share)])
+    missed = BOOK * COST_FN * defaults[approved]
+    turned_away = BOOK * COST_FP * (good[-1] - good[approved])
+    return pd.DataFrame({"threshold": t, SERIES[0]: missed + turned_away,
+                         SERIES[1]: missed, SERIES[2]: turned_away})
+
+
+def total_at(df: pd.DataFrame, t: float) -> float:
+    return float(np.interp(t, df["threshold"], df[SERIES[0]]))
+
+
+def money(x: float) -> str:
+    return f"${x / 1000:,.0f}k"
+
+
+def cost_chart(df: pd.DataFrame, t: float) -> alt.LayerChart:
+    ink, muted, grid, surface = "#f2f5f9", "#9fb1c7", "#2b3f58", "#0e1a2b"
+    teal, slate, amber = "#5fc4c0", "#6f86a3", "#f0a742"
+    x = alt.X("threshold:Q", title="Decision threshold (predicted default risk)",
+              scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(values=[0, 0.25, 0.5, 0.75, 1], format=".2f"))
+    y_axis = alt.Axis(tickCount=4, title=None,
+                      labelExpr="datum.value == 0 ? '$0' : '$' + format(datum.value / 1000, ',') + 'k'")
+
+    lines = alt.Chart(df).transform_fold(SERIES, as_=["series", "cost"]).mark_line(
+        strokeCap="round", strokeJoin="round"
+    ).encode(
+        x=x,
+        y=alt.Y("cost:Q", axis=y_axis),
+        color=alt.Color("series:N", scale=alt.Scale(domain=SERIES, range=[teal, slate, slate]), legend=None),
+        strokeDash=alt.StrokeDash("series:N", scale=alt.Scale(domain=SERIES, range=DASHES), legend=None),
+        strokeWidth=alt.value(2),
+    )
+    total = alt.Chart(df).mark_line(color=teal, strokeWidth=3, strokeCap="round").encode(
+        x=x, y=alt.Y(f"{SERIES[0]}:Q", axis=y_axis))
+
+    # Hover: a crosshair that snaps to the nearest threshold and lists every series.
+    hover = alt.selection_point(fields=["threshold"], encodings=["x"], nearest=True,
+                                on="pointerover", clear="pointerout", empty=False)
+    tooltip = [alt.Tooltip("threshold:Q", title="Threshold", format=".2f")] + [
+        alt.Tooltip(field=name, type="quantitative", format="$,.0f") for name in SERIES]
+    catcher = alt.Chart(df).mark_point(size=400, opacity=0).encode(
+        x=x, y=alt.Y(f"{SERIES[0]}:Q", axis=y_axis), tooltip=tooltip).add_params(hover)
+    crosshair = alt.Chart(df).mark_rule(color=muted, strokeWidth=1).encode(x=x).transform_filter(hover)
+
+    # The slider's threshold, and the two thresholds worth comparing it with.
+    current = pd.DataFrame({"threshold": [t], "cost": [total_at(df, t)]})
+    picked = alt.Chart(current).mark_rule(color=ink, strokeWidth=1, opacity=0.35).encode(x=x)
+    picked_dot = alt.Chart(current).mark_point(filled=True, size=150, opacity=1, color=teal,
+                                               stroke=surface, strokeWidth=2).encode(x=x, y=alt.Y("cost:Q", axis=y_axis))
+    # Callouts sit in the empty space above the curve, tied to their dots by a dashed leader,
+    # so they never collide with the lines or each other at any width.
+    callouts = []
+    for at, label, colour, text_colour, label_y in (
+        (OPTIMUM, f"Cost-optimal {OPTIMUM:.2f} · {money(total_at(df, OPTIMUM))}", amber, ink, 0.6),
+        (USUAL, f"Usual {USUAL:.2f} · {money(total_at(df, USUAL))}", muted, muted, 0.5),
+    ):
+        cost = total_at(df, at)
+        top = label_y * df[SERIES[0]].max()
+        pt = pd.DataFrame({"threshold": [at], "cost": [cost], "top": [top], "leader": [top - 0.04 * df[SERIES[0]].max()],
+                           "label": [label]})
+        c = alt.Chart(pt)
+        callouts += [
+            c.mark_rule(color=colour, strokeWidth=1, strokeDash=[2, 3]).encode(x=x, y=alt.Y("cost:Q", axis=y_axis), y2="leader:Q"),
+            c.mark_point(filled=True, size=110, opacity=1, color=colour, stroke=surface, strokeWidth=2).encode(
+                x=x, y=alt.Y("cost:Q", axis=y_axis)),
+            c.mark_text(align="left", baseline="middle", dx=-3, fontSize=12, stroke=surface, strokeWidth=5,
+                        strokeJoin="round").encode(x=x, y=alt.Y("top:Q", axis=y_axis), text="label:N"),
+            c.mark_text(align="left", baseline="middle", dx=-3, fontSize=12, color=text_colour).encode(
+                x=x, y=alt.Y("top:Q", axis=y_axis), text="label:N"),
+        ]
+
+    return alt.layer(lines, total, picked, crosshair, catcher, *callouts, picked_dot).properties(
+        height=260,
+        description="Expected cost of wrong lending decisions against the decision threshold. Total cost "
+                    f"bottoms out at {OPTIMUM:.2f} ({money(total_at(df, OPTIMUM))}); the usual 0.50 costs "
+                    f"{money(total_at(df, USUAL))}.",
+    ).configure(
+        background="transparent", font="Segoe UI, Open Sans, system-ui, sans-serif",
+    ).configure_view(stroke=None).configure_axis(
+        domainColor=grid, tickColor=grid, gridColor=grid, labelColor=muted, titleColor=muted,
+        labelFontSize=11, titleFontSize=12, titleFontWeight="normal", labelPadding=6,
+    ).configure_axisX(grid=False)
+
+
+def curve_legend() -> str:
+    """HTML legend with line keys that match the chart; it wraps on narrow screens, unlike Vega's."""
+    keys = []
+    for name, colour, width, dash in zip(SERIES, ("#5fc4c0", "#6f86a3", "#6f86a3"), (3, 2, 2), DASHES):
+        dasharray = " ".join(map(str, dash)) if dash != [1, 0] else "none"
+        keys.append(f'<span><svg width="24" height="8" aria-hidden="true"><line x1="2" y1="4" x2="22" y2="4" '
+                    f'stroke="{colour}" stroke-width="{width}" stroke-dasharray="{dasharray}" stroke-linecap="butt"/>'
+                    f'</svg>{html.escape(name)}</span>')
+    return f'<div class="curve-legend">{"".join(keys)}</div>'
+
+
+@st.fragment  # dragging the slider reruns only this chart, not the whole page
+def decision_chart() -> None:
+    df = cost_curve()
+    st.markdown('<p class="curve-title">What a threshold costs</p>'
+                f'<p class="curve-sub">Expected cost of wrong calls on {BOOK:,} loan applications</p>'
+                + curve_legend(),
+                unsafe_allow_html=True)
+    chart_slot = st.container()
+    t = st.slider("Decline when predicted default risk is at least", 0.01, 0.99, USUAL, 0.01,
+                  format="%.2f")
+    chart_slot.altair_chart(cost_chart(df, t), theme=None, width="stretch")
+    gap = total_at(df, t) - total_at(df, OPTIMUM)
+    if gap >= 500:
+        st.metric(f"Expected cost at {t:.2f}", money(total_at(df, t)),
+                  delta=f"{money(gap)} more than at {OPTIMUM:.2f}", delta_color="inverse")
+    else:
+        st.metric(f"Expected cost at {t:.2f}", money(total_at(df, t)),
+                  delta="The cost-optimal threshold", delta_color="off", delta_arrow="off")
+    st.caption(
+        f"Illustrative lending book, scored by a calibrated default model. A missed default loses "
+        f"\\${COST_FN:,}; turning away a good borrower gives up \\${COST_FP:,} of profit. So the cheapest "
+        f"threshold is {COST_FP:,} / ({COST_FP:,} + {COST_FN:,}) = {OPTIMUM:.2f}, not the usual {USUAL:.2f}."
+    )
 
 
 def card_html(p: dict, lead: bool = False) -> str:
@@ -537,7 +666,7 @@ def card_html(p: dict, lead: bool = False) -> str:
     desc = p["description"]
     show_desc = bool(desc) and not p["result"]  # curated result replaces the repo blurb
     return f"""
-<div class="{'lead' if lead else ''}">
+<div class="pc{' lead' if lead else ''}">
   <div class="pc-domain" style="color:{colour}"><i style="background:{colour}"></i>{html.escape(p['domain'])}</div>
   <h3 class="pc-title">{html.escape(p['title'])}</h3>
   {f'<p class="pc-result">{html.escape(p["result"])}</p>' if p['result'] else ''}
@@ -574,7 +703,7 @@ def projects_section() -> None:
                     unsafe_allow_html=True)
 
     domains_present = [d for d in DOMAINS if any(p["domain"] == d for p in projects)]
-    f1, f2, f3 = st.columns([1.3, 2.2, 1], gap="medium", vertical_alignment="bottom")
+    f1, f2, f3 = st.columns([1.15, 2.6, 0.95], gap="medium", vertical_alignment="bottom")
     query = f1.text_input("Search", placeholder="Try XGBoost, RAG or Snowflake")
     picked = f2.pills("Domain", domains_present, selection_mode="multi", default=None)
     sort = f3.selectbox("Sort by", ["Featured", "Recently updated", "Most stars"])
@@ -603,9 +732,11 @@ def projects_section() -> None:
     st.write("")
     rest = shown
     if sort == "Featured" and not query and not picked:
-        project_card(shown[0], lead=True)
-        rest = shown[1:]
-        st.write("")
+        n_lead = load_curation().get("lead_count", 1)
+        for p in shown[:n_lead]:
+            project_card(p, lead=True)
+            st.write("")
+        rest = shown[n_lead:]
 
     for i in range(0, len(rest), 2):
         cols = st.columns(2, gap="medium")
