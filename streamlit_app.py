@@ -90,8 +90,7 @@ HERE = Path(__file__).parent
 # ---------------------------------------------------------------------------
 # Page setup and styling
 # ---------------------------------------------------------------------------
-st.set_page_config(
-    page_title=f"{NAME}, data science projects",
+st.set_page_config(  # each page's browser-tab title comes from its st.Page at the bottom
     page_icon=str(HERE / "assets" / "favicon.png"),  # teal D on navy with the amber dot
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -426,6 +425,7 @@ def build_projects() -> tuple[list[dict], bool]:
                 "updated": r.get("pushed_at") or r.get("updated_at"),
                 "url": r.get("html_url"),
                 "homepage": c.get("homepage") or r.get("homepage") or "",
+                "page": c.get("page", ""), "page_label": c.get("page_label", ""),
                 "branch": r.get("default_branch") or "main",
                 "order": order.get(r["name"], 10_000),
             })
@@ -441,6 +441,7 @@ def build_projects() -> tuple[list[dict], bool]:
                 "description": "", "stack": c.get("stack", []), "language": "", "stars": 0,
                 "updated": None, "url": f"https://github.com/{GITHUB_USER}/{name}",
                 "homepage": c.get("homepage", ""), "branch": c.get("branch", "main"),
+                "page": c.get("page", ""), "page_label": c.get("page_label", ""),
                 "order": order.get(name, 10_000),
             })
     return projects, live
@@ -690,16 +691,19 @@ def card_html(p: dict, lead: bool = False) -> str:
 
 def project_card(p: dict, lead: bool = False) -> None:
     slug, _ = DOMAINS.get(p["domain"], DOMAINS["Data science"])
+    page = PAGES.get(p["page"])  # an in-app page named in projects.json, if any
     with st.container(key=f"card-{slug}-{p['name']}"):
         st.markdown(card_html(p, lead), unsafe_allow_html=True)
-        n = 3 if p["homepage"] else 2
+        n = 2 + bool(page) + bool(p["homepage"])
         widths = [1] * n + ([1.4] if lead else [])
-        cols = st.columns(widths, gap="small")
-        if cols[0].button("Read the write-up", key=f"read-{p['name']}", type="primary", width="stretch"):
+        cols = iter(st.columns(widths, gap="small"))
+        if next(cols).button("Read the write-up", key=f"read-{p['name']}", type="primary", width="stretch"):
             open_writeup(p)
+        if page and next(cols).button(p["page_label"] or page.title, key=f"page-{p['name']}", width="stretch"):
+            st.switch_page(page)
         if p["homepage"]:
-            cols[1].link_button("Open the live app", p["homepage"], width="stretch")
-        cols[n - 1].link_button("View code", p["url"], width="stretch")
+            next(cols).link_button("Open the live app", p["homepage"], width="stretch")
+        next(cols).link_button("View code", p["url"], width="stretch")
 
 
 def projects_section() -> None:
@@ -793,8 +797,23 @@ def footer() -> None:
     )
 
 
-hero()
-projects_section()
-experience_section()
-toolkit_section()
-footer()
+def home_page() -> None:
+    hero()
+    projects_section()
+    experience_section()
+    toolkit_section()
+    footer()
+
+
+# ---------------------------------------------------------------------------
+# Pages: the home page, plus project pages opened from their cards (no nav bar)
+# ---------------------------------------------------------------------------
+HOME = st.Page(home_page, title=f"{NAME}, data science projects", default=True)
+PAGES = {  # keys are the "page" values in projects.json
+    "power-test": st.Page(HERE / "app_pages" / "power_test.py", title="How many questions does a fair test need?",
+                          url_path="power-test"),
+}
+current = st.navigation([HOME, *PAGES.values()], position="hidden")
+if current.url_path != HOME.url_path:
+    st.page_link(HOME, label="Back to projects", icon=":material/arrow_back:")
+current.run()

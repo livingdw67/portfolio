@@ -1,5 +1,5 @@
 {
-  "_how_to_use": "Every repo you own and have starred on GitHub shows up in the app automatically. Add an entry here (keyed by repo name) to give it a nicer title, a domain, optional extra domains ('also', used by the domain filter), a headline result and a stack. 'featured_order' sets the order in the default view; the first 'lead_count' of them get large lead cards.",
+  "_how_to_use": "Every repo you own and have starred on GitHub shows up in the app automatically. Add an entry here (keyed by repo name) to give it a nicer title, a domain, optional extra domains ('also', used by the domain filter), a headline result and a stack. 'featured_order' sets the order in the default view; the first 'lead_count' of them get large lead cards. Optional 'page' (an in-app page key, e.g. 'power-test') and 'page_label' add a button that opens that page.",
   "featured_order": [
     "semantic-rca",
     "grid-stress-simulator",
@@ -53,7 +53,9 @@
         "scikit-learn",
         "LangGraph",
         "Streamlit"
-      ]
+      ],
+      "page": "power-test",
+      "page_label": "How it was tested"
     },
     "cmapss-predictive-maintenance": {
       "title": "Predictive Maintenance",
