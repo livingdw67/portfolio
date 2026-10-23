@@ -71,7 +71,7 @@
     "loan-default-prediction": {
       "title": "Loan Default Prediction",
       "domain": "Finance",
-      "result": "An ECOA-compliant model with an F2-tuned threshold that catches about 75% of defaults on a true holdout (AUC 0.76). Along the way it caught training-data leakage that had inflated the first estimate.",
+      "result": "An ECOA-compliant model with an F2-tuned threshold that catches about 75% of defaults on a true holdout (AUC 0.76). Along the way it caught training-data leakage that had inflated the first estimate. It was rebuilt on Databricks, where one Optuna-tuned LightGBM matches the three-model ensemble (AUC 0.771 vs 0.762).",
       "stack": [
         "Azure ML AutoML",
         "Databricks",
