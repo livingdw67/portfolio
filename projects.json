@@ -6,7 +6,7 @@
     "michelin-rag",
     "snowpark-customer-segmentation",
     "cmapss-predictive-maintenance",
-    "azure-automl-loan-default-prediction"
+    "loan-default-prediction"
   ],
   "lead_count": 2,
   "projects": {
@@ -67,7 +67,7 @@
         "Survival analysis"
       ]
     },
-    "azure-automl-loan-default-prediction": {
+    "loan-default-prediction": {
       "title": "Loan Default Prediction",
       "domain": "Finance",
       "result": "An ECOA-compliant model with an F2-tuned threshold that catches about 75% of defaults on a true holdout (AUC 0.76). Along the way it caught training-data leakage that had inflated the first estimate.",
