@@ -65,7 +65,8 @@
         "Snowflake feature store",
         "XGBoost",
         "Survival analysis"
-      ]
+      ],
+      "homepage": "https://ask-the-fleet.streamlit.app"
     },
     "loan-default-prediction": {
       "title": "Loan Default Prediction",
@@ -87,7 +88,8 @@
         "NREL ResStock",
         "Streamlit",
         "Plotly"
-      ]
+      ],
+      "homepage": "https://grid-stress-simulator.streamlit.app"
     }
   }
 }
