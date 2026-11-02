@@ -3,6 +3,7 @@
   "featured_order": [
     "semantic-rca",
     "grid-stress-simulator",
+    "park-crowd-forecast",
     "michelin-rag",
     "snowpark-customer-segmentation",
     "cmapss-predictive-maintenance",
@@ -90,6 +91,24 @@
         "Plotly"
       ],
       "homepage": "https://grid-stress-simulator.streamlit.app"
+    },
+    "park-crowd-forecast": {
+      "title": "Theme Park Crowd Forecast",
+      "domain": "Customer analytics",
+      "also": [
+        "Applied AI"
+      ],
+      "result": "Forecasts daily crowds at Universal Orlando's parks 90 days out on Databricks and turns them into an OR-Tools staffing plan, with errors of 12 to 19 points against 17 to 22 for the best simple baseline. A synthetic-control study estimates Epic Universe cut Universal Studios' crowds by 20% to 30%, though with seven comparison parks a placebo test can't rule out chance. Two Optuna studies found no reliable gain from tuning, and a public model lab lets anyone check that.",
+      "stack": [
+        "Databricks",
+        "MLflow",
+        "LightGBM",
+        "Optuna",
+        "OR-Tools",
+        "Synthetic control",
+        "Streamlit"
+      ],
+      "homepage": "https://park-crowd-forecast.streamlit.app"
     }
   }
 }
