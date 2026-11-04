@@ -1,30 +1,54 @@
 {
-  "_how_to_use": "Every repo you own and have starred on GitHub shows up in the app automatically. Add an entry here (keyed by repo name) to give it a nicer title, a domain, optional extra domains ('also', used by the domain filter), a headline result and a stack. 'featured_order' sets the order in the default view; the first 'lead_count' of them get large lead cards. Optional 'page' (an in-app page key, e.g. 'power-test') and 'page_label' add a button that opens that page.",
+  "_how_to_use": "Every repo you own and have starred on GitHub shows up in the app automatically. Add an entry here (keyed by repo name) to give it a nicer title, a domain, optional extra domains ('also', used by the domain filter), a headline result and a stack. 'featured_order' sets the order in the default view; the first 'lead_count' of them get large lead cards. Optional 'page' (an in-app page key, e.g. 'power-test' or 'agent-runs') and 'page_label' add a button that opens that page.",
   "featured_order": [
-    "semantic-rca",
-    "grid-stress-simulator",
+    "park-crowd-forecast",
+    "cmapss-predictive-maintenance",
     "michelin-rag",
     "snowpark-customer-segmentation",
-    "cmapss-predictive-maintenance",
-    "loan-default-prediction"
+    "semantic-rca",
+    "loan-default-prediction",
+    "grid-stress-simulator"
   ],
   "lead_count": 2,
   "projects": {
-    "semantic-rca": {
-      "title": "Automated Root Cause Analysis",
-      "domain": "Analytics engineering",
+    "park-crowd-forecast": {
+      "title": "Crowd Forecast and Staffing Optimizer",
+      "domain": "Customer analytics",
       "also": [
-        "Customer analytics"
+        "Applied AI"
       ],
-      "result": "When a KPI drops, it works out why by crawling the dbt Semantic Layer in 8 to 11 warehouse statements, then splits the change across causes with Owen values and bootstrap intervals. On its showcase dataset it finds all four planted incidents with the right mechanism and sign. A benchmark over randomly planted incidents now scores recall and precision across many datasets, and is guiding the next round of improvements.",
+      "result": "Forecasts daily crowds at Universal Orlando's parks 90 days out on Databricks and feeds them to a mixed-integer program (OR-Tools) that plans 14 days of shifts, trading wages against guest wait time. Forecast errors run 12 to 19 points against 17 to 22 for the best simple baseline, and a challenger replaces the champion only if a bootstrap test says it's better. A synthetic-control study suggests Epic Universe cut Universal Studios' crowds by 20% to 30%, and an LLM agent answers questions from the forecast and optimizer, with every number checked against tool output.",
       "stack": [
-        "dbt Semantic Layer",
-        "MetricFlow",
-        "DuckDB",
-        "Owen values",
-        "Forecasting"
+        "Databricks",
+        "Unity Catalog",
+        "MLflow",
+        "LightGBM",
+        "OR-Tools MILP",
+        "Synthetic control",
+        "LLM agent"
       ],
-      "branch": "master"
+      "homepage": "https://park-crowd-forecast.streamlit.app",
+      "page": "agent-runs",
+      "page_label": "Agent test runs"
+    },
+    "cmapss-predictive-maintenance": {
+      "title": "Predictive Maintenance on a Governed Semantic Layer",
+      "domain": "Energy & industry",
+      "result": "Tandem XGBoost models flag turbofan engines 50 and 15 cycles before failure, catching about 91% of failures on held-out NASA C-MAPSS engines. One Snowflake semantic view feeds a report, Cortex Analyst and an MCP server under a read-only role, with all 80 metrics reconciled against hand-written SQL. Ported to Databricks as a Unity Catalog feature table, MLflow champion models, a Kedro pipeline registered as one model, and the metric views behind the live Genie app.",
+      "stack": [
+        "Snowflake feature store",
+        "Semantic views",
+        "MCP",
+        "Databricks",
+        "Unity Catalog",
+        "MLflow",
+        "XGBoost"
+      ],
+      "homepage": "https://ask-the-fleet.streamlit.app",
+      "also": [
+        "Applied AI",
+        "Analytics engineering"
+      ]
     },
     "michelin-rag": {
       "title": "Tire Industry Report Analyst",
@@ -57,16 +81,21 @@
       "page": "power-test",
       "page_label": "How it was tested"
     },
-    "cmapss-predictive-maintenance": {
-      "title": "Predictive Maintenance",
-      "domain": "Energy & industry",
-      "result": "Flags turbofan engines 50 and 15 cycles before failure on NASA C-MAPSS data, catching about 91% of failures on held-out engines.",
-      "stack": [
-        "Snowflake feature store",
-        "XGBoost",
-        "Survival analysis"
+    "semantic-rca": {
+      "title": "Automated Root Cause Analysis",
+      "domain": "Analytics engineering",
+      "also": [
+        "Customer analytics"
       ],
-      "homepage": "https://ask-the-fleet.streamlit.app"
+      "result": "When a KPI drops, it works out why by crawling the dbt Semantic Layer in 8 to 11 warehouse statements, then splits the change across causes with Owen values and bootstrap intervals. On its showcase dataset it finds all four planted incidents with the right mechanism and sign. A benchmark over randomly planted incidents now scores recall and precision across many datasets, and is guiding the next round of improvements.",
+      "stack": [
+        "dbt Semantic Layer",
+        "MetricFlow",
+        "DuckDB",
+        "Owen values",
+        "Forecasting"
+      ],
+      "branch": "master"
     },
     "loan-default-prediction": {
       "title": "Loan Default Prediction",
