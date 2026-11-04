@@ -20,6 +20,12 @@ A free, self-updating portfolio site built with Streamlit. Every repository I ow
 A project can also have its own page inside the app, opened by a button on its card. The pages are in `app_pages/` and are registered in `PAGES` at the bottom of `streamlit_app.py`. Navigation is hidden, so the home page looks the same, and each page gets a "Back to projects" link. To link a page from a card, set `page` (the key in `PAGES`) and `page_label` (the button text) in the project's `projects.json` entry.
 
 - `power-test` (`app_pages/power_test.py`): how many questions a fair Segment Assistant vs Cortex Analyst test needs, and what each round found. Its data, `power_test_rounds.json`, is copied from the eval folder (`OneDrive\Documents\segmentation-practice-eval\power_app\rounds.json`).
+- `agent-runs` (`app_pages/agent_runs.py`): the park agent's 30 graded test runs, replayed from saved results, plus its input screen and number check to try. Its data, `agent_runs.json`, is written by `python scripts/export_agent_runs.py <path to park-crowd-forecast>`; rerun it after a new eval run.
+- `container-planner` (`app_pages/container_planner.py`): an illustrative empty-container repositioning plan. A demand forecast for 15 depots feeds a mixed-integer program (HiGHS through SciPy) that is solved in the app on every click.
+
+### Demos strip
+
+`DEMOS` in `streamlit_app.py` lists the four tiles under the hero ("Try it"). A tile's target is either a key in `PAGES`, which opens in the app, or a URL, which opens the live app.
 
 Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Customer analytics`. `Analytics engineering` is light slate. A repo with no curated domain, and no keyword match, shows as `Data science` (also slate).
 
@@ -36,7 +42,7 @@ Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Cu
 
    A fine-grained token with read-only access to public repositories is enough.
 
-Free apps go to sleep when nobody has visited for a while; the next visitor clicks a button to wake it and waits a moment.
+Free apps go to sleep after about 12 hours without a visitor, and the next visitor gets a wake-up page instead of the app. The **Keep the apps awake** workflow (`.github/workflows/keep-awake.yml`) runs `scripts/wake_apps.py` every 6 hours. It opens the portfolio and every `streamlit.app` homepage in `projects.json` in a headless browser, wakes any that are asleep, and fails if one doesn't load or shows an exception, so a failed-run email from GitHub means a demo is broken. Run it by hand from the Actions tab. GitHub pauses scheduled workflows in a repo with no commits for 60 days; turn it back on there if that happens.
 
 ## Run locally
 

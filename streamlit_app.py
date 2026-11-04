@@ -27,7 +27,7 @@ import streamlit as st
 # ---------------------------------------------------------------------------
 GITHUB_USER = "livingdw67"
 NAME = "Daniel Livingston"
-ROLE = "Data Scientist"
+ROLE = "Principal Data Scientist"
 CREDENTIALS = ["M.S. Applied Statistics", "AWS Certified ML"]  # pills beside your name
 LOCATION = "Greer, SC"
 LINKEDIN = "https://www.linkedin.com/in/daniel-w-livingston"
@@ -36,31 +36,45 @@ REFRESH = dt.timedelta(hours=24)  # how often to re-check GitHub for repos and R
 RETRY_AFTER_FAILURE = dt.timedelta(minutes=15)  # pause before asking GitHub again after it fails
 
 INTRO = (
-    "Ten-plus years building machine learning for finance, energy, manufacturing "
-    "and heavy industry, from "
-    "revenue-driving recommenders to enterprise feature stores. Lately: LLM "
-    "agents, RAG and production ML on Snowflake."
+    "Twelve years building, deploying and monitoring production models in finance, energy and industry, most "
+    "recently as Principal Data Scientist at Diesel Laptops. I design the platform patterns and build on them: "
+    "Snowflake and Databricks feature stores and semantic layers, forecasts that feed optimizers, and LLM agents "
+    "with the tests to prove they work."
 )
 
 PRINCIPLES = [
     ("Decisions over metrics", "Models tuned to the business cost of an error, not a leaderboard score."),
-    ("Built to be questioned", "Interpretable models and fair-lending compliance from the first draft."),
-    ("Platforms that scale", "Five-schema Snowflake architectures (“Data Canon”), Dagster pipelines "
-                             "and reproducible deployments."),
+    ("Built to be questioned", "Interpretable models, fair-lending compliance, and every agent's numbers checked "
+                               "against its tools."),
+    ("Platforms that scale", "Governed Snowflake and Databricks patterns: isolated schemas with audit logging, "
+                             "feature stores, and champion/challenger promotion."),
 ]
 
+# (when, organisation, role, what) from the current resume
 EXPERIENCE = [
-    ("2024 to 2025", "Duke Energy", "Data Scientist",
-     "Built a centralized feature store across structured and unstructured data, cutting model build time roughly in half."),
-    ("2014 to 2023", "TIAA", "Senior Data Scientist",
-     "Built the predictive models behind a recommendation system tied to $36M in incremental revenue, and a SHAP-explained churn model for wealth advisor management."),
+    ("2026", "Diesel Laptops", "Principal Data Scientist (contract)",
+     "Deployed a classifier that separates sensor errors from physical coolant leaks, improving the diagnostic "
+     "product's accuracy by 16%, peer-reviewed graph neural network models, and cut pipeline runtime by 30% under Dagster."),
+    ("2026", "Attain Financial", "Contract data scientist",
+     "Designed a five-schema Snowflake architecture with isolated environments and audit logging, served a collections "
+     "forecast from the Model Registry, and built a Cortex Analyst semantic layer for finance users."),
+    ("2024 to 2025", "Duke Energy", "Contract data scientist",
+     "Built a centralized feature store across smart meter, program and demographic data, cutting data preparation "
+     "and model building time by 50%, and introduced control groups for enterprise models."),
+    ("2014 to 2023", "TIAA", "Senior Data Scientist, 2021 to 2023 · Senior Analyst, Customer Insights, 2016 to 2021",
+     "Built the propensity models behind a recommendation system that drove $36M in incremental revenue in six months, "
+     "an XGBoost churn model with SHAP explanations, and the model monitoring process that became the firm's standard."),
 ]
 
 TOOLKIT = [
-    ("Modeling", "XGBoost, scikit-learn, logistic scorecards, clustering, survival analysis, SHAP, class-imbalance methods, threshold optimization"),
-    ("Platforms and MLOps", "Snowflake, Snowpark, Azure ML, AWS, MLflow, Docker, GitHub Actions"),
-    ("Applied AI", "RAG, LangGraph, vector databases, LLM agents, LLM evaluation"),
-    ("Languages", "Python, SQL, SAS, R, DAX"),
+    ("Snowflake", "Snowpark, stored procedures, Model Registry, feature stores, Cortex Analyst semantic views, MCP server"),
+    ("Databricks", "PySpark, Delta Lake, Unity Catalog, MLflow, Jobs, Asset Bundles, Apps, Genie"),
+    ("Modeling", "LightGBM, XGBoost, scikit-learn, PyTorch, Optuna, time-series backtests, survival analysis, SHAP"),
+    ("Optimization and causal inference", "Mixed-integer programming (OR-Tools, HiGHS), A/B tests, difference-in-differences, "
+                                          "synthetic control, power analysis"),
+    ("Applied AI", "LLM agents and tool orchestration, RAG with citations, MCP, text-to-SQL over semantic layers, "
+                   "guardrails, LLM evaluation"),
+    ("Engineering", "Python, SQL, Git, pytest, GitHub Actions, Docker, FastAPI, Dagster, Kedro, Azure ML, AWS, SAS, R"),
     ("Credentials", "M.S. Applied Statistics. AWS Certified Machine Learning, Associate (2024)"),
 ]
 
@@ -181,8 +195,21 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   letter-spacing: -0.01em; color: var(--ink); margin: 0 0 .35rem 0; padding: 0; }
 .section-head p { color: var(--muted); margin: 0; max-width: 40rem; }
 
+/* ---------- Demos ---------- */
+[class*="st-key-demo-"] {
+  background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--teal);
+  border-radius: 10px; padding: 1.1rem 1.15rem 1rem 1.15rem; gap: .55rem; height: 100%;
+}
+.demo-where { font-size: .8rem; color: var(--muted); font-weight: 500; margin: 0; }
+.demo-title { font-family: var(--display); font-weight: 600; font-size: 1.2rem; line-height: 1.25; color: var(--ink);
+  margin: .1rem 0 .35rem 0; padding: 0; }
+.demo-what { color: var(--ink); font-size: .93rem; margin: 0; }
+.demo-for { color: var(--muted); font-size: .84rem; margin: .45rem 0 0 0; }
+.demo { padding-bottom: 1.1rem; }  /* room for the button Streamlit pulls up under markdown */
+
 /* ---------- Filters ---------- */
 [data-testid="stWidgetLabel"] p { font-size: .88rem; color: var(--muted); font-weight: 500; }
+[data-testid="stButtonGroup"] div:has(> button) { flex-wrap: wrap; }  /* domain pills wrap rather than clip */
 
 /* ---------- Project cards ---------- */
 [class*="st-key-card-"] {
@@ -211,11 +238,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   background: var(--surface); color: var(--ink);
 }
 .stButton button:hover, .stLinkButton a:hover { border-color: var(--teal); color: var(--ink); }
-.stButton button[kind="primary"], .stButton button[data-testid="stBaseButton-primary"] {
+.stButton button[kind="primary"], .stButton button[data-testid="stBaseButton-primary"],
+.stLinkButton a[data-testid="stBaseLinkButton-primary"] {
   background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600;
 }
-.stButton button[data-testid="stBaseButton-primary"] p { color: var(--on-teal); }
-.stButton button[data-testid="stBaseButton-primary"]:hover {
+.stButton button[data-testid="stBaseButton-primary"] p,
+.stLinkButton a[data-testid="stBaseLinkButton-primary"] p { color: var(--on-teal); }
+.stButton button[data-testid="stBaseButton-primary"]:hover,
+.stLinkButton a[data-testid="stBaseLinkButton-primary"]:hover {
   background: var(--teal-hover); border-color: var(--teal-hover); color: var(--on-teal);
 }
 
@@ -450,6 +480,44 @@ def build_projects() -> tuple[list[dict], bool]:
 # ---------------------------------------------------------------------------
 # README rendering
 # ---------------------------------------------------------------------------
+def dark_image(m: re.Match) -> str:
+    """A <picture> with light and dark versions becomes a plain <img> of the dark one: this site is always dark,
+    and a <source srcset> would otherwise point at this site rather than at GitHub."""
+    block = m[0]
+    img = re.search(r"<img\b[^>]*>", block)
+    dark = re.search(r"<source\b[^>]*prefers-color-scheme:\s*dark[^>]*>", block)
+    srcset = re.search(r'srcset="([^"\s]+)', dark[0]) if dark else None
+    if not img:
+        return block
+    if not srcset:
+        return img[0]
+    return re.sub(r'\ssrc="[^"]*"', f' src="{srcset[1]}"', img[0], count=1)
+
+
+@st.cache_data(ttl=REFRESH, show_spinner=False)
+def svg_width(url: str) -> float | None:
+    """The drawing's natural width in pixels, from its viewBox. Raises if it can't be fetched, so a failure isn't cached."""
+    r = requests.get(url, timeout=15)
+    r.raise_for_status()
+    box = re.search(r'viewBox="[-\d.]+ [-\d.]+ ([\d.]+) [\d.]+"', r.text)
+    return float(box[1]) if box else None
+
+
+def mermaid_image(m: re.Match) -> str:
+    """Markdown here can't draw Mermaid diagrams, so render them as an image with mermaid.ink, in the site's colours.
+    A wide diagram keeps its natural size and scrolls sideways, as on GitHub, rather than shrinking past reading."""
+    code = base64.urlsafe_b64encode(m[1].encode("utf-8")).decode("ascii")
+    url = f"https://mermaid.ink/svg/{code}?theme=dark&bgColor=!16283f"
+    try:
+        width = svg_width(url)
+    except requests.RequestException:
+        width = None
+    if not width:
+        return f'<img alt="Diagram" src="{url}">\n'
+    return (f'<div style="overflow-x: auto"><img alt="Diagram" src="{url}" '
+            f'style="width: {width:.0f}px; max-width: none; height: auto"></div>\n')
+
+
 def absolutize(md: str, repo: str, branch: str, folder: str = "") -> str:
     """Point relative images and links at GitHub. `folder` is where the README lives."""
     raw = f"https://raw.githubusercontent.com/{GITHUB_USER}/{repo}/{branch}/"
@@ -462,6 +530,8 @@ def absolutize(md: str, repo: str, branch: str, folder: str = "") -> str:
             return base + url.lstrip("/")
         return base + posixpath.normpath(posixpath.join(folder, url))
 
+    md = re.sub(r"(?s)<picture>.*?</picture>", dark_image, md)
+    md = re.sub(r"(?s)```mermaid\n(.*?)```", mermaid_image, md)
     md = re.sub(r"!\[([^\]]*)\]\(([^)\s]+)([^)]*)\)", lambda m: f"![{m[1]}]({fix(m[2], raw)}{m[3]})", md)
     md = re.sub(r"(?<!!)\[([^\]]*)\]\(([^)\s]+)([^)]*)\)", lambda m: f"[{m[1]}]({fix(m[2], blob)}{m[3]})", md)
     md = re.sub(r'(<img[^>]*?\ssrc=")([^"]+)"', lambda m: f'{m[1]}{fix(m[2], raw)}"', md)
@@ -512,7 +582,8 @@ def hero() -> None:
   <p class="intro">{html.escape(INTRO)}</p>
   <dl class="principles">{principles}</dl>
   <div class="cta">
-    <a class="primary" href="#projects" target="_self">See the projects</a>
+    <a class="primary" href="#demos" target="_self">Try a demo</a>
+    <a href="#projects" target="_self">See the projects</a>
     <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://github.com/{GITHUB_USER}" target="_blank" rel="noopener">GitHub</a>
   </div>
@@ -706,6 +777,50 @@ def project_card(p: dict, lead: bool = False) -> None:
         next(cols).link_button("View code", p["url"], width="stretch")
 
 
+# (key, where it runs, title, what you can do, what it shows, button label, in-app page key or URL)
+DEMOS = [
+    ("planner", "Runs here · solves in about a second", "Plan an empty-container network",
+     "A demand forecast for 15 depots feeds a mixed-integer program that decides which empties to truck where. Change "
+     "the costs or the forecast's accuracy and watch it re-plan.",
+     "Forecasting into optimization, and what forecast accuracy is worth in dollars.",
+     "Open the planner", "container-planner"),
+    ("lab", "Databricks project · frozen snapshot", "Retrain a crowd forecast",
+     "Tune the production LightGBM model, backtest it on years it never saw, and test it against the champion with a "
+     "block bootstrap, the same gate the weekly Databricks job uses.",
+     "Champion/challenger promotion and out-of-time validation.",
+     "Open the model lab", "https://park-crowd-forecast.streamlit.app/"),
+    ("fleet", "Live on Databricks · 50 questions a day", "Ask 709 jet engines a question",
+     "Plain-English questions go to a Databricks Genie space that writes SQL against governed Unity Catalog metric "
+     "views of engine reliability. Allow a minute on the first question while the warehouse starts.",
+     "Semantic layers, text-to-SQL with guardrails, a public app on a budget.",
+     "Open Ask the Fleet", "https://ask-the-fleet.streamlit.app"),
+    ("agent", "Runs here · replays recorded runs", "Step through an AI agent's tests",
+     "Thirty graded runs of an agent that routes questions to specialists, calls an optimizer, and has every number "
+     "checked against its tools. Then try to get past its guardrails.",
+     "Tool orchestration, failure handling, guardrails and evaluation.",
+     "See the test runs", "agent-runs"),
+]
+
+
+def demos_section() -> None:
+    st.markdown('<div id="demos"></div><div class="section-head"><h2>Try it</h2>'
+                "<p>Four working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
+                unsafe_allow_html=True)
+    for row in (DEMOS[:2], DEMOS[2:]):
+        cols = st.columns(len(row), gap="medium")
+        for col, (key, where, title, what, shows, label, target) in zip(cols, row):
+            with col, st.container(key=f"demo-{key}"):
+                st.markdown(f'<div class="demo"><p class="demo-where">{html.escape(where)}</p>'
+                            f'<h3 class="demo-title">{html.escape(title)}</h3><p class="demo-what">{html.escape(what)}</p>'
+                            f'<p class="demo-for">Shows: {html.escape(shows)}</p></div>', unsafe_allow_html=True)
+                if target in PAGES:
+                    # a key starting "demo-" would pick up the tile styling
+                    if st.button(label, key=f"open-demo-{key}", type="primary", width="stretch"):
+                        st.switch_page(PAGES[target])
+                else:
+                    st.link_button(label, target, type="primary", width="stretch")
+
+
 def projects_section() -> None:
     st.markdown('<div id="projects"></div>', unsafe_allow_html=True)
     projects, live = build_projects()
@@ -770,7 +885,7 @@ def experience_section() -> None:
     )
     st.markdown(
         f"""<div class="section-head"><h2>Experience</h2>
-<p>Production models in regulated finance and a utility, measured in revenue and hours saved.</p></div>
+<p>Production models in finance, a utility and industrial diagnostics, measured in revenue, accuracy and hours saved.</p></div>
 <div class="timeline">{items}</div>""",
         unsafe_allow_html=True,
     )
@@ -799,6 +914,7 @@ def footer() -> None:
 
 def home_page() -> None:
     hero()
+    demos_section()
     projects_section()
     experience_section()
     toolkit_section()
@@ -812,6 +928,10 @@ HOME = st.Page(home_page, title=f"{NAME}, data science projects", default=True)
 PAGES = {  # keys are the "page" values in projects.json
     "power-test": st.Page(HERE / "app_pages" / "power_test.py", title="How many questions does a fair test need?",
                           url_path="power-test"),
+    "agent-runs": st.Page(HERE / "app_pages" / "agent_runs.py", title="How the park agent was tested",
+                          url_path="agent-runs"),
+    "container-planner": st.Page(HERE / "app_pages" / "container_planner.py",
+                                 title="Where should the empty containers go?", url_path="container-planner"),
 }
 current = st.navigation([HOME, *PAGES.values()], position="hidden")
 if current.url_path != HOME.url_path:

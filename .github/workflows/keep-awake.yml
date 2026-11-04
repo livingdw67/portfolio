@@ -1,0 +1,28 @@
+# Keeps the portfolio and its live demos awake on Streamlit Community Cloud, which puts an app to sleep
+# after about 12 hours without a visitor. A failed run means an app didn't load: GitHub emails about it.
+name: Keep the apps awake
+
+on:
+  schedule:
+    - cron: "23 */6 * * *"  # every 6 hours, off the hour when GitHub's scheduler is busiest
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/keep-awake.yml"
+      - "scripts/wake_apps.py"
+
+permissions:
+  contents: read
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install "playwright==1.64.1"
+      - run: python -m playwright install --with-deps chromium
+      - run: python scripts/wake_apps.py
