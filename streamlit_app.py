@@ -16,11 +16,10 @@ import re
 import time
 from pathlib import Path
 
-import altair as alt
-import numpy as np
-import pandas as pd
 import requests
 import streamlit as st
+
+from segment_demo import segment_demo
 
 # ---------------------------------------------------------------------------
 # Personal settings: edit these
@@ -35,19 +34,22 @@ EMAIL = ""  # optional, e.g. "you@example.com"; shown in the footer when set
 REFRESH = dt.timedelta(hours=24)  # how often to re-check GitHub for repos and READMEs
 RETRY_AFTER_FAILURE = dt.timedelta(minutes=15)  # pause before asking GitHub again after it fails
 
+HEADLINE = "AI that shows its work."
+
 INTRO = (
-    "Twelve years building, deploying and monitoring production models in finance, energy and industry, most "
-    "recently as Principal Data Scientist at Diesel Laptops. I design the platform patterns and build on them: "
-    "Snowflake and Databricks feature stores and semantic layers, forecasts that feed optimizers, and LLM agents "
-    "with the tests to prove they work."
+    "Twelve years building, deploying and monitoring production models, most recently as Principal Data Scientist "
+    "at Diesel Laptops. I design AI architecture and build it hands-on: semantic layers that reports, agents and MCP "
+    "servers all consume, retrieval grounded in governed data, and agent orchestration with tools, state, failure "
+    "handling and guardrails, tested the way you'd test any other claim."
 )
 
 PRINCIPLES = [
-    ("Decisions over metrics", "Models tuned to the business cost of an error, not a leaderboard score."),
-    ("Built to be questioned", "Interpretable models, fair-lending compliance, and every agent's numbers checked "
-                               "against its tools."),
-    ("Platforms that scale", "Governed Snowflake and Databricks patterns: isolated schemas with audit logging, "
-                             "feature stores, and champion/challenger promotion."),
+    ("Governance enforced by code", "One definition of each metric, shared by a report, an AI assistant and an MCP "
+                                    "server under a read-only role, with all 80 metrics reconciled against hand-written SQL."),
+    ("The model chooses, code computes", "LLMs pick which calculation to run; tested code computes the figures, and "
+                                         "every number in an answer is checked against its source."),
+    ("Tested like an experiment", "Held-out questions, blind grading and tests sized for power against a vendor "
+                                  "baseline, and control groups for models in production."),
 ]
 
 # (when, organisation, role, what) from the current resume
@@ -180,15 +182,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .cta a:hover { border-color: var(--teal); color: var(--ink); }
 .cta a.primary:hover { background: var(--teal-hover); color: var(--on-teal); }
 
-/* The cost curve beside the hero */
-.st-key-cost-curve { padding-top: 2.25rem; gap: .4rem; }
-.st-key-cost-curve .curve-title { font-weight: 600; color: var(--ink); margin: 0; }
-.st-key-cost-curve .curve-sub { color: var(--muted); font-size: .9rem; margin: 0; }
-.curve-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: .45rem; font-size: .84rem; color: var(--muted); }
-.curve-legend span { display: inline-flex; align-items: center; gap: 6px; }
-.st-key-cost-curve [data-testid="stMetricValue"] { font-size: 1.9rem; }
-.st-key-cost-curve [data-testid="stCaptionContainer"] { max-width: 30rem; }
-
 /* ---------- Section headings ---------- */
 .section-head { margin: 5rem 0 1.25rem 0; }
 .section-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3vw, 2.2rem);
@@ -284,7 +277,7 @@ div[role="dialog"] h1, div[role="dialog"] h2, div[role="dialog"] h3 { font-famil
 
 @media (max-width: 640px) {
   [data-testid="stMainBlockContainer"], .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 1.75rem; }
-  .st-key-cost-curve { padding-top: .5rem; }
+  .st-key-hero-demo { padding-top: .5rem; }
   .toolkit { grid-template-columns: 1fr; }
   .toolkit dt { padding-bottom: .1rem; }
   .toolkit dd { border-top: none; padding-top: 0; }
@@ -577,7 +570,7 @@ def hero() -> None:
     <div class="who"><strong>{html.escape(NAME)}</strong>{html.escape(ROLE)}, {html.escape(LOCATION)}</div>
     {f'<div class="creds">{creds}</div>' if creds else ''}
   </div>
-  <h1>Models that change the decision.</h1>
+  <h1>{html.escape(HEADLINE)}</h1>
   <div class="rule"></div>
   <p class="intro">{html.escape(INTRO)}</p>
   <dl class="principles">{principles}</dl>
@@ -591,154 +584,8 @@ def hero() -> None:
 """,
             unsafe_allow_html=True,
         )
-    with right, st.container(key="cost-curve"):
-        decision_chart()
-
-
-# ---------------------------------------------------------------------------
-# Hero chart: what a decision threshold costs
-# ---------------------------------------------------------------------------
-# An illustrative lending book, not a client result. A calibrated model's default risk follows
-# Beta(0.5, 3.5), a 12.5% default rate. With calibrated scores the cheapest threshold is
-# COST_FP / (COST_FP + COST_FN), whatever the score distribution: here 0.25, not the usual 0.50.
-BOOK = 1_000         # loan applications
-COST_FN = 3_000      # lost on a loan that defaults (a missed default)
-COST_FP = 1_000      # profit given up on a good borrower who is turned away
-RISK_BETA = (0.5, 3.5)
-OPTIMUM = COST_FP / (COST_FP + COST_FN)
-USUAL = 0.5
-SERIES = ["Total cost", "Missed defaults", "Good loans turned away"]
-DASHES = [[1, 0], [6, 4], [2, 3]]  # solid, dashed, dotted: identity never rests on colour alone
-
-
-@st.cache_data(show_spinner=False)
-def cost_curve() -> pd.DataFrame:
-    """Expected cost of wrong calls at each threshold (decline when risk >= threshold)."""
-    a, b = RISK_BETA
-    risk = np.linspace(0.0005, 0.9995, 4000)
-    share = risk ** (a - 1) * (1 - risk) ** (b - 1)
-    share /= share.sum()  # share of applicants at each predicted risk
-    t = np.round(np.arange(0, 1.0001, 0.01), 2)
-    approved = np.searchsorted(risk, t)  # applicants below the threshold are approved
-    defaults = np.concatenate([[0], np.cumsum(risk * share)])
-    good = np.concatenate([[0], np.cumsum((1 - risk) * share)])
-    missed = BOOK * COST_FN * defaults[approved]
-    turned_away = BOOK * COST_FP * (good[-1] - good[approved])
-    return pd.DataFrame({"threshold": t, SERIES[0]: missed + turned_away,
-                         SERIES[1]: missed, SERIES[2]: turned_away})
-
-
-def total_at(df: pd.DataFrame, t: float) -> float:
-    return float(np.interp(t, df["threshold"], df[SERIES[0]]))
-
-
-def money(x: float) -> str:
-    return f"${x / 1000:,.0f}k"
-
-
-def cost_chart(df: pd.DataFrame, t: float) -> alt.LayerChart:
-    ink, muted, grid, surface = "#f2f5f9", "#9fb1c7", "#2b3f58", "#0e1a2b"
-    teal, slate, amber = "#5fc4c0", "#6f86a3", "#f0a742"
-    x = alt.X("threshold:Q", title="Decision threshold (predicted default risk)",
-              scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(values=[0, 0.25, 0.5, 0.75, 1], format=".2f"))
-    y_axis = alt.Axis(tickCount=4, title=None,
-                      labelExpr="datum.value == 0 ? '$0' : '$' + format(datum.value / 1000, ',') + 'k'")
-
-    lines = alt.Chart(df).transform_fold(SERIES, as_=["series", "cost"]).mark_line(
-        strokeCap="round", strokeJoin="round"
-    ).encode(
-        x=x,
-        y=alt.Y("cost:Q", axis=y_axis),
-        color=alt.Color("series:N", scale=alt.Scale(domain=SERIES, range=[teal, slate, slate]), legend=None),
-        strokeDash=alt.StrokeDash("series:N", scale=alt.Scale(domain=SERIES, range=DASHES), legend=None),
-        strokeWidth=alt.value(2),
-    )
-    total = alt.Chart(df).mark_line(color=teal, strokeWidth=3, strokeCap="round").encode(
-        x=x, y=alt.Y(f"{SERIES[0]}:Q", axis=y_axis))
-
-    # Hover: a crosshair that snaps to the nearest threshold and lists every series.
-    hover = alt.selection_point(fields=["threshold"], encodings=["x"], nearest=True,
-                                on="pointerover", clear="pointerout", empty=False)
-    tooltip = [alt.Tooltip("threshold:Q", title="Threshold", format=".2f")] + [
-        alt.Tooltip(field=name, type="quantitative", format="$,.0f") for name in SERIES]
-    catcher = alt.Chart(df).mark_point(size=400, opacity=0).encode(
-        x=x, y=alt.Y(f"{SERIES[0]}:Q", axis=y_axis), tooltip=tooltip).add_params(hover)
-    crosshair = alt.Chart(df).mark_rule(color=muted, strokeWidth=1).encode(x=x).transform_filter(hover)
-
-    # The slider's threshold, and the two thresholds worth comparing it with.
-    current = pd.DataFrame({"threshold": [t], "cost": [total_at(df, t)]})
-    picked = alt.Chart(current).mark_rule(color=ink, strokeWidth=1, opacity=0.35).encode(x=x)
-    picked_dot = alt.Chart(current).mark_point(filled=True, size=150, opacity=1, color=teal,
-                                               stroke=surface, strokeWidth=2).encode(x=x, y=alt.Y("cost:Q", axis=y_axis))
-    # Callouts sit in the empty space above the curve, tied to their dots by a dashed leader,
-    # so they never collide with the lines or each other at any width.
-    callouts = []
-    for at, label, colour, text_colour, label_y in (
-        (OPTIMUM, f"Cost-optimal {OPTIMUM:.2f} · {money(total_at(df, OPTIMUM))}", amber, ink, 0.6),
-        (USUAL, f"Usual {USUAL:.2f} · {money(total_at(df, USUAL))}", muted, muted, 0.5),
-    ):
-        cost = total_at(df, at)
-        top = label_y * df[SERIES[0]].max()
-        pt = pd.DataFrame({"threshold": [at], "cost": [cost], "top": [top], "leader": [top - 0.04 * df[SERIES[0]].max()],
-                           "label": [label]})
-        c = alt.Chart(pt)
-        callouts += [
-            c.mark_rule(color=colour, strokeWidth=1, strokeDash=[2, 3]).encode(x=x, y=alt.Y("cost:Q", axis=y_axis), y2="leader:Q"),
-            c.mark_point(filled=True, size=110, opacity=1, color=colour, stroke=surface, strokeWidth=2).encode(
-                x=x, y=alt.Y("cost:Q", axis=y_axis)),
-            c.mark_text(align="left", baseline="middle", dx=-3, fontSize=12, stroke=surface, strokeWidth=5,
-                        strokeJoin="round").encode(x=x, y=alt.Y("top:Q", axis=y_axis), text="label:N"),
-            c.mark_text(align="left", baseline="middle", dx=-3, fontSize=12, color=text_colour).encode(
-                x=x, y=alt.Y("top:Q", axis=y_axis), text="label:N"),
-        ]
-
-    return alt.layer(lines, total, picked, crosshair, catcher, *callouts, picked_dot).properties(
-        height=260,
-        description="Expected cost of wrong lending decisions against the decision threshold. Total cost "
-                    f"bottoms out at {OPTIMUM:.2f} ({money(total_at(df, OPTIMUM))}); the usual 0.50 costs "
-                    f"{money(total_at(df, USUAL))}.",
-    ).configure(
-        background="transparent", font="Segoe UI, Open Sans, system-ui, sans-serif",
-    ).configure_view(stroke=None).configure_axis(
-        domainColor=grid, tickColor=grid, gridColor=grid, labelColor=muted, titleColor=muted,
-        labelFontSize=11, titleFontSize=12, titleFontWeight="normal", labelPadding=6,
-    ).configure_axisX(grid=False)
-
-
-def curve_legend() -> str:
-    """HTML legend with line keys that match the chart; it wraps on narrow screens, unlike Vega's."""
-    keys = []
-    for name, colour, width, dash in zip(SERIES, ("#5fc4c0", "#6f86a3", "#6f86a3"), (3, 2, 2), DASHES):
-        dasharray = " ".join(map(str, dash)) if dash != [1, 0] else "none"
-        keys.append(f'<span><svg width="24" height="8" aria-hidden="true"><line x1="2" y1="4" x2="22" y2="4" '
-                    f'stroke="{colour}" stroke-width="{width}" stroke-dasharray="{dasharray}" stroke-linecap="butt"/>'
-                    f'</svg>{html.escape(name)}</span>')
-    return f'<div class="curve-legend">{"".join(keys)}</div>'
-
-
-@st.fragment  # dragging the slider reruns only this chart, not the whole page
-def decision_chart() -> None:
-    df = cost_curve()
-    st.markdown('<p class="curve-title">What a threshold costs</p>'
-                f'<p class="curve-sub">Expected cost of wrong calls on {BOOK:,} loan applications</p>'
-                + curve_legend(),
-                unsafe_allow_html=True)
-    chart_slot = st.container()
-    t = st.slider("Decline when predicted default risk is at least", 0.01, 0.99, USUAL, 0.01,
-                  format="%.2f")
-    chart_slot.altair_chart(cost_chart(df, t), theme=None, width="stretch")
-    gap = total_at(df, t) - total_at(df, OPTIMUM)
-    if gap >= 500:
-        st.metric(f"Expected cost at {t:.2f}", money(total_at(df, t)),
-                  delta=f"{money(gap)} more than at {OPTIMUM:.2f}", delta_color="inverse")
-    else:
-        st.metric(f"Expected cost at {t:.2f}", money(total_at(df, t)),
-                  delta="The cost-optimal threshold", delta_color="off", delta_arrow="off")
-    st.caption(
-        f"Illustrative lending book, scored by a calibrated default model. A missed default loses "
-        f"\\${COST_FN:,}; turning away a good borrower gives up \\${COST_FP:,} of profit. So the cheapest "
-        f"threshold is {COST_FP:,} / ({COST_FP:,} + {COST_FN:,}) = {OPTIMUM:.2f}, not the usual {USUAL:.2f}."
-    )
+    with right, st.container(key="hero-demo"):
+        segment_demo(PAGES["power-test"])
 
 
 def card_html(p: dict, lead: bool = False) -> str:

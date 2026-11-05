@@ -23,6 +23,10 @@ A project can also have its own page inside the app, opened by a button on its c
 - `agent-runs` (`app_pages/agent_runs.py`): the park agent's 30 graded test runs, replayed from saved results, plus its input screen and number check to try. Its data, `agent_runs.json`, is written by `python scripts/export_agent_runs.py <path to park-crowd-forecast>`; rerun it after a new eval run.
 - `container-planner` (`app_pages/container_planner.py`): an illustrative empty-container repositioning plan. A demand forecast for 15 depots feeds a mixed-integer program (HiGHS through SciPy) that is solved in the app on every click.
 
+### Hero demo
+
+Beside the headline, "Ask the Segment Assistant" (`segment_demo.py`) replays seven recorded, graded Segment Assistant answers, each with its route, plan, code's fixes to the plan, rows and figure check, and Cortex Analyst's answer to the same question. One follow-up shows the conversation state. Nothing calls a model. Its data, `segment_demo.json`, is written by `python scripts/export_segment_demo.py <path to snowpark-customer-segmentation>`; the questions are picked in that script.
+
 ### Demos strip
 
 `DEMOS` in `streamlit_app.py` lists the four tiles under the hero ("Try it"). A tile's target is either a key in `PAGES`, which opens in the app, or a URL, which opens the live app.
