@@ -7,7 +7,8 @@
     "snowpark-customer-segmentation",
     "semantic-rca",
     "loan-default-prediction",
-    "grid-stress-simulator"
+    "grid-stress-simulator",
+    "theme-park-event-extraction"
   ],
   "lead_count": 2,
   "projects": {
@@ -119,6 +120,18 @@
         "Plotly"
       ],
       "homepage": "https://grid-stress-simulator.streamlit.app"
+    },
+    "theme-park-event-extraction": {
+      "title": "Theme Park Event Extraction",
+      "domain": "Applied AI",
+      "result": "Finds parks, attractions, events and dates in text and turns them into proposed rows for a park events calendar, keeping the sentence as evidence. On 150 hand-labeled Wikipedia sentences, list-based rules score F1 0.76. DistilBERT fine-tuned on the rules' labels ties them (0.76 over three seeds) because it learns to copy them, and zero-shot GLiNER finds the most names missing from the rules' lists (40%), at about half their precision.",
+      "stack": [
+        "Hugging Face Transformers",
+        "DistilBERT fine-tuning",
+        "GLiNER",
+        "Bootstrap CIs",
+        "Streamlit"
+      ]
     }
   }
 }
