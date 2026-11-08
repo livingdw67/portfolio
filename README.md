@@ -22,6 +22,11 @@ A project can also have its own page inside the app, opened by a button on its c
 - `power-test` (`app_pages/power_test.py`): how many questions a fair Segment Assistant vs Cortex Analyst test needs, and what each round found. Its data, `power_test_rounds.json`, is copied from the eval folder (`OneDrive\Documents\segmentation-practice-eval\power_app\rounds.json`).
 - `agent-runs` (`app_pages/agent_runs.py`): the park agent's 30 graded test runs, replayed from saved results, plus its input screen and number check to try. Its data, `agent_runs.json`, is written by `python scripts/export_agent_runs.py <path to park-crowd-forecast>`; rerun it after a new eval run.
 - `container-planner` (`app_pages/container_planner.py`): an illustrative empty-container repositioning plan. A demand forecast for 15 depots feeds a mixed-integer program (HiGHS through SciPy) that is solved in the app on every click.
+- `fleet-architecture` (`app_pages/fleet_architecture.py`): an architecture review of the C-MAPSS project: the whole system, the live demo's request path, the three builds (Snowflake, Databricks, Kedro), the design choices, and eight changes I'd make next. Code links are pinned to commit `b2bc04c`; update them and the text when the project changes. Opened from the architecture section and the Predictive Maintenance card.
+
+### Architecture section
+
+The first section under the hero shows the C-MAPSS system diagram, with buttons to the `fleet-architecture` page and the live Ask the Fleet app. The diagrams are SVG files in `assets/` (`fleet_system.svg`, `fleet_demo_path.svg`) with their own colours and fonts, drawn as images by `diagrams.py` so Streamlit's styles don't touch them. On narrow screens they scroll sideways rather than shrink.
 
 ### Hero demo
 
