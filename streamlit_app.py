@@ -19,6 +19,7 @@ from pathlib import Path
 import requests
 import streamlit as st
 
+from diagrams import FLEET_SYSTEM, diagram
 from segment_demo import segment_demo
 
 # ---------------------------------------------------------------------------
@@ -187,6 +188,11 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .section-head h2 { font-family: var(--display); font-weight: 600; font-size: clamp(1.7rem, 3vw, 2.2rem);
   letter-spacing: -0.01em; color: var(--ink); margin: 0 0 .35rem 0; padding: 0; }
 .section-head p { color: var(--muted); margin: 0; max-width: 40rem; }
+
+/* ---------- Architecture diagrams (diagrams.py) ---------- */
+.arch-fig { overflow-x: auto; background: #0b1625; border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px; margin: 0 0 .25rem 0; }
+.arch-fig img { display: block; width: 100%; height: auto; }
 
 /* ---------- Demos ---------- */
 [class*="st-key-demo-"] {
@@ -624,6 +630,21 @@ def project_card(p: dict, lead: bool = False) -> None:
         next(cols).link_button("View code", p["url"], width="stretch")
 
 
+def architecture_section() -> None:
+    """First section under the hero: one system end to end, with a button to its full review."""
+    st.markdown(
+        '<div id="architecture"></div><div class="section-head"><h2>How one of these systems fits together</h2>'
+        "<p>The jet-engine project end to end. One set of metric definitions serves a report, a plain-English question "
+        "box and AI agents, while two models decide which engine to pull. Amber boxes are the checks that run today; "
+        "the numbers mark eight changes I'd make next.</p></div>" + diagram(FLEET_SYSTEM),
+        unsafe_allow_html=True,
+    )
+    read, ask, _ = st.columns([1, 1, 2], gap="small")
+    if read.button("Read the architecture review", key="open-architecture", type="primary", width="stretch"):
+        st.switch_page(PAGES["fleet-architecture"])
+    ask.link_button("Ask the fleet a question", "https://ask-the-fleet.streamlit.app", width="stretch")
+
+
 # (key, where it runs, title, what you can do, what it shows, button label, in-app page key or URL)
 DEMOS = [
     ("planner", "Runs here · solves in about a second", "Plan an empty-container network",
@@ -761,6 +782,7 @@ def footer() -> None:
 
 def home_page() -> None:
     hero()
+    architecture_section()
     demos_section()
     projects_section()
     experience_section()
@@ -779,6 +801,8 @@ PAGES = {  # keys are the "page" values in projects.json
                           url_path="agent-runs"),
     "container-planner": st.Page(HERE / "app_pages" / "container_planner.py",
                                  title="Where should the empty containers go?", url_path="container-planner"),
+    "fleet-architecture": st.Page(HERE / "app_pages" / "fleet_architecture.py",
+                                  title="How the jet-engine fleet system fits together", url_path="fleet-architecture"),
 }
 current = st.navigation([HOME, *PAGES.values()], position="hidden")
 if current.url_path != HOME.url_path:
