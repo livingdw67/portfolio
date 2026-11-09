@@ -646,14 +646,19 @@ DEMOS = [
      "checked against its tools. Then try to get past its guardrails.",
      "Tool orchestration, failure handling, guardrails and evaluation.",
      "See the test runs", "agent-runs"),
+    ("ask", "Runs here · no AI model", "Ask about my work",
+     "Ask what I've built and get answers quoted word for word from my public write-ups, each with its source. If "
+     "nothing covers it, it says so instead of guessing.",
+     "Retrieval with sources, and refusing when the evidence isn't there.",
+     "Ask a question", "ask"),
 ]
 
 
 def demos_section() -> None:
     st.markdown('<div id="demos"></div><div class="section-head"><h2>Try it</h2>'
-                "<p>Four working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
+                "<p>Five working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
                 unsafe_allow_html=True)
-    for row in (DEMOS[:2], DEMOS[2:]):
+    for row in (DEMOS[:2], DEMOS[2:4], DEMOS[4:]):
         cols = st.columns(len(row), gap="medium")
         for col, (key, where, title, what, shows, label, target) in zip(cols, row):
             with col, st.container(key=f"demo-{key}"):
@@ -779,6 +784,7 @@ PAGES = {  # keys are the "page" values in projects.json
                           url_path="agent-runs"),
     "container-planner": st.Page(HERE / "app_pages" / "container_planner.py",
                                  title="Where should the empty containers go?", url_path="container-planner"),
+    "ask": st.Page(HERE / "app_pages" / "ask.py", title="Ask about my work", url_path="ask"),
 }
 current = st.navigation([HOME, *PAGES.values()], position="hidden")
 if current.url_path != HOME.url_path:

@@ -1,0 +1,1148 @@
+{
+ "passages": [
+  {
+   "key": "site-intro",
+   "kind": "about",
+   "source": "About Daniel",
+   "section": "Introduction",
+   "text": "Twelve years building, deploying and monitoring production models, most recently as Principal Data Scientist at Diesel Laptops. I design AI architecture and build it hands-on: semantic layers that reports, agents and MCP servers all consume, retrieval grounded in governed data, and agent orchestration with tools, state, failure handling and guardrails, tested the way you'd test any other claim.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-principles",
+   "kind": "about",
+   "source": "How Daniel works",
+   "section": "Governance enforced by code",
+   "text": "Governance enforced by code. One definition of each metric, shared by a report, an AI assistant and an MCP server under a read-only role, with all 80 metrics reconciled against hand-written SQL.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-principles",
+   "kind": "about",
+   "source": "How Daniel works",
+   "section": "The model chooses, code computes",
+   "text": "The model chooses, code computes. LLMs pick which calculation to run; tested code computes the figures, and every number in an answer is checked against its source.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-principles",
+   "kind": "about",
+   "source": "How Daniel works",
+   "section": "Tested like an experiment",
+   "text": "Tested like an experiment. Held-out questions, blind grading and tests sized for power against a vendor baseline, and control groups for models in production.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "exp-diesel-laptops",
+   "kind": "experience",
+   "source": "Diesel Laptops",
+   "section": "Principal Data Scientist (contract), 2026",
+   "text": "Deployed a classifier that separates sensor errors from physical coolant leaks, improving the diagnostic product's accuracy by 16%, peer-reviewed graph neural network models, and cut pipeline runtime by 30% under Dagster.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "exp-attain-financial",
+   "kind": "experience",
+   "source": "Attain Financial",
+   "section": "Contract data scientist, 2026",
+   "text": "Designed a five-schema Snowflake architecture with isolated environments and audit logging, served a collections forecast from the Model Registry, and built a Cortex Analyst semantic layer for finance users.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "exp-duke-energy",
+   "kind": "experience",
+   "source": "Duke Energy",
+   "section": "Contract data scientist, 2024 to 2025",
+   "text": "Built a centralized feature store across smart meter, program and demographic data, cutting data preparation and model building time by 50%, and introduced control groups for enterprise models.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "exp-tiaa",
+   "kind": "experience",
+   "source": "TIAA",
+   "section": "Senior Data Scientist, Enterprise Analytics, 2016 to 2023 · Contractor, 2014 to 2016, 2014 to 2023",
+   "text": "Built the propensity models behind a recommendation system that drove $36M in incremental revenue in six months, an XGBoost churn model with SHAP explanations, and the model monitoring process that became the firm's standard.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "toolkit",
+   "source": "Toolkit",
+   "section": "Snowflake",
+   "text": "Snowflake: Snowpark, stored procedures, Model Registry, feature stores, Cortex Analyst semantic views, MCP server.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "toolkit",
+   "source": "Toolkit",
+   "section": "Databricks",
+   "text": "Databricks: PySpark, Delta Lake, Unity Catalog, MLflow, Jobs, Asset Bundles, Apps, Genie.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "toolkit",
+   "source": "Toolkit",
+   "section": "Modeling",
+   "text": "Modeling: LightGBM, XGBoost, scikit-learn, PyTorch, Optuna, time-series backtests, survival analysis, SHAP.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "toolkit",
+   "source": "Toolkit",
+   "section": "Optimization and causal inference",
+   "text": "Optimization and causal inference: Mixed-integer programming (OR-Tools, HiGHS), A/B tests, difference-in-differences, synthetic control, power analysis.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "toolkit",
+   "source": "Toolkit",
+   "section": "Applied AI",
+   "text": "Applied AI: LLM agents and tool orchestration, RAG with citations, MCP, text-to-SQL over semantic layers, guardrails, LLM evaluation.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "toolkit",
+   "source": "Toolkit",
+   "section": "Engineering",
+   "text": "Engineering: Python, SQL, Git, pytest, GitHub Actions, Docker, FastAPI, Dagster, Kedro, Azure ML, AWS, SAS, R.",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "site-toolkit",
+   "kind": "credentials",
+   "source": "Toolkit",
+   "section": "Credentials",
+   "text": "Credentials: M.S. Applied Statistics. AWS Certified Machine Learning, Associate (2024).",
+   "url": "https://daniel-livingston.streamlit.app"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Summary",
+   "text": "Forecasts daily crowds at Universal Orlando's parks 90 days out on Databricks and feeds them to a mixed-integer program (OR-Tools) that plans 14 days of shifts, trading wages against guest wait time. Forecast errors run 12 to 19 points against 17 to 22 for the best simple baseline, and a challenger replaces the champion only if a bootstrap test says it's better. A synthetic-control study suggests Epic Universe cut Universal Studios' crowds by 20% to 30%, and an LLM agent answers questions from the forecast and optimizer, with every number checked against tool output. Built with Databricks, Unity Catalog, MLflow, LightGBM, OR-Tools MILP, Synthetic control, LLM agent.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Park Crowd Forecast",
+   "text": "Forecasts daily crowd levels at the Universal Orlando parks and turns the forecast into a staffing plan. Built on Databricks (Delta tables, Unity Catalog, MLflow) with a Streamlit front end, plus an agent that answers questions about the forecast and staffing plans from the same data and optimizer. Try it: park-crowd-forecast.streamlit.app, a public demo with a model lab, a crowd explorer and the Epic Universe study (no sign-in). Daily park attendance isn't published (only annual totals), so ride wait times stand in for it. The crowd index is built from them, and the forecast should be read as \"how busy relative to other days\", not a headcount.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Status",
+   "text": "Phase; What; State. 1a; Hourly wait-time ingest into workspace.parks.raw_wait_times; Live since 2026-10-22. 1b; Crowd calendar history into workspace.parks.raw_crowd_calendar (daily, Jul 2018 on); Live since 2026-10-22. 1c; raw_weather_daily (Open-Meteo) and calendar_features (holidays, school breaks, events); Live since 2026-10-22. 1d; LightGBM forecast in MLflow / Unity Catalog (crowd_forecast), ride-based daily_crowd_index; Live since 2026-10-22. 1e; Staffing optimizer (OR-Tools MILP) planning 14 days from the forecast; Live since 2026-10-22. 1f; Streamlit app on Databricks Apps: crowd calendar, staffing plan, what-if scenarios; Live since 2026-10-22. 1g; Epic Universe impact study: difference-in-differences and synthetic control with placebo tests; Live since 2026-10-27. 2; Agent that explains forecasts and re-plans staffing, with an AI gateway, streaming API and eval suite (agent/); Built 2026-10-29; distilling a local writer model in progress.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Status",
+   "text": "3; Public demo app on a frozen snapshot: model lab, crowd explorer, interactive Epic study (public_app/); Built 2026-11-02. Forecast, scenario and optimizer code is written as plain functions with clear inputs and outputs, so the agent calls the same code as agent tools.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Data",
+   "text": "Wait times: Powered by Queue-Times.com. Parks (queue-times ids): Universal Studios Florida (65), Islands of Adventure (64), Epic Universe (334), Volcano Bay (67). Crowd history: the queue-times crowd calendar, scraped one month page at a time (1.5 seconds apart). It gives a daily 0-100 crowd score, park hours, weather and holiday flags. Measured history starts mid-July 2018 for Universal Studios and Islands of Adventure, May 2025 for Epic Universe and May 2026 for Volcano Bay. The score is queue-times' own and its formula isn't published, so the crowd index built from our ride-level data runs alongside it. Scraped pages and data stay out of this repo. Caveats found so far: The score looks relative to each park's own busy days: Epic Universe reads 1-6% through",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Data",
+   "text": "September 2026 while its live waits were the longest in the resort. Halloween Horror Nights haunted houses show up as rides with some of the longest waits of the year, so event attractions must be left out of any crowd index. Days before tracking started and future days carry queue-times' forecast (is_forecast); days they don't forecast have park hours and no score.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Features",
+   "text": "Everything in calendar_features is known ahead of time, so it can be built for any future date. Holidays: US federal holidays plus Easter, long weekends, days to the next and since the last. School breaks: rule-based windows (calendar.py) rather than one district's calendar, since visitors come from everywhere. Checked against TouringPlans' Florida in-session rates for 2015-2021: on weekdays flagged Florida summer, winter break or Thanksgiving week, 6-20% of Florida students were in school, against 92.5% on unflagged weekdays. Florida spring break is mid-March, not Easter (71% still in school during Easter week), so it has its own window. Events: seeds/events.csv lists Halloween Horror Nights runs, the COVID closure and Epic Universe's opening, with a source for each row.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Features",
+   "text": "Weather: Open-Meteo (CC BY 4.0) observed history from 2018 plus a 16-day forecast. Beyond 16 days there is no weather row. First look, Universal Studios Florida, average daily crowd score (measured days, 2018-2026): Days; Avg score; Days. All; 50.8; 2,932. Weekends; 58.4; 839. Easter week; 84.3; 70. Winter break; 81.8; 148. Thanksgiving week; 74.8; 72. Holiday weekends; 73.1; 188. Florida spring break window; 67.7; 121. Halloween Horror Nights season; 40.0; 476. September-October, no HHN; 42.9; 82. 1+ inch of rain; 43.4; 90. Since Epic Universe opened; 42.7; 518. Easter week beats Florida's own spring break: the crowd is national, not local. HHN doesn't lift the daytime score.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Forecast",
+   "text": "One LightGBM model for all parks predicts the daily crowd score. Backtest: for each test year, train on every earlier day and score that year (mean absolute error, 0-100 scale, all parks): Method; 2023; 2024; 2025; 2026. Baseline: park x month x weekday mean; 20.4; 17.0; 19.2; 24.2. Baseline: same weekday last year; 16.7; 18.1; 18.4; 21.9. LightGBM: calendar; 15.9; 12.4; 16.2; 18.8. LightGBM: calendar + park hours; 17.2; 13.7; 16.1; 19.3. LightGBM: calendar + hours + weather; 16.5; 13.4; 15.9; 18.9. What this says: The target is noisy. The score moves 14-17 points day to day at Universal Studios and Islands of Adventure. With each park-year's average bias removed, the error is 11-14, close to that floor.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Forecast",
+   "text": "Correlation with actuals is about 0.77, and weekly averages are off by 8-13 points. Most of the rest is level shifts. 2025 overpredicted Universal Studios by 11 points: models trained before 2025 had never seen Epic Universe open. Epic itself is overpredicted by 20 in 2026, as its score fell sharply after its opening year. Hours and weather add nothing measurable, so production uses calendar features only, which also works at any horizon. Weighting recent days more (half-lives of 180 to 730 days) didn't help. train-forecast (Mondays) reruns the backtest into MLflow, retrains on all days, and registers workspace.parks.crowd_forecast with the champion alias. daily-features scores the next 90 days into crowd_forecast (latest) and crowd_forecast_history (every run, for tracking accuracy later), next to queue-times' own forecast where they publish one.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Forecast",
+   "text": "Tuning. tune-forecast (on demand, 10_tune_forecast.py) runs an Optuna search over LightGBM's settings and the calendar feature groups, scored on 2023-2024 only, with each trial a nested MLflow run and weak trials stopped after their first year. It then looks once at 2025 onward, which the search never saw, against the settings production uses, and registers the refit as crowd_forecast@challenger. The challenger becomes @champion only if a paired block bootstrap puts the whole 95% interval for its error difference below zero. Every run is logged to forecast_settings, and train-forecast retrains with the latest promoted settings, so a promotion survives the weekly retrain. Study; Trials; MAE 2023-2024 (tuned on); MAE 2025-2026 (unseen) vs production; 95% interval; Promoted.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Forecast",
+   "text": "2026-10-22 (first study, Assistant notebook); 100; 13.81 vs 14.14; 17.39 vs 17.49; -0.42 to +0.18; no. 2026-11-02 (tune-forecast); 60 (21 stopped early); 13.92 vs 14.14; 17.50 vs 17.52; -0.30 to +0.24; no. Tuning buys about 0.3 points on the years it tunes on and nothing reliable on years it hasn't seen: the error sits near the score's own day-to-day noise, so better features or a better target are the way forward, not settings. The public app's model lab can load the first study's best settings to check this live, and marks them on its sliders next to bands showing where the second study's 10 best trials landed. daily_crowd_index is the transparent alternative: average posted wait across open rides between",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Forecast",
+   "text": "11am and 5pm, without single-rider lines and Halloween Horror Nights houses. It needs a few weeks of hourly data before it can be compared with the queue-times score.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Staffing optimizer",
+   "text": "staffing.py is a mixed-integer program (OR-Tools, SCIP; each park-day solves in well under a second). For every ride and food outlet it picks how many workers start each shift (8-hour shifts every 2 hours, 4-hour shifts every hour), minimizing wages plus a cost per guest-hour in line plus a penalty per guest-hour over a 60-minute target. Rules: each location's crew stays between its minimum and maximum, guests served per hour are capped by crew, lines carry from hour to hour, an optional park-wide headcount cap forces trade-offs, and guests skip long lines (the share who skip rises with the line, everyone at a 4-hour line), which keeps lines bounded and gives a \"guests who skipped a ride\" measure.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Staffing optimizer",
+   "text": "Demand is assumed, not measured. The crowd score maps to attendance per open hour (25,000 to 50,000 guests on a 12-hour day), each location sees a share of guests (staffing_locations.csv), and arrivals peak early afternoon. Ride shares were calibrated by bisection so the plan's 11am-5pm waits match observed posted waits on 2026-10-22, one day of data. Recalibrating over a few weeks of wait_times_clean is the next step for this part. Known gaps: posted waits run higher than actual ones; long operating days spread the arrival peak, which overstates waits at Islands of Adventure; on Halloween Horror Nights nights the day plan ends at 5pm. daily-features plans the next 14 days into staffing_plan_summary, staffing_plan_shifts and staffing_plan_hourly. Each day's plan is also replayed at the forecast plus 15 points (about one",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Staffing optimizer",
+   "text": "typical forecast error) to show what an underestimate would cost in waits and skipped guests.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Epic Universe impact study",
+   "text": "Question: Epic Universe opened on 2025-05-22. Did it pull crowds from Universal's two older Orlando parks, and from Disney World and the other Orlando parks? Design. A before/after comparison alone can't separate Epic from everything else that changed (the economy, travel trends, weather). So each park is compared with parks Epic could not have affected: seven year-round parks outside Florida (Disneyland, Disney California Adventure, Universal Studios Hollywood, Knott's Berry Farm, Legoland California, SeaWorld San Diego, Six Flags Magic Mountain), with their crowd calendars scraped the same way (seeds/parks.csv). Monthly average crowd score per park. Each park's own seasonal pattern (its pre-opening average for that calendar month) is removed, since Orlando and California parks peak at different times.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Epic Universe impact study",
+   "text": "Before: January 2022 (the California parks' COVID limits had ended) to April 2025. May 2025 is left out as the opening month. After: June 2025 to September 2026. Difference-in-differences: the change at the Orlando park minus the change at the comparison parks' simple average. Synthetic control: the weighted mix of comparison parks (weights >= 0, summing to 1) that best tracked the park before the opening stands in for \"the park without Epic\" afterwards. Checks: every comparison park rerun as a placebo (an effect as large as the real one should be rare among them), a fake opening date in May 2024 (should find nothing), the study without the Disneyland parks (their 70th anniversary began the same month), and with Busch Gardens Tampa added.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Epic Universe impact study",
+   "text": "Code: causal.py (tested on simulated data with a known effect) and 09_epic_impact_study.py. The weekly comparison-calendar-ingest job refreshes the comparison parks and reruns the study into epic_impact_summary and epic_impact_gaps. Results (crowd score points, range across both methods and three comparison groups): Park; Effect after opening; % of pre-Epic level; Fake 2024 opening; Placebo p-value. Universal Studios Florida; -12 to -18; -20% to -30%; +0.2 / +1.0; 0.17 to 0.38. Islands of Adventure; -2 to -9; -4% to -16%; -3.2 / -3.1; 0.33 to 0.88. Both, averaged; -7 to -14; -12% to -24%; -1.5 / -0.7; 0.17 to 0.67. What this says: Universal Studios Florida dropped when Epic opened and stayed down. It tracked its comparison",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Epic Universe impact study",
+   "text": "within 2 points a year from 2022 to 2024, fell about 7 points below it for the rest of 2025, and 15-20 points below in 2026. No dip before the opening, so this isn't people delaying trips. Islands of Adventure shows no clear effect. It was already slipping before Epic (summer 2024, matching its 5.5% attendance drop that year), and its post-opening gaps swing both ways. Not statistically conclusive. With seven comparison parks, the smallest possible placebo p-value is 1/8. Disneyland alone moved -21 points as a placebo, for reasons of its own. Without the Disneyland parks, Universal Studios' drop is larger than every placebo's. Disney World and the other Orlando parks: inconclusive. The comparison parks can't reproduce",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Epic Universe impact study",
+   "text": "Disney's pre-opening path (monthly misses of 5-12 points against 3 for Universal Studios), and the two methods disagree (Magic Kingdom -17 vs -7). SeaWorld Orlando, Legoland Florida and Epcot come out near zero. A crowd score is not headcount. It is built from wait times, and lines shrink faster than crowds when rides run near capacity, so a 25% lower score likely means a smaller drop in visitors. That fits Comcast's comment that Epic took fewer visitors from the older parks than it expected. The 2025 TEA/AECOM attendance report, when published, is the check. The synthetic control leans on Legoland California (60-90% weight). The simple-average difference-in-differences doesn't, and gives a similar answer.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "App",
+   "text": "A Streamlit app on Databricks Apps (databricks/app/), deployed by the bundle as park-crowds. Four pages: Crowd calendar: the 90-day forecast per park as a calendar, next to the last 90 days of measured scores and queue-times' own forecast. Staffing plan: the published plan for a park-day: crew and planned waits by location and hour, the shifts, and what the same crew faces if the day runs 15 points busier. What if: set the crowd, hours, a worker cap, wages and wait costs, then compare three plans costed the same way: the published plan, that plan on the scenario's day, and a re-plan (evaluate_plan and plan_staffing). On busy days most rides already run at their maximum crew, so re-planning helps less than you'd expect; the page says when that happens.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "App",
+   "text": "Epic Universe impact: the impact study for Universal Studios, Islands of Adventure or both: actual monthly crowds against the no-Epic estimate, the park's effect beside every placebo park's, the fake-2024 check, and the other Orlando parks' (inconclusive) results. Method and comparison group are selectable. Cached for six hours; the study reruns weekly. The app reads the Delta tables through the SQL warehouse as its own service principal and caches them for an hour; nothing it shows is computed at request time except the what-if plans. Its source root is the bundle folder, so it ships with the same parks_lib and seeds/staffing_locations.csv the daily job plans from. Colours follow the brand guide's dark palettes, checked with a palette validator for contrast and colour-vision deficiency.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "App",
+   "text": "Deploy and start (Free Edition stops an app 24 hours after it starts; rerun to restart): After the first deploy, give the app's service principal read access (its client id is in databricks apps get park-crowds): Run it locally against the workspace, from databricks/ so the theme in .streamlit/ applies: ortools==9.11 needs protobuf 5.26, so the app pins databricks-sdk==0.72.0, the newest release that allows it (databricks/requirements.txt).",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Agent",
+   "text": "agent/ answers questions such as \"Why is next Friday so busy?\" or \"What would it cost to staff Islands of Adventure for a crowd score of 80?\". A supervisor routes each question to a forecast analyst, a staffing planner or both; they call five tools over a snapshot of the Databricks tables (the staffing tools run the same OR-Tools optimizer as the daily job); a writer streams the answer; and a validator checks that every number in it came from tool output. All model calls go through an AI gateway with local-first routing, failover, a circuit breaker and spending caps. A FastAPI service streams answers as Server-Sent Events. A 30-question eval set, graded without a model judge (route, tools, grounded numbers, no errors),",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Agent",
+   "text": "passes 30/30 on gpt-5.4-mini at about $0.17 a run. Details, load test results and the distillation pipeline are in agent/README.md.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Public app",
+   "text": "public_app/ is a Streamlit app anyone can open without a Databricks sign-in, live at park-crowd-forecast.streamlit.app. It runs on a small snapshot of derived data in public_app/data/ (daily crowd scores with the model features, monthly averages per park, the 90-day forecast and the latest tuning study's trials; no scraped pages or ride waits) and the same parks_lib code as the jobs. Every model is trained in the app, so clicking costs nothing. Model lab: change LightGBM's settings, the loss and the feature groups, retrain, and compare the backtest with the champion and the baselines. A paired block bootstrap says whether your model is really better or worse, with a check across block lengths. \"Load Optuna's best\" loads the tuning study's best",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Public app",
+   "text": "settings and scores them only on 2025-2026, the years the tuning never saw. Each slider shows those settings as a violet tick and a suggested band: the range the 10 best of the tune-forecast job's 60 trials covered (exported from MLflow; export_data.py --trials-only refreshes just that file). Crowd explorer: every measured day since 2018 as a calendar per park and year. Click a day to see which feature groups pushed its estimate up or down (SHAP values), plus the next 90 days' forecast. Epic Universe impact: rerun the impact study live: pick the park, method, comparison parks and before period, or fake the opening a year early, and the estimate, placebo test and weights update. Refresh the snapshot with .venv\\Scripts\\python public_app\\scripts\\export_data.py (needs the",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Public app",
+   "text": "Databricks CLI login); pushing it to main redeploys the hosted app. It runs on Streamlit Community Cloud from this repo with public_app/streamlit_app.py as the main file and Python 3.11.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Databricks",
+   "text": "The bundle is in databricks/. Free Edition, serverless only. The workspace host comes from the CLI profile, so log in once first: Run the crowd calendar backfill once (later daily runs refresh two months back and two ahead): The daily-features job (6:30am Eastern) refreshes weather and rebuilds calendar_features. The comparison-calendar-ingest job (Mondays 5am Eastern) scrapes the comparison parks in seeds/parks.csv into raw_crowd_calendar_comparison, kept apart so the forecast and app only see Universal, then reruns the Epic Universe impact study. Its first run backfills from July 2021 on its own; that history was fetched from a laptop and copied into the volume to save Free Edition compute. The wait-time-ingest job runs hourly 8am-10pm Eastern. Each run saves the raw JSON to the",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "park-crowd-forecast",
+   "kind": "project",
+   "source": "Crowd Forecast and Staffing Optimizer",
+   "section": "Databricks",
+   "text": "raw_files volume and merges parsed rows into raw_wait_times, keyed on ride and last_updated.",
+   "url": "https://github.com/livingdw67/park-crowd-forecast"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Summary",
+   "text": "Tandem XGBoost models flag turbofan engines 50 and 15 cycles before failure, catching about 91% of failures on held-out NASA C-MAPSS engines. One Snowflake semantic view feeds a report, Cortex Analyst and an MCP server under a read-only role, with all 80 metrics reconciled against hand-written SQL. Ported to Databricks as a Unity Catalog feature table, MLflow champion models, a Kedro pipeline registered as one model, and the metric views behind the live Genie app. Built with Snowflake feature store, Semantic views, MCP, Databricks, Unity Catalog, MLflow, XGBoost.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Definition-Driven Predictive Maintenance Pipeline",
+   "text": "An end-to-end data engineering and machine learning feature store built on Snowflake. This project demonstrates how to process raw aerospace telemetry data into mathematically transformed, ML-ready features for predictive maintenance. Try it live: Ask the Fleet → Ask the engine fleet questions in plain English, explore the fleet report, and tune the XGBoost and GNN models. No setup needed. The live app runs on Databricks (Genie over Unity Catalog metric views); the guided tour of the semantic layer walks through the original Snowflake build.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Business Objective",
+   "text": "Unexpected hardware failure in aviation and heavy industry carries catastrophic costs. This pipeline ingests run-to-failure sensor data from the NASA CMAPSS (Turbofan Engine Degradation) dataset and builds a foundation for Condition-Based Maintenance. By calculating rolling window metrics and defining a Piecewise Remaining Useful Life (RUL) target variable, this architecture allows machine learning models to accurately predict failures before they happen, minimizing unplanned downtime and optimizing supply chain logistics.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "The 5-Schema Snowflake Architecture",
+   "text": "This project implements a rigorous, definition-driven data platform decoupled into five distinct layers: RAW: Ingestion of flat, space-delimited text logs directly from the internal stage. STAGING: Type-casting, standardizing arbitrary column names to physical engine components (e.g., High-Pressure Compressor Temperature), and building a dataset-aware engine key (FD002_001), since engine numbers restart in each of the four source files. CORE: Relational modeling (Star Schema) splitting static entities (DIM_ENGINE) from time-series events (FCT_TELEMETRY). MARTS: Application of business logic to calculate the target variable: a piecewise-capped Remaining Useful Life (RUL) to prevent overfitting on healthy engines. FEATURE STORE: Push-down compute utilizing SQL Window Functions to generate 5-cycle rolling moving averages and standard deviations, dramatically increasing the signal-to-noise ratio for downstream ML models.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Machine Learning: Tandem Binary Classifiers",
+   "text": "To operationalize the feature store, this project includes a complete modeling workflow utilizing Snowpark and XGBoost: Dual-Model Strategy: Deploys a tandem approach predicting both an Early Warning (≤50 cycles) and Critical Action (≤15 cycles) state to drive specific maintenance protocols. F2-Optimized Thresholds: Prioritizes recall to minimize costly missed failures, leveraging the F-beta score (beta=2) to dynamically tune decision thresholds. Honest Evaluation: Engines are split 60/20/20 into train, validation, and test sets. Thresholds and strategies are chosen on validation engines; test engines are scored once. Class Imbalance Experimentation: Compares manual SMOTE, 6x undersampling, and scale_pos_weight. All three land within about 0.01 F2, so the simplest option (scale_pos_weight) is preferred. Model Registry: Demonstrates MLOps best practices by versioning and logging champion models directly into Snowflake's native ML Registry.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Results (held-out test engines)",
+   "text": "Model; Recall; Precision; F2. Early Warning (≤ 50 cycles); 0.917; 0.679; 0.857. Critical Action (≤ 15 cycles); 0.908; 0.636; 0.837. Full experiment results",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Reliability Analysis: Weibull Fleet Model",
+   "text": "The classifiers decide which engine to pull. 09_weibull_reliability_analysis.ipynb answers the fleet-planning questions: how long engines last, how failure risk grows with age, and when monitoring must be in place. Wear-out failure: Weibull shape β = 2.9–4.4 across datasets (β > 1 means risk rises with age). Characteristic life η ≈ 225 cycles (one fault mode) and ≈ 274 cycles (two fault modes); B10 life ≈ 135–140 cycles. Fault modes matter, operating conditions don't: log-rank tests show no lifetime difference across 1 vs. 6 operating conditions (p = 0.73–0.87), but engines with two fault modes live longer and less predictably (p < 0.001), so the fleet is planned as two populations.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Reliability Analysis: Weibull Fleet Model",
+   "text": "Failure-free period: no engine fails before about 125 cycles. A three-parameter Weibull captures this (AIC about 100 points lower) and shows a more gradual wear-out phase beyond it (β ≈ 1.6–1.8). Censoring trap: treating the truncated test engines as ordinary censored data overstates characteristic life by 5–15%, because each trajectory was cut off at a random fraction of that engine's own life (censoring age correlates 0.56–0.88 with true life). A simulation confirms the mechanism: unbiased under independent censoring, biased when censoring tracks lifetime. Age vs. sensors: age alone flags engines within 50 cycles of failure with AUC 0.72–0.86 and misses remaining life by 33–55 cycles on average, which is why sensor-based condition monitoring drives individual removals and Weibull sets the fleet-level window.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "Take the tour of the Fleet Reliability semantic layer → A 10-step guided walk-through of the model, metrics, validation, Cortex Analyst eval and MCP server. 11_build_semantic_view.py adds a SEMANTIC schema with a Snowflake semantic view, FLEET_RELIABILITY, so BI tools, Cortex Analyst and agents all read the same metric definitions instead of each re-deriving \"mean time to failure\" in their own SQL. Three grains: datasets (operating conditions and fault modes from NASA's readme), engines (one row per engine with its failure cycle), and cycles (MART_ENGINE_LIFESPAN). Each metric aggregates at its own grain, so engine counts never fan out to telemetry row counts.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "Metrics: engine count, mean/median/min/max time to failure and its spread, cycles flown, share of cycles in the early-warning and critical windows, average sensor readings, and HPC/LPT temperature rise from the first 20 cycles to the critical window. Business logic from the existing models: the health_stage dimension uses the classifiers' horizons (RUL ≤ 50 early warning, ≤ 15 critical action), so a question asked in plain English uses the same definitions as the deployed models. Context for natural-language queries: synonyms (MTTF, T30, failure mode), descriptions with units, and SQL-generation instructions warning that raw sensor levels are not comparable across operating conditions. Operating conditions; Fault modes; Engines; MTTF (cycles); Shortest life; HPC temp rise (°R). Single; HPC; 100; 206.3; 128; 13.7. Single; HPC + fan; 100; 247.2; 145; 15.6.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "Six; HPC; 260; 206.8; 128; 11.7. Six; HPC + fan; 249; 246.0; 128; 7.9. MTTF splits by fault mode, not by operating conditions, matching the Weibull log-rank results above. Checked, reported and served to agents: Reconciliation: 12_validate_metrics.py recomputes every metric with hand-written SQL on STAGING, below anything the view reads. All 80 values (16 metrics × fleet and 4 datasets) match, a deliberate one-cycle threshold error is caught, and a Weibull fit lands within 0.6% of the view's MTTF. Exits non-zero on any mismatch. Report: streamlit_app/fleet_report.py is a Streamlit in Snowflake app that reads only from the view. 13_deploy_fleet_report.py runs every app query, filtered and unfiltered, before deploying.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "Cortex Analyst eval: 14_eval_cortex_analyst.py asks 25 questions 3 times each and scores the returned rows against independent SQL: 75/75 correct. The first pass found a real modeling flaw: a filter value of 'Single (sea level)' that the model queried as 'Single'. The fix went into the view. Details in results.md. A second set of 200 new questions, with ground truth from STAGING rather than the view, scored 594/600 (99.0%) over 3 runs each. Most misses were Cortex returning both numbers in a comparison without subtracting them, fixed with one sentence in the view's instructions.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "MCP server: 15_create_mcp_server.py creates a Snowflake-managed MCP server (Cortex Analyst on the view, plus SQL execution) and a read-only FLEET_READER role for clients. The test asks a question over MCP, runs the returned SQL, and confirms that a write through the SQL tool is refused.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "Public demo, \"Ask the Fleet\": public_app/app.py, live at ask-the-fleet.streamlit.app, is a Streamlit Community Cloud app where anyone can ask the fleet questions in plain English, plus the filterable fleet report. It first ran on Cortex Analyst over this semantic view, set up by 16_setup_public_demo.py (a key-only service user, a read-only role, an extra-small warehouse with a 30-second query limit and a monthly credit cap). It now runs on Databricks: questions go to a Genie space over the equivalent Unity Catalog metric views (see Databricks Port). A question log enforces 50 questions a day (10 per visitor). Loading the page uses no compute: the log is read only when someone asks a question, so an open tab or a keep-awake visit can't keep the SQL warehouse running.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Semantic Layer: Governed Fleet Metrics",
+   "text": "Modeling tab: visitors pick XGBoost features and hyperparameters (trees, depth, learning rate) with radio buttons, or a GNN graph type, and see test F2, recall, precision, F2 at every threshold, the tuning landscape and feature importance. 17_build_model_explorer.py trains all 54 XGBoost settings ahead of time with the same F2 protocol (threshold chosen on validation engines, test engines scored once), checks that the default settings reproduce the published scores, and packages the saved GNN results.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Graph Neural Network: Sensors as a Graph",
+   "text": "10_sensor_graph_gnn.py treats each engine snapshot as a graph. The 14 informative sensors are nodes, each carrying its last 30 cycles of readings, normalized within its operating condition. A GRU encodes each sensor's history, two GATv2 attention layers pass messages between sensors, and a multitask head predicts RUL plus both maintenance flags. Same engine splits, same validation-tuned F2 thresholds, test engines scored once. Graph design. Four edge sets, so the graph itself is tested rather than assumed: Physics: sensors on the same component, on adjacent gas-path stages (fan → LPC → HPC → combustor → HPT → LPT), on the same shaft, or linked by bleed flows Correlation: each sensor linked to its 3 most correlated sensors on training engines Full: every pair linked; attention must find the structure",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "text": "Model; Early Warning F2; Critical Action F2; RUL RMSE (cycles). XGBoost, original 8 features; 0.857; 0.837; n/a. XGBoost, same inputs as GNN (flattened); 0.931; 0.929; 14.24. GNN, no edges; 0.930 ± 0.002; 0.933 ± 0.000; 14.93 ± 0.10. GNN, correlation graph; 0.931 ± 0.001; 0.934 ± 0.001; 14.37 ± 0.16. GNN, physics graph; 0.930 ± 0.002; 0.934 ± 0.002; 14.30 ± 0.30. GNN, fully connected; 0.929 ± 0.003; 0.936 ± 0.003; 14.61 ± 0.21. Findings Better inputs did most of the work. Normalizing sensors within each operating condition, using 14 sensors instead of 3, and giving the model 30 cycles of history lifts XGBoost from 0.857 to 0.931 F2 (Early Warning) and from 0.837 to 0.929 (Critical Action), with no deep learning at all.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "text": "The GNN ties a strong XGBoost; it does not beat it. On identical inputs, the GNN matches Early Warning F2 and edges Critical Action by about 0.005 F2, trading some precision (0.79 vs 0.81) for recall (0.98 vs 0.96). RUL error is the same within noise (14.30 vs 14.24). Message passing helps, if the graph is sparse. Within the GNN, the correlation and physics graphs cut RUL error by about 0.6 cycles versus no edges, and every seed with a sparse graph beat every seed without one. The fully connected graph recovers only half of that gain. Physics and correlation graphs are tied within seed noise, so domain knowledge reproduced what the data already shows rather than adding to it.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "text": "Recommendation: keep XGBoost (on the improved inputs) in production. It matches the GNN, trains in seconds rather than 10–15 minutes per run on CPU, and is easier to explain to maintenance engineers. A GNN would earn its complexity where the graph varies: fleets with different sensor sets per engine type, or localizing which component is failing.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "text": "What attention learned. As engines approach failure (RUL ≤ 15 vs. healthy), the physics GNN shifts attention toward two sensors as message sources: HPC static pressure (Ps30 → bleed enthalpy rises from 0.24 to 0.35; Ps30 → fuel flow ratio and HPC outlet temperature also rise) and LPT outlet temperature (T50 → fan speeds and coolant bleeds, 0.31–0.36 to 0.40–0.45). Both track high-pressure compressor degradation, the fault mode present in all four datasets. Attention weights indicate where the model looks, not proof of cause.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "text": "NASA benchmark. RMSE (cycles) on the official test trajectories, scored at each engine's last cycle against true RUL capped at 130. One model is trained on all four datasets pooled (425 engines), not tuned per dataset, and the official test set was never used for any choice. Model; FD001; FD002; FD003; FD004. XGBoost, same inputs; 13.2; 14.6; 15.7; 15.9. GNN, no edges; 14.3; 15.1; 15.1; 16.1. GNN, physics graph; 14.8; 15.1; 14.8; 15.3. GNN, correlation graph; 14.8; 15.3; 15.2; 15.2. Raw results for every seed, including recall, precision, PR-AUC, thresholds and the NASA asymmetric score.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
+   "text": "The same pipeline also runs on Databricks (serverless) as one Asset Bundle in databricks/. A four-task Job does the following: Ingest: downloads the NASA archive into a Unity Catalog volume and loads the train and test files into bronze Delta tables. Transform: rebuilds staging, core, marts and the feature store as Delta tables with Spark SQL window functions. The feature table has a (engine_id, cycle TIMESERIES) primary key, so it is a Unity Catalog feature table. Train and register: for each classifier, compares class weighting, SMOTE and 6x undersampling as nested MLflow runs. The best validation F2 is registered in Unity Catalog with a champion alias. Each registered model is a pyfunc that carries its own validation-tuned threshold.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
+   "text": "Batch score: loads both @champion models, scores the latest cycle of all 707 NASA test engines (histories cut off before failure) and writes engine_risk_scores with the tandem decision. NASA's true RUL for those engines is joined in for checking. Semantic layer: rebuilds the FLEET_RELIABILITY semantic view as two Unity Catalog metric views. fleet_engines has one row per engine (MTTF, median, shortest and longest life). fleet_cycles has one row per engine per cycle (health stage, sensor averages, temperature rise to failure). Splitting by grain keeps engine metrics from fanning out to cycle rows. The task fails if any key metric disagrees with plain SQL on the tables.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
+   "text": "The public Ask the Fleet app runs on this layer. Questions go to a Databricks Genie space over the metric views, carrying the Cortex Analyst instructions over unchanged. Genie runs its SQL as a service principal that can only read the metric views and write to the question log. The report tab is served from a snapshot of the metric views' own query results, so it uses no compute and keeps working when the Free Edition daily quota runs out. setup_public_demo.py creates the service principal, grants and Genie space, and export_report_snapshot.py refreshes the snapshot. Engine-level check on the NASA test engines, which played no part in training or model selection: Model; Recall; Precision. Early Warning (RUL ≤ 50); 0.952; 0.720. Critical Action (RUL ≤ 15); 0.912; 0.689.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
+   "text": "Action; Engines; Avg. true RUL; Truly ≤ 50; Truly ≤ 15. Immediate action required; 135; 16.6; 129; 93. Schedule maintenance; 169; 54.4; 90; 9. Normal operations; 403; 114.5; 11; 0.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "cmapss-predictive-maintenance",
+   "kind": "project",
+   "source": "Predictive Maintenance on a Governed Semantic Layer",
+   "section": "Kedro Pipeline: Local, Modular, Tracked with MLflow",
+   "text": "kedro/ rebuilds the same transform → train → score job as a Kedro 1.7 project that runs locally in about 15 seconds. Each step is a pure function, the data flow is declared in a catalog, and every setting is in YAML parameters. One classifier pipeline is instantiated under two namespaces (early_warning, critical_action). kedro-mlflow logs parameters, metrics and reports for each run. It also packages the scoring pipeline with both trained models as one registered MLflow model (pipeline_ml_factory). On the NASA test engines, Early Warning recall is 0.930 (95% Wilson interval 0.890–0.957) and Critical Action recall is 0.912 (0.841–0.953). Both intervals include the Databricks figures above. See its README.",
+   "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Summary",
+   "text": "A LangGraph agent that answers questions over 1,250 pages of tire-industry annual reports with page citations. It got 40 of 41 test questions right and refused every off-topic and prompt-injection attempt. Built with LangGraph, RAG, FastAPI, Streamlit, Docker.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Tire Industry Report Analyst: Grounded RAG Agent with Verified Citations",
+   "text": "Ask questions about the 2025 annual reports of Michelin, Goodyear, Continental, and Bridgestone (about 1,250 pages), compare the companies, or generate a competitive brief. Every figure is cited to the page it came from, arithmetic is done in code, and if the reports don't support an answer the system says so instead of guessing.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Why This Exists",
+   "text": "A chatbot or a web search can tell you roughly what Michelin earns. What it can't do reliably is pull an exact figure from a 556-page regulatory filing, cite the page, keep consolidated group figures separate from parent-company accounts, compute a margin exactly, and refuse when the document doesn't contain the fact. Analysts working with internal or regulatory documents need exactly that, and this project is built and measured to do it.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Results",
+   "text": "41 hand-checked questions, run 3 times with every guardrail enabled (LLM steps are not fully deterministic). Per-question results: eval/results.md. Metric; Mean; Range. Answer accuracy (35 answerable questions); 98%; 94–100%. Correct evidence retrieved; 100%; 100%. Correct evidence cited; 99%; 97–100%. Unanswerable, off-topic, prompt-injection, and false-premise questions handled correctly; 100%; 100%. Median latency; 5.8 s. The set covers financial figures, leadership, workforce, and strategy for all four companies; cross-company and multi-metric comparisons; calculations (margins, growth rates, differences); a parent-company vs. group distinction; questions the reports can't answer; off-topic requests; a prompt-injection attempt; and a false premise (\"Michelin's sales were €99 billion, right?\").",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Results",
+   "text": "Factorial evaluation (400 questions). 41 questions show the system works but can't say what makes a question hard: a 98% score on 35 answerable questions has a 95% interval of roughly 85–99.5%. A second, 400-question set crosses company × question type × wording (formal, casual, terse, typo; randomly assigned and balanced within every cell), adds 48 comparisons, 48 false premises, 48 unanswerable questions and 48 off-topic or injection attempts, and is analyzed with a Firth logistic model (errors clustered by question), a stratified permutation test for wording, and a check of the LLM judge against a model-free grader. Every figure is pinned to its page, calculation answers are computed in code, and each \"not in the reports\" question is checked to be absent before the set can be built.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Results",
+   "text": "What the 400 questions found. On the 300 questions held out from any tuning, the app on gpt-5.4-mini scored 82.3%: 77.2% on answerable questions and 98.6% on questions it should decline or block. That is well below the golden set's 98%, though the two aren't like for like: this set is harder by design, and a cheaper judge graded it. The app is weakest on comparisons (41.7%) and false premises (66.7%). The same app on an untuned local model, qwen2.5:7b, scored 25.7%, nearly all refusals (2.2% on answerable questions). The two split on 172 questions and gpt-5.4-mini won 171 (McNemar p < 0.0001). Tuning the local system on a separate 100 questions is under way: qwen3:8b now passes 47 of 76 answerable development questions against gpt-5.4-mini's 65, and its held-out score is still to come. Results and how to read the tests.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Features",
+   "text": "Tab; What it does. Ask the reports; Chat with follow-up questions. Comparisons are split into verified sub-questions; math goes through a calculator tool.. Compare companies; Cross-company metrics table (sales, operating profit, net income, employees, capex, dividend, R&D, margins), each figure verified against a quoted page.. Competitive brief; One-page memo comparing two companies, with numbered citations, downloadable as Markdown.. News sentiment; Recent news coverage, with scraped text sanitized and treated as untrusted.. Compare companies; Competitive brief. .",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "How It Works",
+   "text": "Ingestion details that matter for financial documents: Page-level metadata and a contextual header on every chunk, so even a bare table is findable by company. About 800 tables kept intact as Markdown, so figures stay attached to their row and year. Image-only pages transcribed. Bridgestone's report is almost entirely images (12,000 extractable characters across 57 pages). Those pages are transcribed once with a vision model and cached in data/ocr/. Entity scoping. Michelin's filing includes the parent company's statutory accounts, whose figures differ from the group's. Those pages are tagged and only searched when a question asks for them.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Guardrails",
+   "text": "Risk; Control. Hallucinated facts; Answers must cite retrieved text; the verifier rejects quotes not found in the source. Altered or invented figures; Quotes with changed numbers are rejected; synthesized answers are checked so every number traces to a source or the calculator. Bad arithmetic; All calculations run in a sandboxed calculator (arithmetic only, no code execution). Unanswerable or off-topic questions; not_found / out_of_scope responses; a classifier screens off-topic requests before retrieval. Prompt injection; Three layers: input patterns, an LLM classifier, and an output check for prompt leakage. Retrieved and web text are treated as data; web text is sanitized. Wrong entity or period; Deterministic company filtering, parent-company page scoping, prompt rules for year and entity. Abuse and cost; API key auth, per-client rate limiting, question length limits, per-request token logging.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "michelin-rag",
+   "kind": "project",
+   "source": "Tire Industry Report Analyst",
+   "section": "Known Limitations",
+   "text": "Footnote markers in tables can attach to numbers (a €2.70 dividend with footnote 4 extracted as \"2.704\"). Prompt rules and sub-question decomposition handle the cases in the test set; superscript-aware table parsing would remove the risk entirely. Bridgestone's report is an integrated report covering FY2024 results, so its figures are a year behind the others and some metrics aren't reported. Currencies are not converted (EUR, USD, JPY), by design, since reports don't state a common rate. The rate limiter is in-memory, so it applies per API process. A shared store (e.g. Redis) would be needed when running several replicas. Originally built as a take-home assessment; rebuilt with verified citations, layered guardrails, an agent for comparisons and calculations, an API, and a measured evaluation.",
+   "url": "https://github.com/livingdw67/michelin-rag"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Summary",
+   "text": "Segments 4,261 customers by predicted next-quarter value and buying style. The top 20% capture 71% of next-quarter revenue, against 56% for standard RFM. Includes Segment Assistant, an LLM chat app for exploring the segments. Built with Snowpark, scikit-learn, LangGraph, Streamlit.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Customer Segmentation in Snowflake",
+   "text": "Segments 4,261 active wholesale-gift customers (UCI Online Retail II, 1.07M transactions) by what they're worth next quarter and how they buy, with every model trained and scored inside Snowflake on scikit-learn 1.9.1. Segment Assistant, an LLM chat app over the results, was tested on 1,788 questions, most of them also put to Snowflake's Cortex Analyst. The Big Takeaway Letting the AI write its own SQL made the chatbot less accurate. In an adversarial test, model-written SQL answered 47% of questions correctly, and most errors were real numbers attached to wrong conclusions. Moving every metric definition into tested code, so the model only chooses which calculation to run, raised accuracy to about 70% on fresh questions, with every figure traceable to the data. (Details)",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Customer Segmentation in Snowflake",
+   "text": "Try it: recorded Segment Assistant answers, each with how it was produced and how Cortex Analyst answered, are at the top of my portfolio. Nothing there calls a model.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Results",
+   "text": "Most segmentation projects stop at clusters that look tidy. I wanted segments a business could act on, so every scheme is scored by what customers actually did over the next 91 days, on two out-of-time backtests: Option B, two-axis clustering: a value axis crossed with a buying-behavior axis. Option C, outcome-guided segments: gradient boosting turned into readable rules. A hybrid: C's value tiers crossed with B's behavior axis. Scheme; Segments; Top-20% revenue capture; Buying-style separation (η²); Buys again (AUC). Classic RFM scores (baseline); 7; 56%; 0.09; 0.754. B: value axis only; 3–4; 57%; 0.04; 0.745. B: value × behavior grid; 9–12; 66%; 0.34; 0.753. C: outcome tiers; 3–4; 71%; 0.06; 0.716. C: outcome tiers; 9–12; 73%; 0.10; 0.751. Hybrid: C tiers × B behavior; 9–12; 71%; 0.34; 0.734.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Results",
+   "text": "Unsegmented outcome model (ceiling); —; 73%; —; 0.781. Each number is the mean of two folds: fit in March and scored in June, and fit in June and scored in September 2011 (results/method_comparison.csv). Top-20% revenue capture ranks customers by their segment's historical value and measures the share of next-quarter revenue held by the top 20%. η² is the share of variance in the five buying-style features that segment membership explains. One clustering over all 11 features (option A) was dropped after a 109-configuration bake-off (exploration/): adding the buying-behavior features made segments worse at predicting next quarter, which is why B keeps value and behavior on separate axes.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "What the segments say",
+   "text": "The top 7% of customers, \"Top spenders / Bulk buyers\", hold 52% of next quarter's predicted value. They order a median 12 times a year at 337 units per order and £1.73 per unit, which is wholesale behavior. Holiday buyers are a distinct style at every value level. 59–100% of their revenue falls in October–December. A \"Top spender / Holiday buyer\" needs a different calendar from a \"Top spender / Bulk buyer\" even though both are worth about the same. Small-basket buyers pay the highest unit prices (£2.29–2.75) with baskets of around 64–140 units. This is the most retail-like group.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "What the segments say",
+   "text": "Value tiers are sticky at the top and leaky at the bottom. 76% of September's highest-value customers were still there in December. 42% of the lowest tier had placed no order in 12 months.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Before you use them",
+   "text": "There are no natural clusters. HDBSCAN labels 61–78% of customers as noise and k-means silhouettes are 0.2–0.3, so the segments are a stable partition of a continuum, not discovered tribes. Nothing much beats plain RFM at predicting who buys again. The hybrid's AUC is 0.02 below it, and even the unsegmented model gains only 0.03. The hybrid earns its place on revenue concentration (+15 points) and buying style. The hybrid's lead over the simpler grid is thin. It captures 71% to the grid's 66%, but across the two folds the hybrid ranges from 67.5% to 74.4% and the grid from 65.9% to 66.1%. The grid uses no gradient boosting; more folds would settle it.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Before you use them",
+   "text": "Use the £ forecasts to rank and size customers, not as a budget. The fold that ended in the holiday quarter under-forecast revenue by 44%, because the model had never seen one. Some cells are small. Two top-spender cells hold 45 and 49 customers: key-account lists, or merge them into their value tier for broad campaigns. All seven findings, in full, are in docs/methodology.md.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Segment Assistant",
+   "text": "A chat app over the results. A LangGraph router sends each request to one of four agents: calculation (figures and tables), documentation (answers from this project's docs, with sources), writing (persona cards and campaigns from a segment's profile) and out of scope (a fixed, polite refusal). The first version let the model write SQL, and only 47% of 137 adversarial questions came back right, mostly real numbers attached to wrong conclusions. The rebuild moves every metric definition into tested code (assistant/semantics.py). The model only chooses a calculation and its inputs; code resolves segment names, corrects the sort direction, computes every figure and checks the answer against the rows. Every answer shows its route, plan, rows and figure check. Test; Questions; Result.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Segment Assistant",
+   "text": "Adversarial rounds 1–5, fresh questions each round; 137 to 300 a round; 47% with model-written SQL; about 70% from round 3 on. Practice mix against Cortex Analyst; 250; Assistant 82.8%, Analyst 89.6%. Held-out retest of the fixes, graded blind; 250; 80.0% before, 87.2% after (18 to 0, p = 8e-6). Power run against Cortex Analyst; 1,400 paired; Analyst 93.8%, Assistant 87.9%: +5.9 points (95% CI 3.8–8.0, p = 4e-8). The biggest remaining gap is questions the data can't answer, such as other countries or CRM fields, where the Assistant gives the nearest figure instead of declining. The agents, guards and every round are in docs/segment-assistant.md; the comparison with Cortex Analyst is in practice_eval/.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Segment Assistant",
+   "text": "It runs offline on DuckDB over the committed segment-level results with Ollama, or live against Snowflake with Cortex (live mode is untested):",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "How it works",
+   "text": "The segmentation needs only Snowflake and scikit-learn. The Segment Assistant (LangGraph, Streamlit, DuckDB and an LLM) is an optional app that reads the results; nothing in the pipeline depends on it. Customer data never leaves Snowflake. Steps 01–04 are SQL. All fitting, scoring and evaluation runs in permanent Python stored procedures, created by 05_deploy_procedures.py from the segmentation/ package zipped on a stage. The local machine only issues CALL statements. The exceptions are 08_make_charts.py, which reads aggregated result tables to draw the charts above, and the assistant in live mode, which returns query results (at most 200 rows) to the app. Cleaning, features, both segmentation options, the evaluation metrics, monthly re-scoring and the scikit-learn features used are in docs/methodology.md.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Summary",
+   "text": "When a KPI drops, it works out why by crawling the dbt Semantic Layer in 8 to 11 warehouse statements, then splits the change across causes with Owen values and bootstrap intervals. On its showcase dataset it finds all four planted incidents with the right mechanism and sign. A benchmark over randomly planted incidents now scores recall and precision across many datasets, and is guiding the next round of improvements. Built with dbt Semantic Layer, MetricFlow, DuckDB, Owen values, Forecasting.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Why I built this",
+   "text": "Every analyst knows the moment. A KPI drops, someone asks \"why?\", and the next day disappears into slicing dashboards: by country, then device, then channel, then combinations of the three. The answer is usually two or three things happening at once, and some of the first suspects turn out to be innocent: a holiday, a payday, or a segment that's simply big. I wanted a tool that runs that investigation the way a careful analyst would, on numbers the business already trusts. So it reads its metrics from the dbt Semantic Layer (MetricFlow) instead of hand-written SQL. If \"conversion rate\" has a governed definition, that's the one it uses. It also brings together the parts of the job I care most about: analytics engineering on a",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Why I built this",
+   "text": "semantic layer, statistics that hold up, SQL that scales to a warehouse, and honest evaluation against a known answer.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "What it finds",
+   "text": "Point it at a metric and a week. It answers three questions: did something really change, where, and how much of the change does each cause explain? In plain terms: conversion fell 11.4%, but payday should have lifted it 3.1%, so the real gap is 14.0%, and it isn't noise. Four things explain it, each with its share of the gap and a bootstrap interval: Email traffic halved. Email still converts well; there's just less of it. That's a mix effect: the blend of traffic changed, not how each channel behaves. Checkout broke for iOS users in Germany. A rate effect: same traffic, worse conversion. iOS users in the US did better. That good news hid part of the drop, so its share is negative.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "What it finds",
+   "text": "Paid search on Android in the US. A 3-way interaction you can't see in any single dimension. The last lines are suspects it considered and cleared. All four causes are incidents I planted in synthetic data, and it got each one's mechanism and direction right. None of the decoys was blamed: a German holiday the same week, payday, seasonality, duplicate dimensions, a column derived from the outcome, and 20 dimensions of pure noise.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "Check the data before trusting it. Three data problems produce causes that look convincing and are completely wrong, so rca/preflight.py checks for them first and lists anything it finds at the top of the report: A late partition. If the last day hasn't fully landed, it looks like a crash. Trailing days with less than 60% of that weekday's usual volume are left out of the window. Holidays are kept, because a quiet holiday isn't missing data. A renamed category. If \"iOS\" becomes \"ios\", one value vanishes and another appears. That's a data change, not a cause, so the dimension is excluded with the reason. A column derived from the outcome. checkout_status (purchased, abandoned, browsed) is",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "defined by conversion, so it \"explains\" any change in conversion perfectly and tells you nothing. It gets flagged and excluded. A column like this can also be declared in the semantic model, which covers metrics where the circularity doesn't show, like a count of active customers. Any exclusion can be overridden in the dimension's config. Work out what \"normal\" would have been. Comparing this week with the last few is misleading when this week has a payday or a holiday. So rca/forecast.py fits trend, day of week, day of month and holidays as a Huber-robust ridge regression: robust so one strange day can't drag the fit around, ridge so the trend doesn't chase noise. The leftover errors are modelled as",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "AR(1), because today's error tends to look like yesterday's, which gives an honest sense of how much a week can wobble on its own. (It's the decomposition Prophet uses, without pulling in Stan for what is really a penalized linear regression.) The difference between actual and expected is the anomaly, the part that needs explaining. Forecasts are made per segment too, which is why the German holiday's dip isn't blamed on Germany. Search the slices without flooding the warehouse. One query per dimension, then per pair, runs to about 500 queries a round at 30 dimensions. Instead, MetricFlow compiles the governed SQL, and a planner wraps it in GROUPING SETS, which returns dozens of breakdowns from one scan.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "MetricFlow still owns the joins, filters and metric logic, and golden tests check the wrapped results match MetricFlow queried directly. The crawl then narrows down like an analyst would: Drop dimensions that can't be causes, like IDs and near-constants, and collapse aliases (storefront is just country under another name). Score each segment by surplus: its share of the change minus its share of the traffic. A segment that is 57% of traffic and carries 63% of the drop is unremarkable. Surplus is tested against the forecast's noise level, so random drift in big segments never makes the shortlist. For rates, the mix effect is also tested on its own: a channel that lost half its traffic but",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "converts a little better has a big mix effect even when its net surplus looks ordinary. Drill down with a beam search: keep the most suspicious segments and split each by every other dimension. A narrower segment replaces its parent only if it concentrates the effect, so \"iOS\" doesn't become \"iOS & mobile\" just because most iOS traffic is mobile. Check every combination of the dimensions that already look guilty. Interactions usually involve them (effect heredity, from experimental design), and that's how the 3-way cause turns up even though it looks like noise in any single dimension. That's 8 to 11 warehouse statements in total, and the count stays flat as dimensions are added. Count unique customers correctly. Metrics like active customers don't add up: someone who",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "shopped on Monday and Tuesday is one customer, not two. The search uses exact COUNT(DISTINCT) (DuckDB's approximate version was off by 15-20% here and flipped the sign of the change). Attribution uses HyperLogLog sketches built in SQL: tiny fingerprints of a set that merge by taking a max, so any combination of segments can be counted locally without going back to the warehouse. Split the credit fairly. Causes overlap, and if you peel them off one at a time, the first one takes credit for everything it touches. So all candidates are judged together on a flag cube, one row per day and combination of candidate segments, fetched in a single query. For each combination the engine asks \"what if these segments had behaved normally?\", separately for rate",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "How it works",
+   "text": "(keep the traffic, restore the conversion) and volume (keep the conversion, restore the traffic). Duplicates merge, loose supersets and thin slices give way to the real cause, and bystanders like \"mobile\" drop out when leaving them out changes nothing (with Bonferroni-adjusted intervals). The final split uses Owen values: Shapley values, game theory's way to share credit that adds up exactly to the total, applied across causes and then split between rate and volume. Intervals come from a residual bootstrap, which resamples each day's deviation from the forecast rather than raw days, so four Saturdays never get compared against an expectation built for one.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Results against a known answer",
+   "text": "The synthetic data covers 400 days, 3.4M sessions and 32 dimensions, with four incidents planted in the week of Oct 2-8 plus decoys (scripts/generate_data.py, data/ground_truth.json). Metric; Type; Anomaly vs forecast; Planted causes found; Also accepted; Statements; Time. conversion_rate; ratio; -14.0%; 4 of 4; none; 8; 17s. orders; additive; -21.9%; 4 of 4; none; 8; 19s. revenue; additive; -23.4%; 3 of 4; none; 9; 17s. revenue_per_session; ratio; -15.5%; 4 of 4; none; 10; 22s. buyer_rate; count-distinct ratio; -18.1%; 4 of 4; none; 9; 52s. active_customers; count-distinct; -5.2%; 1 of 1 (email); 5 other segments; 11; 82s. conversion_rate, quiet week; ratio; -0.2% (p=0.92); none, correctly; none; 3; 3s. Two results worth explaining: Revenue misses the offsetting iOS-US effect, and that's the statistics working. Revenue is",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Results against a known answer",
+   "text": "heavy-tailed (a few big orders swing it), so that effect's interval, -33% to +8% of the anomaly, doesn't clear the multiple-testing bar. The report still lists it under \"considered and rejected\". In revenue per session, where dividing by sessions damps the noise, it's significant. active_customers finds email, then spreads the rest thinly over other channels. Its baseline is the previous four weeks rather than a holiday-aware forecast, and in this synthetic data customers aren't tied to one country or channel, so segments overlap heavily.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Try it",
+   "text": "Example reports, with the statement trace and the wrapped SQL, are in reports/.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "semantic-rca",
+   "kind": "project",
+   "source": "Automated Root Cause Analysis",
+   "section": "Limitations",
+   "text": "Only DuckDB is tested. The Snowflake and BigQuery SQL templates follow the same structure but haven't run against a live warehouse. Count-distinct baselines are the previous weeks, not forecasts, and the HyperLogLog estimator skips HLL++ bias correction (about 1% bias on sets of 40k-80k). Additive metrics take about 20 s locally; count-distinct metrics take 1-1.5 minutes. It can only judge what the crawl proposes. A cause whose dimensions never look suspicious, and whose cells sit below the noise floor, won't be found. The results above are for one generated sample. On other samples of the same scenario, the weaker causes (email's mix effect, the offsetting iOS-US effect) can fall below the multiple-testing bar. scripts/benchmark.py measures recall across random incidents.",
+   "url": "https://github.com/livingdw67/semantic-rca"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Summary",
+   "text": "An ECOA-compliant model with an F2-tuned threshold that catches about 75% of defaults on a true holdout (AUC 0.76). Along the way it caught training-data leakage that had inflated the first estimate. It was rebuilt on Databricks, where one Optuna-tuned LightGBM matches the three-model ensemble (AUC 0.771 vs 0.762). Built with Azure ML AutoML, Databricks, Optuna, SHAP, Threshold optimization.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Overview",
+   "text": "This repository contains an end-to-end machine learning pipeline designed to predict financial loan defaults using Azure Machine Learning SDK v2 and Azure AutoML. The project emphasizes not only predictive accuracy but also regulatory compliance and business-driven decision-making. The champion model, a VotingEnsemble, was built to identify high-risk accounts prior to charge-off, allowing for early intervention strategies while adhering to fair lending laws. The same model is also rebuilt on Databricks (Unity Catalog, MLflow, Optuna), with tuning kept away from the holdout and a champion/challenger registry: see Databricks Version.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "1. Regulatory Compliance (ECOA) & Feature Engineering",
+   "text": "To support compliance with the Equal Credit Opportunity Act (ECOA), age and date of birth were removed from the champion model's features. Additional transformations included: Consolidating active financial obligations (total_open_accounts). Correcting a negative-dependents anomaly (-1 recoded to 0) and aligning column types to the registered model's schema. A random-forest baseline on the no-age features ranks the two credit scores first, followed by credit utilization, debt-to-income and monthly income:",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "2. Azure AutoML Orchestration",
+   "text": "The pipeline points AutoML directly at Azure Blob Storage via MLTable, avoiding local memory limits. Metric: Optimized for auc_weighted with k-fold cross-validation on a ~90/10 target class imbalance (the notebook's no-age job is configured for 30 folds). Guardrails: Compute costs capped with timeouts, trial limits, and concurrency limits (120 minutes and 50 trials for the no-age job; an earlier exploratory job used 5-fold CV, 60 minutes, and 15 trials). Champion Model: A VotingEnsemble outperforming standalone XGBoost and LightGBM models, registered in MLflow as Purpose_Challenger (the no-age variant used for final scoring).",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "3. Business-Driven Threshold Optimization",
+   "text": "The financial loss of a missed charge-off (false negative) outweighs the friction of a proactive account review (false positive), so the decision cutoff is chosen to maximize F2, which weighs recall four times as heavily as precision. The original analysis set the cutoff at 0.15 using a precision/recall curve computed on the training data. Because the challenge's test set has no labels, that curve scored the same rows the model was trained on, which overstates performance. Section 5 re-measures it properly.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "4. Global Interpretability",
+   "text": "SHAP (via a KernelExplainer wrapper) was applied to the ensemble to identify the portfolio's main drivers of risk. Lower monthly income and lower credit scores were the dominant upward drivers of default risk; credit utilization and debt-to-income moved predictions far less. The AutoML model stays in the Azure ML workspace, so the chart below repeats the notebook's SHAP setup (a 100-row background, 300 sampled customers) on the local stand-in ensemble from section 5. Its top five drivers come out in the same order as the notebook's run on the AutoML champion.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "5. Out-of-Sample Validation",
+   "text": "notebooks/validate_locally.py rebuilds the no-age features and a comparable soft-voting ensemble (LightGBM + XGBoost + logistic regression), then measures performance on customers the model has not seen. Default rate: 10.2% of 20,839 customers. Evaluation; Cutoff; Defaults caught; Precision; AUC. Training data (original method); 0.15; 79.8%; 32.7%; 0.90. 10-fold cross-validation; 0.15; 56.5%; 23.3%; 0.76. Held-out 20%, original cutoff; 0.15; 58.0%; 23.1%; 0.76. Held-out 20%, cutoff chosen on the other 80%; 0.10; 74.6%; 19.8%; 0.76. Takeaways: The original \"75–80% of defaults caught\" figure was a training-data result. At the same 0.15 cutoff, the model catches about 57% of defaults on unseen customers.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "5. Out-of-Sample Validation",
+   "text": "Choosing the F2 cutoff properly (on separate data) lands at 0.10, which catches about 75% of defaults on a true holdout, at the cost of lower precision: roughly 38% of accounts would be flagged for review. Whether that review volume is acceptable is a business decision about the cost of an account review versus a charge-off. Out-of-sample AUC is about 0.76, a solid but realistic level of separation for application-time credit data. Library versions weren't pinned when this table was made. With the versions now in requirements-dev.txt, the same script picks a cutoff of 0.09 on the 80% and catches 80.0% of holdout defaults at 19.3% precision (AUC 0.762). F2 is nearly flat between 0.08 and 0.10, so small changes move the cutoff.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Databricks Version",
+   "text": "The same model, rebuilt on Databricks Free Edition (serverless) in databricks/ as an Asset Bundle with one job, loan-default-pipeline: Step; Notebook; What it does. Load; 01_load_data.py; Reads train.csv and test.csv from a Unity Catalog volume into the Delta tables workspace.loans.raw_train and raw_test. Tune and train; 02_tune_train.py; Optuna search, one look at the holdout, and the model registered in Unity Catalog. Score; 03_score.py; The champion model scores the 1,000 test customers into workspace.loans.predictions. What changed from the Azure version",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Databricks Version",
+   "text": "Tuning: Optuna searches LightGBM settings (trees, learning rate, leaves, minimum leaf size, row and column sampling, L2 penalty) by 5-fold cross-validated AUC, in place of AutoML's model search. Its default sampler (TPE) learns from earlier trials which settings score well, and trials that trail the median after a fold or two are stopped early. Every trial is a nested MLflow run. The holdout stays out of tuning: the search and the F2 cutoff use only the 80% development split. The 20% holdout, the same customers as in section 5, is scored once at the end.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Databricks Version",
+   "text": "Champion and challenger: each run registers workspace.loans.loan_default as @challenger. It becomes @champion only if it beats the current champion's holdout AUC on the same customers, with a paired bootstrap interval above zero. Each run's holdout predictions are kept in workspace.loans.holdout_predictions for that comparison. No age by construction: the registered model's input schema has no date of birth, so age can't reach it. One copy of the code: the features, the stand-in ensemble and the cutoff search live in databricks/src/loan_lib/, which validate_locally.py now imports too. Holdout results (4,168 customers, run of 2026-10-22) Model; AUC; PR-AUC; Cutoff; Defaults caught; Precision; Accounts flagged. Stand-in for the AutoML ensemble (three models); 0.762; 0.252; 0.09; 80.0%; 19.3%; 42.4%. Optuna-tuned LightGBM (one model); 0.771; 0.251; 0.09; 79.3%; 19.3%; 41.9%.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Databricks Version",
+   "text": "Tuned minus stand-in, paired bootstrap: AUC +0.010 (95% interval +0.003 to +0.016); PR-AUC −0.001 (−0.017 to +0.012). The test: both models score the same customers, so the comparison resamples customers 2,000 times and scores both models on each resample. That keeps the pairing and separates the models' difference from the luck of which customers landed in the holdout. Plain meaning: the single tuned model ranks customers slightly but reliably better, since the AUC interval stays above zero. On precision-recall, which weighs the rare defaults most, the two can't be told apart, and at the business cutoff they flag and catch nearly the same accounts. One tuned model does the job of the three-model ensemble.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Databricks Version",
+   "text": "Assumptions: customers are independent of one another, and the holdout resembles future applicants. The interval is the 2.5th to 97.5th percentile of the resampled differences. The search settled on small trees (7 leaves, 250 trees, learning rate 0.016). The drivers match the Azure SHAP analysis: monthly income (41% of the mean absolute SHAP value) and the two credit scores (28% and 27%) carry almost everything, and utilization, debt-to-income and the account counts together add about 5%. Run it Local checks: python -m pip install -r requirements-dev.txt, then python -m pytest -q tests.",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "loan-default-prediction",
+   "kind": "project",
+   "source": "Loan Default Prediction",
+   "section": "Technologies Used",
+   "text": "Cloud & MLOps: Azure Machine Learning SDK v2, Azure AutoML, Databricks (Unity Catalog, Delta, Jobs, Asset Bundles), MLflow Core Data Stack: Python, Pandas, NumPy, Scikit-Learn, LightGBM, XGBoost, Optuna Interpretability & Visualization: SHAP, Matplotlib, Seaborn",
+   "url": "https://github.com/livingdw67/loan-default-prediction"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Summary",
+   "text": "Models how heat pump and EV adoption shift winter peak load across South Carolina counties. An 11 PM EV charging timer would create a new midnight peak above today's morning peak. Built with NREL ResStock, Streamlit, Plotly.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "IRA Grid Stress Simulator",
+   "text": "How much do Inflation Reduction Act incentives for heat pumps and electric vehicles raise winter peak load on South Carolina's grid? Try it live → Pick a county, set heat pump and EV adoption, and see the new winter peak. No setup needed.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Why It Matters",
+   "text": "The Inflation Reduction Act gives households tax credits and rebates for two big electrification moves: replacing gas, propane, and oil furnaces with electric heat pumps, and buying electric vehicles. Both cut emissions, and both shift energy use onto the electric grid. Timing is the problem. Heat pumps work hardest on the coldest mornings, and unmanaged EV charging lands in the early evening when people get home. If adoption clusters in one area, local transformers and feeders can be pushed past their limits. This tool lets a utility planner pick a county, set adoption rates for heat pumps and EVs, and see how the winter peak changes before the installs happen.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Approach",
+   "text": "Current load (all homes): NREL ResStock county aggregates give 15-minute electricity use for every home in each South Carolina county (single-family, multi-family, and mobile homes), from the AMY2018 release on NREL's public S3 data lake. Heat pumps: For the chosen share of gas, propane, and oil-heated homes, fuel used for heating is converted to delivered heat (80% furnace efficiency), then to heat pump electricity using the selected efficiency (COP). EV charging: Each EV needs daily miles × kWh/mile per day. Unmanaged charging starts when drivers get home (centered on 6 PM); managed charging is staggered across an 11 PM–2 AM off-peak window. The expected charging curve is applied to the chosen share of households.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Approach",
+   "text": "Peak impact: The three loads are stacked over the January 16–19, 2018 cold snap (or all of January–February) to show the new peak and what drives it. All loads are shown as average power in MW. ResStock reports energy per 15-minute interval, so kW = kWh × 4.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Example Findings: Greenville County, January 2018 Cold Snap",
+   "text": "With 20% heat pump adoption (COP 2.5) and 20% of households owning an EV (30 miles/day): Baseline peak: about 1,079 MW across roughly 201,000 homes, at 8 AM on January 18. About 74% of South Carolina homes already heat with electricity, so the winter morning peak is heating-driven. Heat pumps add about 67 MW at that peak, a 6.2% increase. Unmanaged EV charging adds almost nothing to the morning peak because it lands around 6 PM. Off-peak timers backfire: when every EV starts charging at 11 PM, a new midnight peak forms on cold nights, about 1,150 MW with 97 MW of EV load, higher than the original morning peak. Staggered or utility-managed charging matters more than a simple time-of-use window.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Dashboard",
+   "text": "Controls: county (or all 46 counties at once), time window, heat pump adoption and efficiency, EV adoption, daily miles, winter kWh/mile, charger power, and managed vs. unmanaged charging Headline metrics: homes in the county or state, new heat pumps and EVs, new peak load, and percent increase in peak Stacked load chart: current load plus added heat pump and EV load Peak breakdown: when the new peak occurs and how much each source contributes Housing stock by heating fuel for the selected county or the whole state",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Slider guide bands",
+   "text": "Two lines on each slider mark a reasonable range for about 2035, roughly the end of the IRA incentive window. They guide the user without limiting them: the full slider is still available for extreme scenarios. Each band comes from published figures plus simple stock-turnover arithmetic: Slider; Band; How it's calculated. Heat pump adoption; 5-25%; Furnaces last 15-20 years, so 50-67% are replaced by 2035. If 10-40% of those replacements switch to a heat pump (an assumption, since no survey tracks the switching rate), 5-27% of gas, propane, and oil-heated homes convert..",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Slider guide bands",
+   "text": "Heat pump COP; 1.8-3.0; Low: ENERGY STAR cold-climate heat pumps must reach a COP of 1.75 at 5°F (spec v6.2). High: a high-efficiency unit's seasonal COP (HSPF2 10 ÷ 3.412 ≈ 2.9). Cold-snap mornings sit near the low end.. EV adoption; 5-20%; About 32,000 of South Carolina's 3.5 million registered vehicles are EVs (SC Daily Gazette, Sept 2025), about 1%. Roughly 55% of vehicles are replaced by 2035; if EVs take 4% (today's SC share) to 20% of those sales, EVs are 3-12% of vehicles, or 5-19% of households at 1.6 vehicles per household.. Daily miles per EV; 25-40; The average light-duty vehicle is driven 11,106 miles a year, about 30 a day (FHWA Highway Statistics 2023, VM-1). Second cars drive less; rural commutes drive more..",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Slider guide bands",
+   "text": "EV energy use; 0.32-0.47 kWh/mile; Popular EVs are rated about 0.28-0.33 kWh/mile (fueleconomy.gov). Between 32°F and 20°F they keep 70-88% of their range (Recurrent, Nov 2025), so they need 14-43% more energy per mile: 0.28 ÷ 0.88 to 0.33 ÷ 0.70.. Charger power has no band because its four settings are all common home chargers. The bands live in GUIDE_BANDS in grid_model.py.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Tests",
+   "text": "28 tests run on every push through GitHub Actions: Model checks on synthetic data: each EV charging curve delivers exactly the daily energy and never exceeds the charger's power, managed charging stays overnight, heat pump load scales correctly with adoption and COP, and the statewide load equals the sum of the county loads. Findings checks on the committed data: every Greenville County number in the section above is recomputed and must match. Dashboard checks: the Streamlit app runs headlessly with both charging modes and the statewide view, and every guide band sits inside its slider and around the slider's default. The load model lives in grid_model.py, separate from the dashboard in app.py.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Tests",
+   "text": "analyze_single_home.py is a standalone deep dive showing how one gas-heated home's load changes after switching to a heat pump (grid_stress_test_chart.png).",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "grid-stress-simulator",
+   "kind": "project",
+   "source": "Grid Stress Simulator",
+   "section": "Limitations and Next Steps",
+   "text": "County as a proxy for a feeder. True transformer-level analysis needs a utility's feeder and GIS data, and adoption tends to cluster on specific streets. Fixed heat pump efficiency. Real COP drops as temperatures fall. Next: temperature-dependent COP from the weather data behind ResStock. Simplified EV behavior. One EV per adopting household and a single arrival-time distribution. Next: NREL EVI-Pro charging profiles and workplace charging. 2018 weather and housing stock. Results reflect the AMY2018 ResStock release, before recent heat pump and EV growth.",
+   "url": "https://github.com/livingdw67/grid-stress-simulator"
+  },
+  {
+   "key": "theme-park-event-extraction",
+   "kind": "project",
+   "source": "Theme Park Event Extraction",
+   "section": "Summary",
+   "text": "Finds parks, attractions, events and dates in text and turns them into proposed rows for a park events calendar, keeping the sentence as evidence. On 150 hand-labeled Wikipedia sentences, list-based rules score F1 0.76. DistilBERT fine-tuned on the rules' labels ties them (0.76 over three seeds) because it learns to copy them, and zero-shot GLiNER finds the most names missing from the rules' lists (40%), at about half their precision. Built with Hugging Face Transformers, DistilBERT fine-tuning, GLiNER, Bootstrap CIs, Streamlit.",
+   "url": "https://github.com/livingdw67/theme-park-event-extraction"
+  },
+  {
+   "key": "theme-park-event-extraction",
+   "kind": "project",
+   "source": "Theme Park Event Extraction",
+   "section": "Theme Park Event Extraction",
+   "text": "Find parks, attractions, events and dates in text and turn them into rows for a park events calendar, e.g. \"Universal Studios Florida closed Kongfrontation on September 8, 2002\" → Kongfrontation · close · 2002-09-08, with the sentence kept as evidence. Three taggers are compared on 150 hand-labeled sentences from Wikipedia articles that none of them were built from: Rules: Queue-Times ride lists for the four Universal Orlando parks, park and event lists, and a date pattern. Zero-shot GLiNER (urchade/gliner_small-v2.1), told only the label names. Fine-tuned DistilBERT (distilbert-base-cased, token classification) trained on the rules' labels (\"silver\" labels) for 2,999 sentences from 29 other articles, in two variants: plain, and ignore_caps, which leaves capitalized words the rules didn't match out of the loss.",
+   "url": "https://github.com/livingdw67/theme-park-event-extraction"
+  },
+  {
+   "key": "theme-park-event-extraction",
+   "kind": "project",
+   "source": "Theme Park Event Extraction",
+   "section": "Results",
+   "text": "Exact-match scores on 150 sentences (131 entities: 44 attractions, 26 parks, 10 events, 51 dates). \"Unlisted\" are the 45 hand-labeled parks, attractions and events the rules can't find because the name isn't on their lists. Each DistilBERT variant was trained with three seeds (42, 7, 13) on the same GPU setup; its row shows the mean over seeds (± standard deviation for F1). The intervals are 95% bootstrap intervals over sentences; for DistilBERT they are the per-seed ranges. Tagger; Precision; Recall; F1 (95% CI); Recall on unlisted names. Rules; 0.90; 0.65; 0.76 (0.67–0.84); 0. Zero-shot GLiNER; 0.48; 0.73; 0.58 (0.50–0.66); 0.40. DistilBERT, plain (3 seeds); 0.90; 0.66; 0.76 ± 0.01 (0.66–0.84); 0.04. DistilBERT, ignore_caps (3 seeds); 0.35; 0.75; 0.48 ± 0.02 (0.38–0.58); 0.32 (0.24–0.38).",
+   "url": "https://github.com/livingdw67/theme-park-event-extraction"
+  },
+  {
+   "key": "theme-park-event-extraction",
+   "kind": "project",
+   "source": "Theme Park Event Extraction",
+   "section": "Results",
+   "text": "Seed-to-seed variation (sd 0.01–0.02) is small next to the width of the intervals, so the size of the test set, not training randomness, limits how precisely these scores are known. For every plain seed, the paired F1 difference from the rules has an interval that includes zero (−0.04 to +0.04): no detectable difference. Every ignore_caps seed is worse than the rules (−0.37 to −0.18). Trained on the rules' labels alone, DistilBERT learns to copy the rules. Taking unlisted capitalized words out of the loss lets it find a third of the unlisted names, but it then tags characters and titles as well, and precision collapses. GLiNER finds the most unlisted names, also at low precision.",
+   "url": "https://github.com/livingdw67/theme-park-event-extraction"
+  },
+  {
+   "key": "theme-park-event-extraction",
+   "kind": "project",
+   "source": "Theme Park Event Extraction",
+   "section": "Data",
+   "text": "Text from English Wikipedia (CC BY-SA 4.0); ride lists Powered by Queue-Times.com. The test labels were drafted by hand under the annotation guide and reviewed sentence by sentence; the rule and GLiNER outputs were shown alongside as a checklist, never accepted automatically.",
+   "url": "https://github.com/livingdw67/theme-park-event-extraction"
+  }
+ ]
+}
