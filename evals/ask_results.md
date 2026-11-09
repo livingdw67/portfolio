@@ -1,45 +1,47 @@
 # "Ask about my work": test results
 
-## Round 2 (current version)
+## Round 3 (matching on words and meaning)
 
-30 new questions, scored once with every setting already frozen.
+30 new questions, scored once with every setting already frozen. The bar was set before scoring: at least
+17 of 20 answered and at least 8 of 10 refused. **Result: not met.**
 
 | Check | Result |
 |---|---|
-| Should answer: a right source is shown | 13/20 (65%; 95% interval 43% to 82%) |
+| Should answer: a right source is shown | 14/20 (70%; 95% interval 48% to 85%) |
 | Should answer: the first source shown is right | 13/20 (65%; 95% interval 43% to 82%) |
-| Should refuse: it refused | 8/10 (80%; 95% interval 49% to 94%) |
+| Should refuse: it refused | 9/10 (90%; 95% interval 60% to 98%) |
 
-**Limits.** The questions were written by the same author as the page, after seeing round 1's misses, so they are not
-independent of it. With 30 questions the intervals are wide. A real visitor's phrasing will be harder than this.
+**Limits.** The questions were written by the same author as the page, so they are not independent of it. With 30
+questions the intervals are wide, and a real visitor's phrasing may be harder.
 
-## Round 1, kept for the record
+## Does the meaning model earn its place?
 
-The first version scored 20/20 on its tuning questions and then **15/20 (75%) answered and 10/10 refused** on held-out
-questions. All five misses were wrong refusals: a word the write-ups never use, such as "comfortable", counted heavily
-against the match. Those questions then joined the tuning set, so they don't count toward round 2.
+**Why this test.** The model adds about 6 MB to the repo, so it should do measurably better than matching words alone.
+Both versions answer the same 30 questions, which makes the outcomes paired, and McNemar's test uses only the questions
+where the two disagree.
 
-## Do word normalization and synonyms help?
-
-**Why this test.** Normalization (forecast/forecasting, LLM/GenAI) is extra code that has to earn its place, and two
-percentages on 20 questions can't separate a real gain from luck. Both versions answer the same questions, so the paired
-test is McNemar's, which looks only at the questions where the two disagree.
-
-**What it says.** With normalization 13/20 (65%; 95% interval 43% to 82%); without it 13/20 (65%; 95% interval 43% to 82%). Only the normalized version got
-1 right, only the plain version got 1, exact McNemar p = 1.000. With so few disagreements this can't show much either way.
-
+**What it says.** With the model: answered 14/20 (70%; 95% interval 48% to 85%), refused 9/10 (90%; 95% interval 60% to 98%). Words only: answered 7/20 (35%; 95% interval 18% to 57%),
+refused 9/10 (90%; 95% interval 60% to 98%). Across all 30, only the model version was right on 7, only the words version was
+right on 0, exact McNemar p = 0.016. 
 **Assumption check.** McNemar needs paired outcomes on independent questions. The pairing holds by design. Independence
 is approximate, since several questions touch the same project. The exact binomial form is used because the number of
 disagreements is small, which is where the chi-square approximation breaks down.
 
-## Misses in round 2
+## Earlier rounds, kept for the record
 
-- `V01` Does he have hands-on experience shipping LLM agents to production? (returned decline: nothing)
-- `V03` Any background in time series forecasting? (returned decline: nothing)
-- `V04` How does he handle model monitoring in production? (returned decline: nothing)
-- `V07` What's the biggest business impact he's delivered? (returned decline: nothing)
-- `V12` Has he worked in financial services? (returned decline: nothing)
-- `V16` How did he evaluate text-to-SQL accuracy? (returned decline: nothing)
-- `V17` Is there a live demo of the jet engine app? (returned decline: nothing)
-- `V22` What's his notice period? (returned quotes: park-crowd-forecast, cmapss-predictive-maintenance)
-- `V29` Does he play golf? (returned quotes: cmapss-predictive-maintenance)
+| Round | What changed | Answered | Refused |
+|---|---|---:|---:|
+| 1 | Word matching | 15/20 | 10/10 |
+| 2 | New, more natural questions; stricter settings | 13/20 | 8/10 |
+
+Each round used new questions, and once a round's misses had been read, its questions moved to the tuning set.
+
+## Misses in round 3
+
+- `W03` Tell me about a time his work made the company money (returned quotes: michelin-rag)
+- `W06` Has he dealt with imbalanced classification? (returned decline: nothing)
+- `W08` Has he worked at a large financial firm? (returned decline: nothing)
+- `W12` Anything with named entity recognition? (returned decline: nothing)
+- `W16` Has he deployed anything on Azure? (returned decline: nothing)
+- `W18` How was the customer churn model explained to stakeholders? (returned decline: nothing)
+- `W24` What's the weather in Charlotte? (returned quotes: park-crowd-forecast, grid-stress-simulator)

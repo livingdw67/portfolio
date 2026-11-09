@@ -12,8 +12,12 @@ from __future__ import annotations
 
 import math
 import re
+import unicodedata
 from collections import Counter
 from dataclasses import dataclass, field
+from pathlib import Path
+
+import numpy as np
 
 TOKEN = re.compile(r"[a-z0-9]+")
 SENTENCE = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9\"(])")
@@ -107,6 +111,54 @@ LISTINGS = [
 ]
 
 
+class Meaning:
+    """Match on meaning with a static word-piece embedding (Model2Vec potion-base-8M).
+
+    The model is a table of vectors, so a text's embedding is the average of its pieces'
+    vectors. It needs only numpy, runs in milliseconds and writes nothing. It only decides
+    which passages to quote. Build the file with scripts/build_ask_model.py.
+    """
+
+    SKIP = {"[PAD]", "[UNK]", "[CLS]", "[SEP]", "[MASK]"}
+
+    def __init__(self, path: Path, passages: list[dict]):
+        with np.load(path, allow_pickle=False) as data:
+            tokens = [str(token) for token in data["tokens"]]
+            self.table = data["vectors"].astype(np.float32) * float(data["scale"])
+        self.vocabulary = {token: i for i, token in enumerate(tokens) if token not in self.SKIP}
+        self.matrix = np.vstack([self.embed(f"{p['source']} {p['section']} {p['text']}") for p in passages])
+
+    def pieces(self, text: str) -> list[int]:
+        """Lowercase, split on spaces and punctuation, then take the longest known pieces."""
+        ids: list[int] = []
+        folded = "".join(c for c in unicodedata.normalize("NFD", text.lower()) if unicodedata.category(c) != "Mn")
+        for word in re.findall(r"[^\W_]+|[^\w\s]|_", folded):   # the model's tokenizer splits on "_"
+            found: list[int] = []
+            start = 0
+            while start < len(word):
+                for end in range(len(word), start, -1):
+                    piece = word[start:end] if start == 0 else f"##{word[start:end]}"
+                    if piece in self.vocabulary:
+                        found.append(self.vocabulary[piece])
+                        start = end
+                        break
+                else:
+                    found = []
+                    break
+            ids.extend(found)
+        return ids
+
+    def embed(self, text: str) -> np.ndarray:
+        ids = self.pieces(text)
+        if not ids:
+            return np.zeros(self.table.shape[1], dtype=np.float32)
+        vector = self.table[ids].mean(axis=0)
+        return vector / max(float(np.linalg.norm(vector)), 1e-9)
+
+    def cosines(self, question: str) -> np.ndarray:
+        return self.matrix @ self.embed(question)
+
+
 class Index:
     """BM25 over passages. The corpus is a few hundred passages, so plain Python is fast enough."""
 
@@ -153,13 +205,18 @@ class Index:
         return any(term in self.counts[index] and self.idf[term] >= min_idf for term in set(terms))
 
 
-def best_sentences(index: Index, passage: dict, terms: list[str], limit: int = 2) -> str:
-    """The sentences that carry the most of the question's words, kept in reading order."""
+def best_sentences(index: Index, passage: dict, terms: list[str], limit: int = 2,
+                   meaning: Meaning | None = None, question: str = "") -> str:
+    """The sentences closest to the question, by its words and its meaning, in reading order."""
     sentences = [s.strip() for s in SENTENCE.split(passage["text"]) if s.strip()]
     wanted = set(terms)
+    target = meaning.embed(question) if meaning is not None else None
 
     def weight(sentence: str) -> float:
-        return sum(index.idf.get(term, 0.0) for term in set(tokenize(sentence, index.normalize)) & wanted)
+        words = sum(index.idf.get(term, 0.0) for term in set(tokenize(sentence, index.normalize)) & wanted)
+        if target is None:
+            return words
+        return words + 5.0 * max(float(meaning.embed(sentence) @ target), 0.0)
 
     scored = sorted(range(len(sentences)), key=lambda i: (-weight(sentences[i]), i))
     keep = sorted(i for i in scored[:limit] if weight(sentences[i]) > 0) or [0]
@@ -170,6 +227,7 @@ def best_sentences(index: Index, passage: dict, terms: list[str], limit: int = 2
 # equally accurate settings, because quoting something irrelevant looks worse than one refusal.
 MIN_COVERAGE = 0.70
 MIN_ANCHOR_IDF = 1.0
+MIN_COSINE = 0.425
 MAX_SOURCES = 3
 NO_MATCH = ("That isn't covered in Daniel's public write-ups, which doesn't mean he hasn't done it. "
             "The fastest way to find out is to ask him on LinkedIn.")
@@ -178,7 +236,8 @@ NOT_ANSWERED = ("This page only covers Daniel's published work. For anything per
 
 
 def answer(question: str, index: Index, min_coverage: float = MIN_COVERAGE,
-           min_anchor: float = MIN_ANCHOR_IDF) -> Answer:
+           min_anchor: float = MIN_ANCHOR_IDF, meaning: Meaning | None = None,
+           min_cosine: float = MIN_COSINE) -> Answer:
     question = (question or "").strip()[:MAX_QUESTION_CHARS]
     if not question:
         return Answer("empty", message="Type a question, or pick one of the suggestions.")
@@ -202,18 +261,29 @@ def answer(question: str, index: Index, min_coverage: float = MIN_COVERAGE,
 
     if not terms:
         return Answer("empty", message="Try naming a tool, a method or a topic, such as Snowflake or forecasting.")
-    ranked = index.rank(terms)
+    ranked = [passage_index for passage_index, _ in index.rank(terms)]
+    cosines = meaning.cosines(question) if meaning is not None else None
+    if cosines is not None:
+        # Reciprocal rank fusion: a passage that either method ranks highly moves up.
+        by_meaning = [int(i) for i in np.argsort(-cosines, kind="stable")]
+        fused: Counter = Counter()
+        for order in (ranked, by_meaning):
+            for position, passage_index in enumerate(order, 1):
+                fused[passage_index] += 1.0 / (60 + position)
+        ranked = [passage_index for passage_index, _ in sorted(fused.items(), key=lambda item: (-item[1], item[0]))]
 
     def good_enough(passage_index: int) -> bool:
+        if cosines is not None and cosines[passage_index] >= min_cosine:
+            return True
         return index.coverage(terms, passage_index) >= min_coverage and index.anchored(terms, passage_index, min_anchor)
 
-    if not ranked or not any(good_enough(passage_index) for passage_index, _ in ranked[:10]):
+    if not ranked or not any(good_enough(passage_index) for passage_index in ranked[:10]):
         return Answer("decline", message=NO_MATCH)
 
     quotes: list[Quote] = []
     used: set[str] = set()
     keys: list[str] = []
-    for passage_index, _ in ranked:
+    for passage_index in ranked:
         if len(quotes) >= MAX_SOURCES:
             break
         passage = index.passages[passage_index]
@@ -221,6 +291,6 @@ def answer(question: str, index: Index, min_coverage: float = MIN_COVERAGE,
             continue
         used.add(passage["key"])
         keys.append(passage["key"])
-        quotes.append(Quote(best_sentences(index, passage, terms), passage["source"], passage["section"],
-                            passage["url"], passage["key"]))
+        quotes.append(Quote(best_sentences(index, passage, terms, meaning=meaning, question=question),
+                            passage["source"], passage["section"], passage["url"], passage["key"]))
     return Answer("quotes", quotes=quotes, keys=keys)
