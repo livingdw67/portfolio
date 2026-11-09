@@ -1,5 +1,11 @@
 # "Ask about my work": test results
 
+## Decision: a list of checked questions, not a search box
+
+The bar for shipping free typing was set before round 3: at least 17 of 20 answered and at least 8 of 10 refused. It
+scored 14 and 9. A wrong answer about my own work is worse than a shorter list, so the page now offers a fixed set of
+questions whose sources I read. The code for these rounds, including the evaluation script, is in commit `e211217`.
+
 ## Round 3 (matching on words and meaning)
 
 30 new questions, scored once with every setting already frozen. The bar was set before scoring: at least

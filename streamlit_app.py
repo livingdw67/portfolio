@@ -647,10 +647,10 @@ DEMOS = [
      "Tool orchestration, failure handling, guardrails and evaluation.",
      "See the test runs", "agent-runs"),
     ("ask", "Runs here · no AI model", "Ask about my work",
-     "Ask what I've built and get answers quoted word for word from my public write-ups, each with its source. If "
-     "nothing covers it, it says so instead of guessing.",
-     "Retrieval with sources, and refusing when the evidence isn't there.",
-     "Ask a question", "ask"),
+     "Pick a question about what I've built and read answers quoted word for word from my public write-ups, each "
+     "with its source.",
+     "Retrieval with sources, and testing a feature before shipping it.",
+     "Pick a question", "ask"),
 ]
 
 
