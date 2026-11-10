@@ -140,16 +140,16 @@
    "key": "park-crowd-forecast",
    "kind": "project",
    "source": "Crowd Forecast and Staffing Optimizer",
-   "section": "Status",
-   "text": "Phase; What; State. 1a; Hourly wait-time ingest into workspace.parks.raw_wait_times; Live since 2026-10-22. 1b; Crowd calendar history into workspace.parks.raw_crowd_calendar (daily, Jul 2018 on); Live since 2026-10-22. 1c; raw_weather_daily (Open-Meteo) and calendar_features (holidays, school breaks, events); Live since 2026-10-22. 1d; LightGBM forecast in MLflow / Unity Catalog (crowd_forecast), ride-based daily_crowd_index; Live since 2026-10-22. 1e; Staffing optimizer (OR-Tools MILP) planning 14 days from the forecast; Live since 2026-10-22. 1f; Streamlit app on Databricks Apps: crowd calendar, staffing plan, what-if scenarios; Live since 2026-10-22. 1g; Epic Universe impact study: difference-in-differences and synthetic control with placebo tests; Live since 2026-10-27. 2; Agent that explains forecasts and re-plans staffing, with an AI gateway, streaming API and eval suite (agent/); Built 2026-10-29; distilling a local writer model in progress.",
+   "section": "What's here",
+   "text": "Data: hourly ride wait times, the daily crowd calendar back to 2018, Open-Meteo weather, and a calendar of holidays, school breaks and events, all as Delta tables on Databricks. Forecast: one LightGBM model for all parks, registered in MLflow and Unity Catalog, backtested year by year and scored 90 days ahead every morning, with an Optuna challenger that must beat the champion in a bootstrap test. Staffing optimizer: an OR-Tools mixed-integer program that plans 14 days of shifts from the forecast. Epic Universe impact study: difference-in-differences and synthetic control with placebo tests. Apps: a Streamlit app on Databricks Apps for the workspace, and a public demo on a frozen snapshot where every model is trained in the browser session.",
    "url": "https://github.com/livingdw67/park-crowd-forecast"
   },
   {
    "key": "park-crowd-forecast",
    "kind": "project",
    "source": "Crowd Forecast and Staffing Optimizer",
-   "section": "Status",
-   "text": "3; Public demo app on a frozen snapshot: model lab, crowd explorer, interactive Epic study (public_app/); Built 2026-11-02. Forecast, scenario and optimizer code is written as plain functions with clear inputs and outputs, so the agent calls the same code as agent tools.",
+   "section": "What's here",
+   "text": "Agent: explains forecasts and re-plans staffing through an AI gateway, with a streaming API and a 30-question eval suite (agent/). Forecast, scenario and optimizer code is written as plain functions with clear inputs and outputs, so the agent calls the same code as agent tools.",
    "url": "https://github.com/livingdw67/park-crowd-forecast"
   },
   {
@@ -380,47 +380,47 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Definition-Driven Predictive Maintenance Pipeline",
-   "text": "An end-to-end data engineering and machine learning feature store built on Snowflake. This project demonstrates how to process raw aerospace telemetry data into mathematically transformed, ML-ready features for predictive maintenance. Try it live: Ask the Fleet → Ask the engine fleet questions in plain English, explore the fleet report, and tune the XGBoost and GNN models. No setup needed. The live app runs on Databricks (Genie over Unity Catalog metric views); the guided tour of the semantic layer walks through the original Snowflake build.",
+   "section": "Predictive Maintenance on a Governed Semantic Layer",
+   "text": "Tandem XGBoost classifiers flag NASA C-MAPSS turbofan engines 50 and 15 cycles before failure, catching about 91% of failures on held-out engines. One Snowflake semantic view feeds a Streamlit report, Cortex Analyst and an MCP server under a read-only role, with all 80 metrics reconciled against hand-written SQL. The same pipeline runs on Databricks (a Unity Catalog feature table, MLflow champion models and the metric views behind a Genie space) and as a Kedro project that runs locally in 15 seconds.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Business Objective",
-   "text": "Unexpected hardware failure in aviation and heavy industry carries catastrophic costs. This pipeline ingests run-to-failure sensor data from the NASA CMAPSS (Turbofan Engine Degradation) dataset and builds a foundation for Condition-Based Maintenance. By calculating rolling window metrics and defining a Piecewise Remaining Useful Life (RUL) target variable, this architecture allows machine learning models to accurately predict failures before they happen, minimizing unplanned downtime and optimizing supply chain logistics.",
+   "section": "Predictive Maintenance on a Governed Semantic Layer",
+   "text": "Try it live: Ask the Fleet → Ask 709 engines a question in plain English, explore the fleet report, and tune the XGBoost and GNN models. No sign-in. Questions go to a Databricks Genie space over Unity Catalog metric views; the guided tour of the semantic layer walks through the original Snowflake build.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "The 5-Schema Snowflake Architecture",
-   "text": "This project implements a rigorous, definition-driven data platform decoupled into five distinct layers: RAW: Ingestion of flat, space-delimited text logs directly from the internal stage. STAGING: Type-casting, standardizing arbitrary column names to physical engine components (e.g., High-Pressure Compressor Temperature), and building a dataset-aware engine key (FD002_001), since engine numbers restart in each of the four source files. CORE: Relational modeling (Star Schema) splitting static entities (DIM_ENGINE) from time-series events (FCT_TELEMETRY). MARTS: Application of business logic to calculate the target variable: a piecewise-capped Remaining Useful Life (RUL) to prevent overfitting on healthy engines. FEATURE STORE: Push-down compute utilizing SQL Window Functions to generate 5-cycle rolling moving averages and standard deviations, dramatically increasing the signal-to-noise ratio for downstream ML models.",
+   "section": "Results",
+   "text": "Engines are split 60/20/20 into train, validation and test. Thresholds are chosen on validation engines to maximize F2 (recall weighted four times precision, because a missed failure costs far more than an early inspection); test engines are scored once. Model; Recall; Precision; F2. Early Warning (≤ 50 cycles); 0.917; 0.679; 0.857. Critical Action (≤ 15 cycles); 0.908; 0.636; 0.837. Class imbalance: manual SMOTE, 6x undersampling and scale_pos_weight land within about 0.01 F2 of each other, so the simplest option (scale_pos_weight) is used. Better inputs beat deep learning: normalizing sensors within each operating condition and giving the model 14 sensors with 30 cycles of history lifts XGBoost to 0.931 F2. A graph neural network on the same inputs ties it (below).",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Machine Learning: Tandem Binary Classifiers",
-   "text": "To operationalize the feature store, this project includes a complete modeling workflow utilizing Snowpark and XGBoost: Dual-Model Strategy: Deploys a tandem approach predicting both an Early Warning (≤50 cycles) and Critical Action (≤15 cycles) state to drive specific maintenance protocols. F2-Optimized Thresholds: Prioritizes recall to minimize costly missed failures, leveraging the F-beta score (beta=2) to dynamically tune decision thresholds. Honest Evaluation: Engines are split 60/20/20 into train, validation, and test sets. Thresholds and strategies are chosen on validation engines; test engines are scored once. Class Imbalance Experimentation: Compares manual SMOTE, 6x undersampling, and scale_pos_weight. All three land within about 0.01 F2, so the simplest option (scale_pos_weight) is preferred. Model Registry: Demonstrates MLOps best practices by versioning and logging champion models directly into Snowflake's native ML Registry.",
+   "section": "Results",
+   "text": "The semantic layer is checked, not assumed: 80 of 80 metrics reconcile with independent SQL, and Cortex Analyst scores 594/600 on 200 fresh questions. The full experiment log is in results.md.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Results (held-out test engines)",
-   "text": "Model; Recall; Precision; F2. Early Warning (≤ 50 cycles); 0.917; 0.679; 0.857. Critical Action (≤ 15 cycles); 0.908; 0.636; 0.837. Full experiment results",
+   "section": "The Snowflake pipeline",
+   "text": "Five schemas, each with one job: RAW: space-delimited NASA logs loaded from an internal stage. STAGING: typed columns named for physical components (High-Pressure Compressor Temperature, not s3), and an engine key that carries the dataset (FD002_001), since engine numbers restart in each of the four source files. CORE: a star schema splitting static entities (DIM_ENGINE) from time-series events (FCT_TELEMETRY). MARTS: the target, a piecewise-capped Remaining Useful Life (RUL), so healthy engines don't dominate training. FEATURE STORE: 5-cycle rolling means and standard deviations computed with SQL window functions, in the warehouse. The classifiers train in Snowpark and are versioned in Snowflake's Model Registry (08_build_register_classifiers.ipynb).",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Reliability Analysis: Weibull Fleet Model",
+   "section": "Fleet reliability: Weibull model",
    "text": "The classifiers decide which engine to pull. 09_weibull_reliability_analysis.ipynb answers the fleet-planning questions: how long engines last, how failure risk grows with age, and when monitoring must be in place. Wear-out failure: Weibull shape β = 2.9–4.4 across datasets (β > 1 means risk rises with age). Characteristic life η ≈ 225 cycles (one fault mode) and ≈ 274 cycles (two fault modes); B10 life ≈ 135–140 cycles. Fault modes matter, operating conditions don't: log-rank tests show no lifetime difference across 1 vs. 6 operating conditions (p = 0.73–0.87), but engines with two fault modes live longer and less predictably (p < 0.001), so the fleet is planned as two populations.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -428,7 +428,7 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Reliability Analysis: Weibull Fleet Model",
+   "section": "Fleet reliability: Weibull model",
    "text": "Failure-free period: no engine fails before about 125 cycles. A three-parameter Weibull captures this (AIC about 100 points lower) and shows a more gradual wear-out phase beyond it (β ≈ 1.6–1.8). Censoring trap: treating the truncated test engines as ordinary censored data overstates characteristic life by 5–15%, because each trajectory was cut off at a random fraction of that engine's own life (censoring age correlates 0.56–0.88 with true life). A simulation confirms the mechanism: unbiased under independent censoring, biased when censoring tracks lifetime. Age vs. sensors: age alone flags engines within 50 cycles of failure with AUC 0.72–0.86 and misses remaining life by 33–55 cycles on average, which is why sensor-based condition monitoring drives individual removals and Weibull sets the fleet-level window.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -436,23 +436,23 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
-   "text": "Take the tour of the Fleet Reliability semantic layer → A 10-step guided walk-through of the model, metrics, validation, Cortex Analyst eval and MCP server. 11_build_semantic_view.py adds a SEMANTIC schema with a Snowflake semantic view, FLEET_RELIABILITY, so BI tools, Cortex Analyst and agents all read the same metric definitions instead of each re-deriving \"mean time to failure\" in their own SQL. Three grains: datasets (operating conditions and fault modes from NASA's readme), engines (one row per engine with its failure cycle), and cycles (MART_ENGINE_LIFESPAN). Each metric aggregates at its own grain, so engine counts never fan out to telemetry row counts.",
+   "section": "Semantic layer: governed fleet metrics",
+   "text": "Take the tour → A 10-step walk-through of the model, metrics, validation, Cortex Analyst eval and MCP server. 11_build_semantic_view.py adds a SEMANTIC schema with a Snowflake semantic view, FLEET_RELIABILITY, so BI tools, Cortex Analyst and agents all read the same metric definitions instead of each re-deriving \"mean time to failure\" in their own SQL. Three grains: datasets (operating conditions and fault modes from NASA's readme), engines (one row per engine with its failure cycle), and cycles (MART_ENGINE_LIFESPAN). Each metric aggregates at its own grain, so engine counts never fan out to telemetry row counts.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
-   "text": "Metrics: engine count, mean/median/min/max time to failure and its spread, cycles flown, share of cycles in the early-warning and critical windows, average sensor readings, and HPC/LPT temperature rise from the first 20 cycles to the critical window. Business logic from the existing models: the health_stage dimension uses the classifiers' horizons (RUL ≤ 50 early warning, ≤ 15 critical action), so a question asked in plain English uses the same definitions as the deployed models. Context for natural-language queries: synonyms (MTTF, T30, failure mode), descriptions with units, and SQL-generation instructions warning that raw sensor levels are not comparable across operating conditions. Operating conditions; Fault modes; Engines; MTTF (cycles); Shortest life; HPC temp rise (°R). Single; HPC; 100; 206.3; 128; 13.7. Single; HPC + fan; 100; 247.2; 145; 15.6.",
+   "section": "Semantic layer: governed fleet metrics",
+   "text": "Metrics: engine count, mean/median/min/max time to failure and its spread, cycles flown, share of cycles in the early-warning and critical windows, average sensor readings, and HPC/LPT temperature rise from the first 20 cycles to the critical window. Business logic from the deployed models: the health_stage dimension uses the classifiers' horizons (RUL ≤ 50 early warning, ≤ 15 critical action), so a question asked in plain English uses the same definitions as the deployed models. Context for natural-language queries: synonyms (MTTF, T30, failure mode), descriptions with units, and SQL-generation instructions warning that raw sensor levels are not comparable across operating conditions. Operating conditions; Fault modes; Engines; MTTF (cycles); Shortest life; HPC temp rise (°R). Single; HPC; 100; 206.3; 128; 13.7. Single; HPC + fan; 100; 247.2; 145; 15.6.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
+   "section": "Semantic layer: governed fleet metrics",
    "text": "Six; HPC; 260; 206.8; 128; 11.7. Six; HPC + fan; 249; 246.0; 128; 7.9. MTTF splits by fault mode, not by operating conditions, matching the Weibull log-rank results above. Checked, reported and served to agents: Reconciliation: 12_validate_metrics.py recomputes every metric with hand-written SQL on STAGING, below anything the view reads. All 80 values (16 metrics × fleet and 4 datasets) match, a deliberate one-cycle threshold error is caught, and a Weibull fit lands within 0.6% of the view's MTTF. Exits non-zero on any mismatch. Report: streamlit_app/fleet_report.py is a Streamlit in Snowflake app that reads only from the view. 13_deploy_fleet_report.py runs every app query, filtered and unfiltered, before deploying.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -460,15 +460,15 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
-   "text": "Cortex Analyst eval: 14_eval_cortex_analyst.py asks 25 questions 3 times each and scores the returned rows against independent SQL: 75/75 correct. The first pass found a real modeling flaw: a filter value of 'Single (sea level)' that the model queried as 'Single'. The fix went into the view. Details in results.md. A second set of 200 new questions, with ground truth from STAGING rather than the view, scored 594/600 (99.0%) over 3 runs each. Most misses were Cortex returning both numbers in a comparison without subtracting them, fixed with one sentence in the view's instructions.",
+   "section": "Semantic layer: governed fleet metrics",
+   "text": "Cortex Analyst eval: 14_eval_cortex_analyst.py asks 25 questions 3 times each and scores the returned rows against independent SQL: 75/75 correct. The first pass found a real modeling flaw: a filter value of 'Single (sea level)' that the model queried as 'Single'. The fix went into the view. A second set of 200 new questions, with ground truth from STAGING rather than the view, scored 594/600 (99.0%) over 3 runs each. Most misses were Cortex returning both numbers in a comparison without subtracting them, fixed with one sentence in the view's instructions.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
+   "section": "Semantic layer: governed fleet metrics",
    "text": "MCP server: 15_create_mcp_server.py creates a Snowflake-managed MCP server (Cortex Analyst on the view, plus SQL execution) and a read-only FLEET_READER role for clients. The test asks a question over MCP, runs the returned SQL, and confirms that a write through the SQL tool is refused.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -476,15 +476,15 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
-   "text": "Public demo, \"Ask the Fleet\": public_app/app.py, live at ask-the-fleet.streamlit.app, is a Streamlit Community Cloud app where anyone can ask the fleet questions in plain English, plus the filterable fleet report. It first ran on Cortex Analyst over this semantic view, set up by 16_setup_public_demo.py (a key-only service user, a read-only role, an extra-small warehouse with a 30-second query limit and a monthly credit cap). It now runs on Databricks: questions go to a Genie space over the equivalent Unity Catalog metric views (see Databricks Port). A question log enforces 50 questions a day (10 per visitor). Loading the page uses no compute: the log is read only when someone asks a question, so an open tab or a keep-awake visit can't keep the SQL warehouse running.",
+   "section": "Semantic layer: governed fleet metrics",
+   "text": "Public demo, \"Ask the Fleet\": public_app/app.py, live at ask-the-fleet.streamlit.app, is a Streamlit Community Cloud app where anyone can ask the fleet questions in plain English, plus the filterable fleet report. Questions go to a Databricks Genie space over the equivalent Unity Catalog metric views (see Databricks port). A question log enforces 50 questions a day (10 per visitor), and loading the page uses no compute: the log is read only when someone asks, so an open tab can't keep the SQL warehouse running. 16_setup_public_demo.py is the Snowflake equivalent the demo ran on first: a key-only service user, a read-only role, an extra-small warehouse with a 30-second query limit and a monthly credit cap.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Semantic Layer: Governed Fleet Metrics",
+   "section": "Semantic layer: governed fleet metrics",
    "text": "Modeling tab: visitors pick XGBoost features and hyperparameters (trees, depth, learning rate) with radio buttons, or a GNN graph type, and see test F2, recall, precision, F2 at every threshold, the tuning landscape and feature importance. 17_build_model_explorer.py trains all 54 XGBoost settings ahead of time with the same F2 protocol (threshold chosen on validation engines, test engines scored once), checks that the default settings reproduce the published scores, and packages the saved GNN results.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -492,7 +492,7 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Graph Neural Network: Sensors as a Graph",
+   "section": "Graph neural network: sensors as a graph",
    "text": "10_sensor_graph_gnn.py treats each engine snapshot as a graph. The 14 informative sensors are nodes, each carrying its last 30 cycles of readings, normalized within its operating condition. A GRU encodes each sensor's history, two GATv2 attention layers pass messages between sensors, and a multitask head predicts RUL plus both maintenance flags. Same engine splits, same validation-tuned F2 thresholds, test engines scored once. Graph design. Four edge sets, so the graph itself is tested rather than assumed: Physics: sensors on the same component, on adjacent gas-path stages (fan → LPC → HPC → combustor → HPT → LPT), on the same shaft, or linked by bleed flows Correlation: each sensor linked to its 3 most correlated sensors on training engines Full: every pair linked; attention must find the structure",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -500,31 +500,31 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
-   "text": "Model; Early Warning F2; Critical Action F2; RUL RMSE (cycles). XGBoost, original 8 features; 0.857; 0.837; n/a. XGBoost, same inputs as GNN (flattened); 0.931; 0.929; 14.24. GNN, no edges; 0.930 ± 0.002; 0.933 ± 0.000; 14.93 ± 0.10. GNN, correlation graph; 0.931 ± 0.001; 0.934 ± 0.001; 14.37 ± 0.16. GNN, physics graph; 0.930 ± 0.002; 0.934 ± 0.002; 14.30 ± 0.30. GNN, fully connected; 0.929 ± 0.003; 0.936 ± 0.003; 14.61 ± 0.21. Findings Better inputs did most of the work. Normalizing sensors within each operating condition, using 14 sensors instead of 3, and giving the model 30 cycles of history lifts XGBoost from 0.857 to 0.931 F2 (Early Warning) and from 0.837 to 0.929 (Critical Action), with no deep learning at all.",
+   "section": "Graph neural network: sensors as a graph",
+   "text": "None: self-loops only, so no message passing (ablation) Held-out test engines; GNN rows are mean ± std over 3 seeds: Model; Early Warning F2; Critical Action F2; RUL RMSE (cycles). XGBoost, original 8 features; 0.857; 0.837; n/a. XGBoost, same inputs as GNN (flattened); 0.931; 0.929; 14.24. GNN, no edges; 0.930 ± 0.002; 0.933 ± 0.000; 14.93 ± 0.10. GNN, correlation graph; 0.931 ± 0.001; 0.934 ± 0.001; 14.37 ± 0.16. GNN, physics graph; 0.930 ± 0.002; 0.934 ± 0.002; 14.30 ± 0.30. GNN, fully connected; 0.929 ± 0.003; 0.936 ± 0.003; 14.61 ± 0.21.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
-   "text": "The GNN ties a strong XGBoost; it does not beat it. On identical inputs, the GNN matches Early Warning F2 and edges Critical Action by about 0.005 F2, trading some precision (0.79 vs 0.81) for recall (0.98 vs 0.96). RUL error is the same within noise (14.30 vs 14.24). Message passing helps, if the graph is sparse. Within the GNN, the correlation and physics graphs cut RUL error by about 0.6 cycles versus no edges, and every seed with a sparse graph beat every seed without one. The fully connected graph recovers only half of that gain. Physics and correlation graphs are tied within seed noise, so domain knowledge reproduced what the data already shows rather than adding to it.",
+   "section": "Graph neural network: sensors as a graph",
+   "text": "Better inputs did most of the work. Normalizing sensors within each operating condition, using 14 sensors instead of 3, and giving the model 30 cycles of history lifts XGBoost from 0.857 to 0.931 F2 (Early Warning) and from 0.837 to 0.929 (Critical Action), with no deep learning at all. The GNN ties a strong XGBoost; it does not beat it. On identical inputs, the GNN matches Early Warning F2 and edges Critical Action by about 0.005 F2, trading some precision (0.79 vs 0.81) for recall (0.98 vs 0.96). RUL error is the same within noise (14.30 vs 14.24).",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
-   "text": "Recommendation: keep XGBoost (on the improved inputs) in production. It matches the GNN, trains in seconds rather than 10–15 minutes per run on CPU, and is easier to explain to maintenance engineers. A GNN would earn its complexity where the graph varies: fleets with different sensor sets per engine type, or localizing which component is failing.",
+   "section": "Graph neural network: sensors as a graph",
+   "text": "Message passing helps, if the graph is sparse. Within the GNN, the correlation and physics graphs cut RUL error by about 0.6 cycles versus no edges, and every seed with a sparse graph beat every seed without one. The fully connected graph recovers only half of that gain. Physics and correlation graphs are tied within seed noise, so domain knowledge reproduced what the data already shows rather than adding to it. Recommendation: keep XGBoost (on the improved inputs) in production. It matches the GNN, trains in seconds rather than 10–15 minutes per run on CPU, and is easier to explain to maintenance engineers. A GNN would earn its complexity where the graph varies: fleets with different sensor sets per engine type, or localizing which component is failing.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "section": "Graph neural network: sensors as a graph",
    "text": "What attention learned. As engines approach failure (RUL ≤ 15 vs. healthy), the physics GNN shifts attention toward two sensors as message sources: HPC static pressure (Ps30 → bleed enthalpy rises from 0.24 to 0.35; Ps30 → fuel flow ratio and HPC outlet temperature also rise) and LPT outlet temperature (T50 → fan speeds and coolant bleeds, 0.31–0.36 to 0.40–0.45). Both track high-pressure compressor degradation, the fault mode present in all four datasets. Attention weights indicate where the model looks, not proof of cause.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -532,7 +532,7 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Results (held-out test engines; GNN rows are mean ± std over 3 seeds)",
+   "section": "Graph neural network: sensors as a graph",
    "text": "NASA benchmark. RMSE (cycles) on the official test trajectories, scored at each engine's last cycle against true RUL capped at 130. One model is trained on all four datasets pooled (425 engines), not tuned per dataset, and the official test set was never used for any choice. Model; FD001; FD002; FD003; FD004. XGBoost, same inputs; 13.2; 14.6; 15.7; 15.9. GNN, no edges; 14.3; 15.1; 15.1; 16.1. GNN, physics graph; 14.8; 15.1; 14.8; 15.3. GNN, correlation graph; 14.8; 15.3; 15.2; 15.2. Raw results for every seed, including recall, precision, PR-AUC, thresholds and the NASA asymmetric score.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -540,15 +540,15 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
-   "text": "The same pipeline also runs on Databricks (serverless) as one Asset Bundle in databricks/. A four-task Job does the following: Ingest: downloads the NASA archive into a Unity Catalog volume and loads the train and test files into bronze Delta tables. Transform: rebuilds staging, core, marts and the feature store as Delta tables with Spark SQL window functions. The feature table has a (engine_id, cycle TIMESERIES) primary key, so it is a Unity Catalog feature table. Train and register: for each classifier, compares class weighting, SMOTE and 6x undersampling as nested MLflow runs. The best validation F2 is registered in Unity Catalog with a champion alias. Each registered model is a pyfunc that carries its own validation-tuned threshold.",
+   "section": "Databricks port: Delta, MLflow and Unity Catalog",
+   "text": "The same pipeline also runs on Databricks (serverless) as one Asset Bundle in databricks/. A five-task Job does the following: Ingest: downloads the NASA archive into a Unity Catalog volume and loads the train and test files into bronze Delta tables. Transform: rebuilds staging, core, marts and the feature store as Delta tables with Spark SQL window functions. The feature table has a (engine_id, cycle TIMESERIES) primary key, so it is a Unity Catalog feature table. Train and register: for each classifier, compares class weighting, SMOTE and 6x undersampling as nested MLflow runs. The best validation F2 is registered in Unity Catalog with a champion alias. Each registered model is a pyfunc that carries its own validation-tuned threshold.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
+   "section": "Databricks port: Delta, MLflow and Unity Catalog",
    "text": "Batch score: loads both @champion models, scores the latest cycle of all 707 NASA test engines (histories cut off before failure) and writes engine_risk_scores with the tandem decision. NASA's true RUL for those engines is joined in for checking. Semantic layer: rebuilds the FLEET_RELIABILITY semantic view as two Unity Catalog metric views. fleet_engines has one row per engine (MTTF, median, shortest and longest life). fleet_cycles has one row per engine per cycle (health stage, sensor averages, temperature rise to failure). Splitting by grain keeps engine metrics from fanning out to cycle rows. The task fails if any key metric disagrees with plain SQL on the tables.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -556,7 +556,7 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
+   "section": "Databricks port: Delta, MLflow and Unity Catalog",
    "text": "The public Ask the Fleet app runs on this layer. Questions go to a Databricks Genie space over the metric views, carrying the Cortex Analyst instructions over unchanged. Genie runs its SQL as a service principal that can only read the metric views and write to the question log. The report tab is served from a snapshot of the metric views' own query results, so it uses no compute and keeps working when the Free Edition daily quota runs out. setup_public_demo.py creates the service principal, grants and Genie space, and export_report_snapshot.py refreshes the snapshot. Engine-level check on the NASA test engines, which played no part in training or model selection: Model; Recall; Precision. Early Warning (RUL ≤ 50); 0.952; 0.720. Critical Action (RUL ≤ 15); 0.912; 0.689.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -564,15 +564,15 @@
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Databricks Port: Delta, MLflow and Unity Catalog",
-   "text": "Action; Engines; Avg. true RUL; Truly ≤ 50; Truly ≤ 15. Immediate action required; 135; 16.6; 129; 93. Schedule maintenance; 169; 54.4; 90; 9. Normal operations; 403; 114.5; 11; 0.",
+   "section": "Databricks port: Delta, MLflow and Unity Catalog",
+   "text": "Action; Engines; Avg. true RUL; Truly ≤ 50; Truly ≤ 15. Immediate action required; 135; 16.6; 129; 93. Schedule maintenance; 169; 54.4; 90; 9. Normal operations; 403; 114.5; 11; 0. The workspace host comes from the CLI profile, so log in once first:",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
   {
    "key": "cmapss-predictive-maintenance",
    "kind": "project",
    "source": "Predictive Maintenance on a Governed Semantic Layer",
-   "section": "Kedro Pipeline: Local, Modular, Tracked with MLflow",
+   "section": "Kedro pipeline: local, modular, tracked with MLflow",
    "text": "kedro/ rebuilds the same transform → train → score job as a Kedro 1.7 project that runs locally in about 15 seconds. Each step is a pure function, the data flow is declared in a catalog, and every setting is in YAML parameters. One classifier pipeline is instantiated under two namespaces (early_warning, critical_action). kedro-mlflow logs parameters, metrics and reports for each run. It also packages the scoring pipeline with both trained models as one registered MLflow model (pipeline_ml_factory). On the NASA test engines, Early Warning recall is 0.930 (95% Wilson interval 0.890–0.957) and Critical Action recall is 0.912 (0.841–0.953). Both intervals include the Databricks figures above. See its README.",
    "url": "https://github.com/livingdw67/cmapss-predictive-maintenance"
   },
@@ -612,16 +612,16 @@
    "key": "michelin-rag",
    "kind": "project",
    "source": "Tire Industry Report Analyst",
-   "section": "Results",
-   "text": "Factorial evaluation (400 questions). 41 questions show the system works but can't say what makes a question hard: a 98% score on 35 answerable questions has a 95% interval of roughly 85–99.5%. A second, 400-question set crosses company × question type × wording (formal, casual, terse, typo; randomly assigned and balanced within every cell), adds 48 comparisons, 48 false premises, 48 unanswerable questions and 48 off-topic or injection attempts, and is analyzed with a Firth logistic model (errors clustered by question), a stratified permutation test for wording, and a check of the LLM judge against a model-free grader. Every figure is pinned to its page, calculation answers are computed in code, and each \"not in the reports\" question is checked to be absent before the set can be built.",
+   "section": "The 400-question test",
+   "text": "41 questions show the system works but can't say what makes a question hard: 98% on 35 answerable questions has a 95% interval of roughly 85–99.5%. A second, 400-question set crosses company × question type × wording (formal, casual, terse, typo; randomly assigned and balanced within every cell), adds 48 comparisons, 48 false premises, 48 unanswerable questions and 48 off-topic or injection attempts, and is analyzed with a Firth logistic model (errors clustered by question), a stratified permutation test for wording, and a check of the LLM judge against a model-free grader. Every figure is pinned to its page, calculation answers are computed in code, and each \"not in the reports\" question is checked to be absent before the set can be built. 100 questions were used for tuning; the other 300 were scored once per system.",
    "url": "https://github.com/livingdw67/michelin-rag"
   },
   {
    "key": "michelin-rag",
    "kind": "project",
    "source": "Tire Industry Report Analyst",
-   "section": "Results",
-   "text": "What the 400 questions found. On the 300 questions held out from any tuning, the app on gpt-5.4-mini scored 82.3%: 77.2% on answerable questions and 98.6% on questions it should decline or block. That is well below the golden set's 98%, though the two aren't like for like: this set is harder by design, and a cheaper judge graded it. The app is weakest on comparisons (41.7%) and false premises (66.7%). The same app on an untuned local model, qwen2.5:7b, scored 25.7%, nearly all refusals (2.2% on answerable questions). The two split on 172 questions and gpt-5.4-mini won 171 (McNemar p < 0.0001). Tuning the local system on a separate 100 questions is under way: qwen3:8b now passes 47 of 76 answerable development questions against gpt-5.4-mini's 65, and its held-out score is still to come. Results and how to read the tests.",
+   "section": "The 400-question test",
+   "text": "System; Held-out 300; Answerable; Should decline or block. gpt-5.4-mini; 82.3%; 77.2%; 98.6%. qwen3:8b, local, after tuning on the 100; 61.7%; 57.5%; 75.0%. qwen2.5:7b, local, untuned; 25.7%; 2.2%; nearly all refusals. The hosted model leads by 20.7 points (95% interval +15.0 to +26.7). Its weak spots are comparisons (41.7%) and false premises (66.7%). The score is well below the golden set's 98%, but the two aren't like for like: this set is harder by design, and a cheaper judge graded it. Tuning flipped the local model's failure mode. Untuned, it refused almost everything (gpt-5.4-mini won 171 of the 172 questions they split on, McNemar p < 0.0001). Tuned, it answers too readily: 20 of 36 unanswerable questions answered, 20 of 36 false premises accepted. Results and how to read the tests.",
    "url": "https://github.com/livingdw67/michelin-rag"
   },
   {
@@ -653,7 +653,7 @@
    "kind": "project",
    "source": "Tire Industry Report Analyst",
    "section": "Known Limitations",
-   "text": "Footnote markers in tables can attach to numbers (a €2.70 dividend with footnote 4 extracted as \"2.704\"). Prompt rules and sub-question decomposition handle the cases in the test set; superscript-aware table parsing would remove the risk entirely. Bridgestone's report is an integrated report covering FY2024 results, so its figures are a year behind the others and some metrics aren't reported. Currencies are not converted (EUR, USD, JPY), by design, since reports don't state a common rate. The rate limiter is in-memory, so it applies per API process. A shared store (e.g. Redis) would be needed when running several replicas. Originally built as a take-home assessment; rebuilt with verified citations, layered guardrails, an agent for comparisons and calculations, an API, and a measured evaluation.",
+   "text": "Footnote markers in tables can attach to numbers (a €2.70 dividend with footnote 4 extracted as \"2.704\"). Prompt rules and sub-question decomposition handle the cases in the test set; superscript-aware table parsing would remove the risk entirely. Bridgestone's report is an integrated report covering FY2024 results, so its figures are a year behind the others and some metrics aren't reported. Currencies are not converted (EUR, USD, JPY), by design, since reports don't state a common rate. The rate limiter is in-memory, so it applies per API process. A shared store (e.g. Redis) would be needed when running several replicas.",
    "url": "https://github.com/livingdw67/michelin-rag"
   },
   {
@@ -669,7 +669,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Customer Segmentation in Snowflake",
-   "text": "Segments 4,261 active wholesale-gift customers (UCI Online Retail II, 1.07M transactions) by what they're worth next quarter and how they buy, with every model trained and scored inside Snowflake on scikit-learn 1.9.1. Segment Assistant, an LLM chat app over the results, was tested on 1,788 questions, most of them also put to Snowflake's Cortex Analyst. The Big Takeaway Letting the AI write its own SQL made the chatbot less accurate. In an adversarial test, model-written SQL answered 47% of questions correctly, and most errors were real numbers attached to wrong conclusions. Moving every metric definition into tested code, so the model only chooses which calculation to run, raised accuracy to about 70% on fresh questions, with every figure traceable to the data. (Details)",
+   "text": "Segments 4,261 active wholesale-gift customers (UCI Online Retail II, 1.07M transactions) by what they're worth next quarter and how they buy, with every model trained and scored inside the data platform (built on Snowflake, now running on Databricks) on scikit-learn 1.9.1. Segment Assistant, an LLM chat app over the results, was tested on 1,788 questions, most of them also put to Snowflake's Cortex Analyst. The Big Takeaway",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -677,7 +677,15 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Customer Segmentation in Snowflake",
-   "text": "Try it: recorded Segment Assistant answers, each with how it was produced and how Cortex Analyst answered, are at the top of my portfolio. Nothing there calls a model.",
+   "text": "Letting the AI write its own SQL made the chatbot less accurate. In an adversarial test, model-written SQL answered 47% of questions correctly, and most errors were real numbers attached to wrong conclusions. Moving every metric definition into tested code, so the model only chooses which calculation to run, raised accuracy to about 70% on fresh questions, with every figure traceable to the data. (Details) Try it: recorded Segment Assistant answers, each with how it was produced and how Cortex Analyst answered, are at the top of my portfolio. Nothing there calls a model.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "Customer Segmentation in Snowflake",
+   "text": "Now on Databricks. Snowflake's trial ended, so the pipeline runs as a Databricks Asset Bundle (databricks/) and the numbers below come from that build. Moving it exposed a flaw: gradient boosting's early stopping validated on a split by row, which mixed one customer's snapshots across the split and made the fitted model depend on row order. Boosting rounds now come from customer-grouped cross-validation, and shuffling the rows no longer changes anything. The backtests barely moved (hybrid top-20% capture 71.0% to 70.9%), but the line between the Occasional and Low value tiers moved from about £410–425 of trailing spend to £278. That line is close to a tie: 100 and 130 boosting rounds differ by 0.2% in cross-validated deviance and give the two different lines. The evals below were graded on the earlier numbers, kept in practice_eval/frozen_results/.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -685,7 +693,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Results",
-   "text": "Most segmentation projects stop at clusters that look tidy. I wanted segments a business could act on, so every scheme is scored by what customers actually did over the next 91 days, on two out-of-time backtests: Option B, two-axis clustering: a value axis crossed with a buying-behavior axis. Option C, outcome-guided segments: gradient boosting turned into readable rules. A hybrid: C's value tiers crossed with B's behavior axis. Scheme; Segments; Top-20% revenue capture; Buying-style separation (η²); Buys again (AUC). Classic RFM scores (baseline); 7; 56%; 0.09; 0.754. B: value axis only; 3–4; 57%; 0.04; 0.745. B: value × behavior grid; 9–12; 66%; 0.34; 0.753. C: outcome tiers; 3–4; 71%; 0.06; 0.716. C: outcome tiers; 9–12; 73%; 0.10; 0.751. Hybrid: C tiers × B behavior; 9–12; 71%; 0.34; 0.734.",
+   "text": "Most segmentation projects stop at clusters that look tidy. I wanted segments a business could act on, so every scheme is scored by what customers actually did over the next 91 days, on two out-of-time backtests: Option B, two-axis clustering: a value axis crossed with a buying-behavior axis. Option C, outcome-guided segments: gradient boosting turned into readable rules. A hybrid: C's value tiers crossed with B's behavior axis. Scheme; Segments; Top-20% revenue capture; Buying-style separation (η²); Buys again (AUC). Classic RFM scores (baseline); 7; 56%; 0.09; 0.754. B: value axis only; 3–4; 57%; 0.04; 0.745. B: value × behavior grid; 9–12; 66%; 0.34; 0.753. C: outcome tiers; 3–4; 71%; 0.06; 0.716. C: outcome tiers; 9–12; 73%; 0.11; 0.749. Hybrid: C tiers × B behavior; 9–12; 71%; 0.34; 0.734.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -693,7 +701,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Results",
-   "text": "Unsegmented outcome model (ceiling); —; 73%; —; 0.781. Each number is the mean of two folds: fit in March and scored in June, and fit in June and scored in September 2011 (results/method_comparison.csv). Top-20% revenue capture ranks customers by their segment's historical value and measures the share of next-quarter revenue held by the top 20%. η² is the share of variance in the five buying-style features that segment membership explains. One clustering over all 11 features (option A) was dropped after a 109-configuration bake-off (exploration/): adding the buying-behavior features made segments worse at predicting next quarter, which is why B keeps value and behavior on separate axes.",
+   "text": "Unsegmented outcome model (ceiling); —; 73%; —; 0.783. Each number is the mean of two folds: fit in March and scored in June, and fit in June and scored in September 2011 (results/method_comparison.csv). Top-20% revenue capture ranks customers by their segment's historical value and measures the share of next-quarter revenue held by the top 20%. η² is the share of variance in the five buying-style features that segment membership explains. One clustering over all 11 features (option A) was dropped after a 109-configuration bake-off (exploration/): adding the buying-behavior features made segments worse at predicting next quarter, which is why B keeps value and behavior on separate axes.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -701,7 +709,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "What the segments say",
-   "text": "The top 7% of customers, \"Top spenders / Bulk buyers\", hold 52% of next quarter's predicted value. They order a median 12 times a year at 337 units per order and £1.73 per unit, which is wholesale behavior. Holiday buyers are a distinct style at every value level. 59–100% of their revenue falls in October–December. A \"Top spender / Holiday buyer\" needs a different calendar from a \"Top spender / Bulk buyer\" even though both are worth about the same. Small-basket buyers pay the highest unit prices (£2.29–2.75) with baskets of around 64–140 units. This is the most retail-like group.",
+   "text": "The top 7% of customers, \"Top spenders / Bulk buyers\", hold 51% of next quarter's predicted value. They order a median 12 times a year at 337 units per order and £1.73 per unit, which is wholesale behavior. Holiday buyers are a distinct style at every value level. 59–100% of their revenue falls in October–December. A \"Top spender / Holiday buyer\" needs a different calendar from a \"Top spender / Bulk buyer\" even though both are worth about the same. Small-basket buyers pay the highest unit prices (£2.24–2.75) with baskets of around 56–140 units. This is the most retail-like group.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -717,7 +725,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Before you use them",
-   "text": "There are no natural clusters. HDBSCAN labels 61–78% of customers as noise and k-means silhouettes are 0.2–0.3, so the segments are a stable partition of a continuum, not discovered tribes. Nothing much beats plain RFM at predicting who buys again. The hybrid's AUC is 0.02 below it, and even the unsegmented model gains only 0.03. The hybrid earns its place on revenue concentration (+15 points) and buying style. The hybrid's lead over the simpler grid is thin. It captures 71% to the grid's 66%, but across the two folds the hybrid ranges from 67.5% to 74.4% and the grid from 65.9% to 66.1%. The grid uses no gradient boosting; more folds would settle it.",
+   "text": "There are no natural clusters. HDBSCAN labels 61–78% of customers as noise and k-means silhouettes are 0.2–0.3, so the segments are a stable partition of a continuum, not discovered tribes. Nothing much beats plain RFM at predicting who buys again. The hybrid's AUC is 0.02 below it, and even the unsegmented model gains only 0.03. The hybrid earns its place on revenue concentration (+15 points) and buying style. The hybrid's lead over the simpler grid is thin. It captures 71% to the grid's 66%, but across the two folds the hybrid ranges from 67.5% to 74.3% and the grid from 65.7% to 65.9%. The grid uses no gradient boosting; more folds would settle it.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -725,7 +733,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Before you use them",
-   "text": "Use the £ forecasts to rank and size customers, not as a budget. The fold that ended in the holiday quarter under-forecast revenue by 44%, because the model had never seen one. Some cells are small. Two top-spender cells hold 45 and 49 customers: key-account lists, or merge them into their value tier for broad campaigns. All seven findings, in full, are in docs/methodology.md.",
+   "text": "Use the £ forecasts to rank and size customers, not as a budget. The fold that ended in the holiday quarter under-forecast revenue by 43%, because the model had never seen one. Some cells are small. Two top-spender cells hold 44 and 49 customers: key-account lists, or merge them into their value tier for broad campaigns. All seven findings, in full, are in docs/methodology.md.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -741,7 +749,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Segment Assistant",
-   "text": "Adversarial rounds 1–5, fresh questions each round; 137 to 300 a round; 47% with model-written SQL; about 70% from round 3 on. Practice mix against Cortex Analyst; 250; Assistant 82.8%, Analyst 89.6%. Held-out retest of the fixes, graded blind; 250; 80.0% before, 87.2% after (18 to 0, p = 8e-6). Power run against Cortex Analyst; 1,400 paired; Analyst 93.8%, Assistant 87.9%: +5.9 points (95% CI 3.8–8.0, p = 4e-8). The biggest remaining gap is questions the data can't answer, such as other countries or CRM fields, where the Assistant gives the nearest figure instead of declining. The agents, guards and every round are in docs/segment-assistant.md; the comparison with Cortex Analyst is in practice_eval/.",
+   "text": "Adversarial rounds 1–5, fresh questions each round; 137 to 300 a round; 47% with model-written SQL; about 70% from round 3 on. Practice mix against Cortex Analyst; 250; Assistant 82.8%, Analyst 89.6%. Held-out retest of the fixes, graded blind; 250; 80.0% before, 87.2% after (18 to 0, p = 8e-6). Power run against Cortex Analyst; 1,400 paired; Analyst 93.8%, Assistant 87.9%: +5.9 points (95% CI 3.8–8.0, p = 4e-8). Genie (Databricks) on the 175 held-out data questions; 175; Genie 94.3%, Analyst 92.0%, Assistant 91.4%; no pair differs significantly (McNemar p = 0.42 to 1.0).",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -749,7 +757,7 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "Segment Assistant",
-   "text": "It runs offline on DuckDB over the committed segment-level results with Ollama, or live against Snowflake with Cortex (live mode is untested):",
+   "text": "The biggest remaining gap is questions the data can't answer, such as other countries or CRM fields, where the Assistant gives the nearest figure instead of declining. The agents, guards and every round are in docs/segment-assistant.md; the comparison with Cortex Analyst is in practice_eval/. It runs offline on DuckDB over the committed segment-level results with Ollama. On Databricks (ASSISTANT_MODE=databricks) it reads the same four tables from Unity Catalog and uses a Databricks-hosted Llama 3.3 70B; that mode was checked live on nine questions, not evaluated. The Snowflake live mode with Cortex was never tested:",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -757,7 +765,23 @@
    "kind": "project",
    "source": "Customer Segmentation",
    "section": "How it works",
-   "text": "The segmentation needs only Snowflake and scikit-learn. The Segment Assistant (LangGraph, Streamlit, DuckDB and an LLM) is an optional app that reads the results; nothing in the pipeline depends on it. Customer data never leaves Snowflake. Steps 01–04 are SQL. All fitting, scoring and evaluation runs in permanent Python stored procedures, created by 05_deploy_procedures.py from the segmentation/ package zipped on a stage. The local machine only issues CALL statements. The exceptions are 08_make_charts.py, which reads aggregated result tables to draw the charts above, and the assistant in live mode, which returns query results (at most 200 rows) to the app. Cleaning, features, both segmentation options, the evaluation metrics, monthly re-scoring and the scikit-learn features used are in docs/methodology.md.",
+   "text": "The segmentation needs only the data platform and scikit-learn. The Segment Assistant (LangGraph, Streamlit, DuckDB and an LLM) is an optional app that reads the results; nothing in the pipeline depends on it.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "How it works",
+   "text": "Customer data stays in the workspace. Cleaning and features are SQL, and all fitting, scoring and evaluation run as serverless job tasks that import the segmentation/ package, the same code the Snowflake build ran as stored procedures. Each production run registers its models in Unity Catalog as challenger; the reproduction check is the gate that moves champion, and the monthly re-score uses champion. What leaves the workspace is aggregated: databricks/export_results.py writes the segment-level tables in results/, 08_make_charts.py also reads 2,000 sampled map coordinates (no customer IDs) to draw the segment map, and the Assistant reads the four segment-level tables. The original Snowflake build is still here: steps 01–08, which create and call stored procedures, and the monthly Task in sql/.",
+   "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
+  },
+  {
+   "key": "snowpark-customer-segmentation",
+   "kind": "project",
+   "source": "Customer Segmentation",
+   "section": "How it works",
+   "text": "Cleaning, features, both segmentation options, the evaluation metrics, monthly re-scoring and the scikit-learn features used are in docs/methodology.md.",
    "url": "https://github.com/livingdw67/snowpark-customer-segmentation"
   },
   {
@@ -900,63 +924,55 @@
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "Overview",
-   "text": "This repository contains an end-to-end machine learning pipeline designed to predict financial loan defaults using Azure Machine Learning SDK v2 and Azure AutoML. The project emphasizes not only predictive accuracy but also regulatory compliance and business-driven decision-making. The champion model, a VotingEnsemble, was built to identify high-risk accounts prior to charge-off, allowing for early intervention strategies while adhering to fair lending laws. The same model is also rebuilt on Databricks (Unity Catalog, MLflow, Optuna), with tuning kept away from the holdout and a champion/challenger registry: see Databricks Version.",
+   "section": "Loan Default Prediction",
+   "text": "A loan default model with ECOA-compliant features and a decision cutoff chosen for the business cost of a missed default, not for accuracy. Built with Azure AutoML, then rebuilt on Databricks with Optuna, MLflow and Unity Catalog, where one tuned LightGBM does the work of the three-model ensemble. On a true 20% holdout the model catches about 75% of defaults (AUC 0.76) at a cutoff chosen on the other 80%. The first estimate, 80% caught, came from scoring the training data; finding and correcting that is part of the write-up.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "1. Regulatory Compliance (ECOA) & Feature Engineering",
-   "text": "To support compliance with the Equal Credit Opportunity Act (ECOA), age and date of birth were removed from the champion model's features. Additional transformations included: Consolidating active financial obligations (total_open_accounts). Correcting a negative-dependents anomaly (-1 recoded to 0) and aligning column types to the registered model's schema. A random-forest baseline on the no-age features ranks the two credit scores first, followed by credit utilization, debt-to-income and monthly income:",
+   "section": "Features and compliance",
+   "text": "To support compliance with the Equal Credit Opportunity Act (ECOA), age and date of birth are left out of the champion model's features. In the Databricks version the registered model's input schema has no date of birth, so age can't reach it by construction. Other changes: active financial obligations consolidated into total_open_accounts, a negative-dependents anomaly (-1) recoded to 0, and column types aligned to the registered model's schema. A random-forest baseline on these features ranks the two credit scores first, followed by credit utilization, debt-to-income and monthly income:",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "2. Azure AutoML Orchestration",
-   "text": "The pipeline points AutoML directly at Azure Blob Storage via MLTable, avoiding local memory limits. Metric: Optimized for auc_weighted with k-fold cross-validation on a ~90/10 target class imbalance (the notebook's no-age job is configured for 30 folds). Guardrails: Compute costs capped with timeouts, trial limits, and concurrency limits (120 minutes and 50 trials for the no-age job; an earlier exploratory job used 5-fold CV, 60 minutes, and 15 trials). Champion Model: A VotingEnsemble outperforming standalone XGBoost and LightGBM models, registered in MLflow as Purpose_Challenger (the no-age variant used for final scoring).",
+   "section": "Azure AutoML",
+   "text": "The pipeline points AutoML at Azure Blob Storage through MLTable, so nothing is held in local memory. Metric: auc_weighted with k-fold cross-validation on a roughly 90/10 class imbalance (30 folds for the no-age job). Guardrails: a 120-minute timeout, 50 trials and a concurrency cap; an earlier exploratory job used 5-fold CV, 60 minutes and 15 trials. Champion: a VotingEnsemble that beat standalone XGBoost and LightGBM, registered in MLflow.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "3. Business-Driven Threshold Optimization",
-   "text": "The financial loss of a missed charge-off (false negative) outweighs the friction of a proactive account review (false positive), so the decision cutoff is chosen to maximize F2, which weighs recall four times as heavily as precision. The original analysis set the cutoff at 0.15 using a precision/recall curve computed on the training data. Because the challenge's test set has no labels, that curve scored the same rows the model was trained on, which overstates performance. Section 5 re-measures it properly.",
+   "section": "Choosing the cutoff",
+   "text": "A missed charge-off (false negative) costs more than a proactive account review (false positive), so the cutoff maximizes F2, which weighs recall four times as heavily as precision. The original analysis set the cutoff at 0.15 from a precision/recall curve computed on the training data. The challenge's test set has no labels, so that curve scored the rows the model was trained on, which overstates performance. validate_locally.py rebuilds the no-age features and a comparable soft-voting ensemble (LightGBM + XGBoost + logistic regression) and measures it on customers the model has not seen. Default rate: 10.2% of 20,839 customers. Evaluation; Cutoff; Defaults caught; Precision; AUC. Training data (original method); 0.15; 79.8%; 32.7%; 0.90. 10-fold cross-validation; 0.15; 56.5%; 23.3%; 0.76. Held-out 20%, original cutoff; 0.15; 58.0%; 23.1%; 0.76.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "4. Global Interpretability",
-   "text": "SHAP (via a KernelExplainer wrapper) was applied to the ensemble to identify the portfolio's main drivers of risk. Lower monthly income and lower credit scores were the dominant upward drivers of default risk; credit utilization and debt-to-income moved predictions far less. The AutoML model stays in the Azure ML workspace, so the chart below repeats the notebook's SHAP setup (a 100-row background, 300 sampled customers) on the local stand-in ensemble from section 5. Its top five drivers come out in the same order as the notebook's run on the AutoML champion.",
+   "section": "Choosing the cutoff",
+   "text": "Held-out 20%, cutoff chosen on the other 80%; 0.10; 74.6%; 19.8%; 0.76. At the original 0.15 cutoff, the model catches about 57% of defaults on unseen customers, not 75–80%. Choosing the F2 cutoff properly, on separate data, lands at 0.10: about 75% of defaults caught on a true holdout, with roughly 38% of accounts flagged for review. Whether that review volume is acceptable is a business decision about the cost of a review against a charge-off. Out-of-sample AUC is about 0.76, solid and realistic for application-time credit data. F2 is nearly flat between 0.08 and 0.10, so library versions move the cutoff: with the versions pinned in requirements-dev.txt, the same script picks 0.09 and catches 80.0% at 19.3% precision (AUC 0.762).",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "5. Out-of-Sample Validation",
-   "text": "notebooks/validate_locally.py rebuilds the no-age features and a comparable soft-voting ensemble (LightGBM + XGBoost + logistic regression), then measures performance on customers the model has not seen. Default rate: 10.2% of 20,839 customers. Evaluation; Cutoff; Defaults caught; Precision; AUC. Training data (original method); 0.15; 79.8%; 32.7%; 0.90. 10-fold cross-validation; 0.15; 56.5%; 23.3%; 0.76. Held-out 20%, original cutoff; 0.15; 58.0%; 23.1%; 0.76. Held-out 20%, cutoff chosen on the other 80%; 0.10; 74.6%; 19.8%; 0.76. Takeaways: The original \"75–80% of defaults caught\" figure was a training-data result. At the same 0.15 cutoff, the model catches about 57% of defaults on unseen customers.",
+   "section": "What drives risk",
+   "text": "SHAP (through a KernelExplainer wrapper) on the ensemble: lower monthly income and lower credit scores are the dominant upward drivers of default risk; credit utilization and debt-to-income move predictions far less. The AutoML model stays in the Azure ML workspace, so the chart repeats the notebook's SHAP setup (a 100-row background, 300 sampled customers) on the local stand-in ensemble; its top five drivers come out in the same order as the AutoML champion's.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "5. Out-of-Sample Validation",
-   "text": "Choosing the F2 cutoff properly (on separate data) lands at 0.10, which catches about 75% of defaults on a true holdout, at the cost of lower precision: roughly 38% of accounts would be flagged for review. Whether that review volume is acceptable is a business decision about the cost of an account review versus a charge-off. Out-of-sample AUC is about 0.76, a solid but realistic level of separation for application-time credit data. Library versions weren't pinned when this table was made. With the versions now in requirements-dev.txt, the same script picks a cutoff of 0.09 on the 80% and catches 80.0% of holdout defaults at 19.3% precision (AUC 0.762). F2 is nearly flat between 0.08 and 0.10, so small changes move the cutoff.",
-   "url": "https://github.com/livingdw67/loan-default-prediction"
-  },
-  {
-   "key": "loan-default-prediction",
-   "kind": "project",
-   "source": "Loan Default Prediction",
-   "section": "Databricks Version",
+   "section": "Databricks version",
    "text": "The same model, rebuilt on Databricks Free Edition (serverless) in databricks/ as an Asset Bundle with one job, loan-default-pipeline: Step; Notebook; What it does. Load; 01_load_data.py; Reads train.csv and test.csv from a Unity Catalog volume into the Delta tables workspace.loans.raw_train and raw_test. Tune and train; 02_tune_train.py; Optuna search, one look at the holdout, and the model registered in Unity Catalog. Score; 03_score.py; The champion model scores the 1,000 test customers into workspace.loans.predictions. What changed from the Azure version",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
@@ -964,40 +980,32 @@
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "Databricks Version",
-   "text": "Tuning: Optuna searches LightGBM settings (trees, learning rate, leaves, minimum leaf size, row and column sampling, L2 penalty) by 5-fold cross-validated AUC, in place of AutoML's model search. Its default sampler (TPE) learns from earlier trials which settings score well, and trials that trail the median after a fold or two are stopped early. Every trial is a nested MLflow run. The holdout stays out of tuning: the search and the F2 cutoff use only the 80% development split. The 20% holdout, the same customers as in section 5, is scored once at the end.",
+   "section": "Databricks version",
+   "text": "Tuning: Optuna searches LightGBM settings (trees, learning rate, leaves, minimum leaf size, row and column sampling, L2 penalty) by 5-fold cross-validated AUC, in place of AutoML's model search. Its default sampler (TPE) learns from earlier trials which settings score well, and trials that trail the median after a fold or two are stopped early. Every trial is a nested MLflow run. The holdout stays out of tuning: the search and the F2 cutoff use only the 80% development split. The 20% holdout, the same customers as above, is scored once at the end.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "Databricks Version",
-   "text": "Champion and challenger: each run registers workspace.loans.loan_default as @challenger. It becomes @champion only if it beats the current champion's holdout AUC on the same customers, with a paired bootstrap interval above zero. Each run's holdout predictions are kept in workspace.loans.holdout_predictions for that comparison. No age by construction: the registered model's input schema has no date of birth, so age can't reach it. One copy of the code: the features, the stand-in ensemble and the cutoff search live in databricks/src/loan_lib/, which validate_locally.py now imports too. Holdout results (4,168 customers, run of 2026-10-22) Model; AUC; PR-AUC; Cutoff; Defaults caught; Precision; Accounts flagged. Stand-in for the AutoML ensemble (three models); 0.762; 0.252; 0.09; 80.0%; 19.3%; 42.4%. Optuna-tuned LightGBM (one model); 0.771; 0.251; 0.09; 79.3%; 19.3%; 41.9%.",
+   "section": "Databricks version",
+   "text": "Champion and challenger: each run registers workspace.loans.loan_default as @challenger. It becomes @champion only if it beats the current champion's holdout AUC on the same customers, with a paired bootstrap interval above zero. Each run's holdout predictions are kept in workspace.loans.holdout_predictions for that comparison. One copy of the code: the features, the stand-in ensemble and the cutoff search live in databricks/src/loan_lib/, which validate_locally.py imports too. Holdout results (4,168 customers) Model; AUC; PR-AUC; Cutoff; Defaults caught; Precision; Accounts flagged. Stand-in for the AutoML ensemble (three models); 0.762; 0.252; 0.09; 80.0%; 19.3%; 42.4%. Optuna-tuned LightGBM (one model); 0.771; 0.251; 0.09; 79.3%; 19.3%; 41.9%. Tuned minus stand-in, paired bootstrap: AUC +0.010 (95% interval +0.003 to +0.016); PR-AUC −0.001 (−0.017 to +0.012).",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "Databricks Version",
-   "text": "Tuned minus stand-in, paired bootstrap: AUC +0.010 (95% interval +0.003 to +0.016); PR-AUC −0.001 (−0.017 to +0.012). The test: both models score the same customers, so the comparison resamples customers 2,000 times and scores both models on each resample. That keeps the pairing and separates the models' difference from the luck of which customers landed in the holdout. Plain meaning: the single tuned model ranks customers slightly but reliably better, since the AUC interval stays above zero. On precision-recall, which weighs the rare defaults most, the two can't be told apart, and at the business cutoff they flag and catch nearly the same accounts. One tuned model does the job of the three-model ensemble.",
+   "section": "Databricks version",
+   "text": "The test: both models score the same customers, so the comparison resamples customers 2,000 times and scores both models on each resample. That keeps the pairing and separates the models' difference from the luck of which customers landed in the holdout. Plain meaning: the single tuned model ranks customers slightly but reliably better, since the AUC interval stays above zero. On precision-recall, which weighs the rare defaults most, the two can't be told apart, and at the business cutoff they flag and catch nearly the same accounts. One tuned model does the job of the three-model ensemble. Assumptions: customers are independent of one another, and the holdout resembles future applicants. The interval is the 2.5th to 97.5th percentile of the resampled differences.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
    "key": "loan-default-prediction",
    "kind": "project",
    "source": "Loan Default Prediction",
-   "section": "Databricks Version",
-   "text": "Assumptions: customers are independent of one another, and the holdout resembles future applicants. The interval is the 2.5th to 97.5th percentile of the resampled differences. The search settled on small trees (7 leaves, 250 trees, learning rate 0.016). The drivers match the Azure SHAP analysis: monthly income (41% of the mean absolute SHAP value) and the two credit scores (28% and 27%) carry almost everything, and utilization, debt-to-income and the account counts together add about 5%. Run it Local checks: python -m pip install -r requirements-dev.txt, then python -m pytest -q tests.",
-   "url": "https://github.com/livingdw67/loan-default-prediction"
-  },
-  {
-   "key": "loan-default-prediction",
-   "kind": "project",
-   "source": "Loan Default Prediction",
-   "section": "Technologies Used",
-   "text": "Cloud & MLOps: Azure Machine Learning SDK v2, Azure AutoML, Databricks (Unity Catalog, Delta, Jobs, Asset Bundles), MLflow Core Data Stack: Python, Pandas, NumPy, Scikit-Learn, LightGBM, XGBoost, Optuna Interpretability & Visualization: SHAP, Matplotlib, Seaborn",
+   "section": "Databricks version",
+   "text": "The search settled on small trees (7 leaves, 250 trees, learning rate 0.016). The drivers match the Azure SHAP analysis: monthly income (41% of the mean absolute SHAP value) and the two credit scores (28% and 27%) carry almost everything, and utilization, debt-to-income and the account counts together add about 5%.",
    "url": "https://github.com/livingdw67/loan-default-prediction"
   },
   {
