@@ -57,7 +57,7 @@
       "also": [
         "Energy & industry"
       ],
-      "result": "A LangGraph agent that answers questions over 1,250 pages of tire-industry annual reports with page citations. It got 40 of 41 test questions right and refused every off-topic and prompt-injection attempt.",
+      "result": "A LangGraph agent that answers questions over 1,250 pages of tire-industry annual reports with page citations. It got 40 of 41 hand-checked questions right, then 82% of the 300 held-out questions in a harder 400-question test, which showed where it's weakest: comparisons (42%) and false premises (67%). It handled every off-topic and prompt-injection attempt in both tests.",
       "stack": [
         "LangGraph",
         "RAG",
