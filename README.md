@@ -19,9 +19,10 @@ A free, self-updating portfolio site built with Streamlit. Every repository I ow
 
 A project can also have its own page inside the app, opened by a button on its card. The pages are in `app_pages/` and are registered in `PAGES` at the bottom of `streamlit_app.py`. Navigation is hidden, so the home page looks the same, and each page gets a "Back to projects" link. To link a page from a card, set `page` (the key in `PAGES`) and `page_label` (the button text) in the project's `projects.json` entry.
 
-- `power-test` (`app_pages/power_test.py`): how many questions a fair Segment Assistant vs Cortex Analyst test needs, and what each round found. Its data, `power_test_rounds.json`, is copied from the eval folder (`OneDrive\Documents\segmentation-practice-eval\power_app\rounds.json`).
+- `power-test` (`app_pages/power_test.py`): how many questions a fair Segment Assistant vs Cortex Analyst test needs, and what each round found. Its data, `power_test_rounds.json`, is a copy of `practice_eval/power_app/rounds.json` in the snowpark-customer-segmentation repo.
 - `agent-runs` (`app_pages/agent_runs.py`): the park agent's 30 graded test runs, replayed from saved results, plus its input screen and number check to try. Its data, `agent_runs.json`, is written by `python scripts/export_agent_runs.py <path to park-crowd-forecast>`; rerun it after a new eval run.
 - `container-planner` (`app_pages/container_planner.py`): an illustrative empty-container repositioning plan. A demand forecast for 15 depots feeds a mixed-integer program (HiGHS through SciPy) that is solved in the app on every click.
+- `ask` (`app_pages/ask.py`): "Ask about my work". A visitor picks one of the questions in `TOPICS` (`ask_my_work.py`) and reads verbatim quotes from the featured READMEs and this site's own text, each pinned to its source. No model is called. Its data, `ask_corpus.json`, is written by `python scripts/export_ask_corpus.py`; rerun it after a featured README changes.
 
 ### Hero demo
 
@@ -29,7 +30,7 @@ Beside the headline, "Ask the Segment Assistant" (`segment_demo.py`) replays sev
 
 ### Demos strip
 
-`DEMOS` in `streamlit_app.py` lists the four tiles under the hero ("Try it"). A tile's target is either a key in `PAGES`, which opens in the app, or a URL, which opens the live app.
+`DEMOS` in `streamlit_app.py` lists the five tiles under the hero ("Try it"). A tile's target is either a key in `PAGES`, which opens in the app, or a URL, which opens the live app.
 
 Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Customer analytics`. `Analytics engineering` is light slate. A repo with no curated domain, and no keyword match, shows as `Data science` (also slate).
 
@@ -58,3 +59,7 @@ streamlit run streamlit_app.py
 ## Personalise
 
 Name, role, credentials, intro, principles, experience, toolkit and contact links live at the top of `streamlit_app.py`. Colours and fonts follow the personal brand guide (`Branding/brand-guide.md`): the Streamlit theme is in `.streamlit/config.toml`, and the page's own styles use the CSS variables in the `:root` block below the settings.
+
+## License
+
+MIT ([LICENSE](LICENSE)).
