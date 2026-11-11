@@ -34,7 +34,9 @@ if picked:
         with st.container(border=True):
             st.markdown(f"**{quote.source}** · {quote.section}")
             st.text(quote.text)
-            st.link_button("Read the source", quote.url, icon=":material/open_in_new:")
+            # Each link opens the heading the quote sits under, not the top of the page.
+            label = "Read it in the README" if "github.com" in quote.url else "See it on the home page"
+            st.link_button(label, quote.url, icon=":material/open_in_new:")
 
 st.divider()
 st.caption(

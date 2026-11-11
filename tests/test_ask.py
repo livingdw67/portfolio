@@ -43,6 +43,28 @@ def test_work_history_matches_the_site():
     ]
 
 
+@pytest.mark.parametrize("topic", [t for t in TOPICS if "site-toolkit" in t.sources],
+                         ids=[t.question for t in TOPICS if "site-toolkit" in t.sources])
+def test_the_toolkit_line_comes_after_the_write_ups(topic):
+    assert [quote.key for quote in answer(topic, INDEX)][-1] == "site-toolkit"
+
+
+def test_site_quotes_link_to_their_own_section_of_the_home_page():
+    home = (ROOT / "streamlit_app.py").read_text(encoding="utf-8")
+    for passage in PASSAGES:
+        if passage["kind"] in ("experience", "toolkit", "credentials"):
+            heading = "Experience" if passage["kind"] == "experience" else "Toolkit"
+            assert passage["url"].endswith(f"/#{heading.lower()}")
+            assert f"<h2>{heading}</h2>" in home   # Streamlit makes the id from the heading's words
+
+
+def test_project_quotes_link_into_their_own_repo():
+    for passage in PASSAGES:
+        if passage["kind"] == "project":
+            assert passage["url"].split("#")[0] == f"https://github.com/livingdw67/{passage['key']}"
+    assert sum("#" in p["url"] for p in PASSAGES if p["kind"] == "project") > 50
+
+
 def test_private_repos_never_enter_the_corpus():
     private = {"cfb-betting-sim", "data-canon-core", "music-similarity", "architecture-comparison", "headhunter"}
     assert not private & {passage["key"] for passage in PASSAGES}

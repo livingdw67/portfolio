@@ -44,8 +44,8 @@ def site_constants() -> dict:
     return found
 
 
-def github(path: str, raw: bool = False) -> requests.Response:
-    headers = {"Accept": "application/vnd.github.raw" if raw else "application/vnd.github+json"}
+def github(path: str, accept: str = "json") -> requests.Response:
+    headers = {"Accept": f"application/vnd.github.{accept}" if accept != "json" else "application/vnd.github+json"}
     token = os.environ.get("GITHUB_TOKEN")
     if token:
         headers["Authorization"] = f"Bearer {token}"
@@ -72,15 +72,28 @@ def table_row(line: str) -> str:
     return "; ".join(cell for cell in cells if cell) + "."
 
 
-def sections_of(markdown: str) -> list[tuple[str, str]]:
-    """Split a README on its headings and flatten each section to prose lines."""
-    sections, heading, lines = [], "Overview", []
+def heading_anchor(heading: str, seen: dict[str, int]) -> str:
+    """The id GitHub gives a README heading; a repeated heading gets -1, -2 and so on."""
+    slug = re.sub(r"[^\w\- ]", "", heading.strip().lower()).replace(" ", "-")
+    count = seen.get(slug, 0)
+    seen[slug] = count + 1
+    return f"{slug}-{count}" if count else slug
+
+
+def sections_of(markdown: str) -> list[tuple[str, str, list[str]]]:
+    """Split a README on its headings and flatten each section to prose lines.
+
+    Returns (heading, anchor, lines). Text above the first heading has no anchor.
+    """
+    sections, heading, anchor, lines = [], "Overview", "", []
+    seen: dict[str, int] = {}
     for line in clean_markdown(markdown).splitlines():
         match = re.match(r"^#{1,6}\s+(.*)", line)
         if match:
             if lines:
-                sections.append((heading, lines))
+                sections.append((heading, anchor, lines))
             heading, lines = match.group(1).strip(), []
+            anchor = heading_anchor(heading, seen)
         elif re.fullmatch(r"\s*\|?[\s:|-]+\|?\s*", line) and "-" in line:
             continue  # the divider under a table header
         elif line.strip().startswith("|"):
@@ -88,8 +101,8 @@ def sections_of(markdown: str) -> list[tuple[str, str]]:
         elif line.strip():
             lines.append(re.sub(r"^\s*(?:[-*+]|\d+\.)\s+", "", line).strip())
     if lines:
-        sections.append((heading, lines))
-    return [(name, body) for name, body in sections if not SKIP_SECTION.search(name)]
+        sections.append((heading, anchor, lines))
+    return [section for section in sections if not SKIP_SECTION.search(section[0])]
 
 
 def passages_from(body: list[str]) -> list[str]:
@@ -112,18 +125,20 @@ def main() -> None:
     curated = json.loads((ROOT / "projects.json").read_text(encoding="utf-8"))
     passages: list[dict] = []
 
-    def site(key: str, kind: str, source: str, section: str, text: str) -> None:
-        passages.append({"key": key, "kind": kind, "source": source, "section": section, "text": text, "url": SITE})
+    def site(key: str, kind: str, source: str, section: str, text: str, anchor: str = "") -> None:
+        # The anchor is the home page heading the text sits under; the intro and principles are at the top.
+        passages.append({"key": key, "kind": kind, "source": source, "section": section, "text": text,
+                         "url": f"{SITE}/#{anchor}" if anchor else SITE})
 
     site("site-intro", "about", "About Daniel", "Introduction", constants["INTRO"])
     for name, text in constants["PRINCIPLES"]:
         site("site-principles", "about", "How Daniel works", name, f"{name}. {text}")
     for when, organisation, role, what in constants["EXPERIENCE"]:
         key = "exp-" + re.sub(r"[^a-z]+", "-", organisation.lower()).strip("-")
-        site(key, "experience", organisation, f"{role}, {when}", what)
+        site(key, "experience", organisation, f"{role}, {when}", what, anchor="experience")
     for name, text in constants["TOOLKIT"]:
         kind = "credentials" if name == "Credentials" else "toolkit"
-        site("site-toolkit", kind, "Toolkit", name, f"{name}: {text}.")
+        site("site-toolkit", kind, "Toolkit", name, f"{name}: {text}.", anchor="toolkit")
 
     for repo in curated["featured_order"]:
         details = github(f"/repos/{USER}/{repo}").json()
@@ -136,11 +151,14 @@ def main() -> None:
         summary = card.get("result", "")
         passages.append({"key": repo, "kind": "project", "source": title, "section": "Summary",
                          "text": f"{summary} Built with {stack}." if stack else summary, "url": url})
-        for name, body in sections_of(github(f"/repos/{USER}/{repo}/readme", raw=True).text):
+        # Link each quote to its own README heading, but only where GitHub's rendered page has that id.
+        rendered = github(f"/repos/{USER}/{repo}/readme", accept="html").text
+        for name, anchor, body in sections_of(github(f"/repos/{USER}/{repo}/readme", accept="raw").text):
+            found = anchor and re.search(rf'(?:id="user-content-|href="#){re.escape(anchor)}"', rendered)
             for text in passages_from(body):
                 if len(text.split()) >= 12:
                     passages.append({"key": repo, "kind": "project", "source": title, "section": name,
-                                     "text": text, "url": url})
+                                     "text": text, "url": f"{url}#{anchor}" if found else url})
 
     payload = json.dumps({"passages": passages}, ensure_ascii=False, indent=1) + "\n"
     OUTPUT.write_bytes(payload.encode("utf-8"))   # bytes, so Windows doesn't rewrite line endings
