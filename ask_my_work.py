@@ -150,4 +150,5 @@ def answer(topic: Topic, index: Index) -> list[Quote]:
             used.add(passage["key"])
             quotes.append(Quote(best_sentences(index, passage, terms), passage["source"], passage["section"],
                                 passage["url"], passage["key"]))
-    return quotes
+    # The Toolkit line is a list of names, so the write-ups that show the work come first.
+    return sorted(quotes, key=lambda quote: quote.key == "site-toolkit")
