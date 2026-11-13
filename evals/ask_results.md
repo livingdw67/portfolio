@@ -51,3 +51,9 @@ Each round used new questions, and once a round's misses had been read, its ques
 - `W16` Has he deployed anything on Azure? (returned decline: nothing)
 - `W18` How was the customer churn model explained to stakeholders? (returned decline: nothing)
 - `W24` What's the weather in Charlotte? (returned quotes: park-crowd-forecast, grid-stress-simulator)
+
+## Change to the question file after these rounds (2026-11-13)
+
+One Experience entry was removed from the site, so its passage left `ask_corpus.json`. In `ask_questions.jsonl` its
+key was taken out of the accepted sources for `D18`, `W07` and `W11`, and `D17` and `T09`, which only that passage
+answered, were deleted. Every result above was scored before this change, on the questions as they were then.

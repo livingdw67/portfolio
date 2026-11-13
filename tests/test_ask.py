@@ -39,7 +39,7 @@ def test_every_answer_is_a_verbatim_quote_of_the_sources(topic):
 def test_work_history_matches_the_site():
     history = next(topic for topic in TOPICS if topic.listing == "experience")
     assert [quote.key for quote in answer(history, INDEX)] == [
-        "exp-diesel-laptops", "exp-attain-financial", "exp-duke-energy", "exp-tiaa",
+        "exp-attain-financial", "exp-duke-energy", "exp-tiaa",
     ]
 
 

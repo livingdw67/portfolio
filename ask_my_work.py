@@ -66,8 +66,8 @@ TOPICS = [
           ("site-toolkit", "park-crowd-forecast")),
     Topic("What's his predictive maintenance work?", "predictive maintenance turbofan engines failure",
           ("cmapss-predictive-maintenance",)),
-    Topic("What business impact has he had?", "incremental revenue accuracy runtime cutting time",
-          ("exp-tiaa", "exp-diesel-laptops", "exp-duke-energy")),
+    Topic("What business impact has he had?", "incremental revenue cutting time",
+          ("exp-tiaa", "exp-duke-energy")),
     Topic("Where has he worked?", listing="experience"),
     Topic("What are his credentials?", listing="credentials"),
 ]
