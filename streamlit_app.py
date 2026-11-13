@@ -26,7 +26,7 @@ from segment_demo import segment_demo
 # ---------------------------------------------------------------------------
 GITHUB_USER = "livingdw67"
 NAME = "Daniel Livingston"
-ROLE = "Principal Data Scientist"
+ROLE = "Senior Data Scientist"
 CREDENTIALS = ["M.S. Applied Statistics", "AWS Certified ML"]  # pills beside your name
 LOCATION = "Greer, SC"
 LINKEDIN = "https://www.linkedin.com/in/daniel-w-livingston"
@@ -37,8 +37,8 @@ RETRY_AFTER_FAILURE = dt.timedelta(minutes=15)  # pause before asking GitHub aga
 HEADLINE = "AI that shows its work."
 
 INTRO = (
-    "Twelve years building, deploying and monitoring production models, most recently as Principal Data Scientist "
-    "at Diesel Laptops. I design AI architecture and build it hands-on: semantic layers that reports, agents and MCP "
+    "Twelve years building, deploying and monitoring production models in finance and energy. "
+    "I design AI architecture and build it hands-on: semantic layers that reports, agents and MCP "
     "servers all consume, retrieval grounded in governed data, and agent orchestration with tools, state, failure "
     "handling and guardrails, tested the way you'd test any other claim."
 )
@@ -54,9 +54,6 @@ PRINCIPLES = [
 
 # (when, organisation, role, what) from the current resume
 EXPERIENCE = [
-    ("2026", "Diesel Laptops", "Principal Data Scientist (contract)",
-     "Deployed a classifier that separates sensor errors from physical coolant leaks, improving the diagnostic "
-     "product's accuracy by 16%, peer-reviewed graph neural network models, and cut pipeline runtime by 30% under Dagster."),
     ("2026", "Attain Financial", "Contract data scientist",
      "Designed a five-schema Snowflake architecture with isolated environments and audit logging, served a collections "
      "forecast from the Model Registry, and built a Cortex Analyst semantic layer for finance users."),
@@ -76,7 +73,7 @@ TOOLKIT = [
                                           "synthetic control, power analysis"),
     ("Applied AI", "LLM agents and tool orchestration, RAG with citations, MCP, text-to-SQL over semantic layers, "
                    "guardrails, LLM evaluation"),
-    ("Engineering", "Python, SQL, Git, pytest, GitHub Actions, Docker, FastAPI, Dagster, Kedro, Azure ML, AWS, SAS, R"),
+    ("Engineering", "Python, SQL, Git, pytest, GitHub Actions, Docker, FastAPI, Kedro, Azure ML, AWS, SAS, R"),
     ("Credentials", "M.S. Applied Statistics. AWS Certified Machine Learning, Associate (2024)"),
 ]
 
@@ -737,7 +734,7 @@ def experience_section() -> None:
     )
     st.markdown(
         f"""<div class="section-head"><h2>Experience</h2>
-<p>Production models in finance, a utility and industrial diagnostics, measured in revenue, accuracy and hours saved.</p></div>
+<p>Production models in finance and a utility, measured in revenue and hours saved.</p></div>
 <div class="timeline">{items}</div>""",
         unsafe_allow_html=True,
     )

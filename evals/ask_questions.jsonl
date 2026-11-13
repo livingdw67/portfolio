@@ -14,8 +14,7 @@
 {"id":"D14","split":"dev","type":"answer","question":"MCP server experience","gold":["cmapss-predictive-maintenance","site-toolkit","site-intro"]}
 {"id":"D15","split":"dev","type":"answer","question":"What were the customer segmentation results?","gold":["snowpark-customer-segmentation"]}
 {"id":"D16","split":"dev","type":"answer","question":"Heat pump load on the electric grid","gold":["grid-stress-simulator"]}
-{"id":"D17","split":"dev","type":"answer","question":"Has Daniel worked with graph neural networks?","gold":["exp-diesel-laptops"]}
-{"id":"D18","split":"dev","type":"answer","question":"Where has Daniel worked?","gold":["exp-diesel-laptops","exp-attain-financial","exp-duke-energy","exp-tiaa"]}
+{"id":"D18","split":"dev","type":"answer","question":"Where has Daniel worked?","gold":["exp-attain-financial","exp-duke-energy","exp-tiaa"]}
 {"id":"D19","split":"dev","type":"answer","question":"What degree does he have?","gold":["site-toolkit"]}
 {"id":"D20","split":"dev","type":"answer","question":"What are his skills?","gold":["site-toolkit"]}
 {"id":"D21","split":"dev","type":"decline","question":"Does he know Kubernetes?"}
@@ -36,7 +35,6 @@
 {"id":"T06","split":"round1","type":"answer","question":"Turbofan failure prediction","gold":["cmapss-predictive-maintenance"]}
 {"id":"T07","split":"round1","type":"answer","question":"A/B tests and control groups","gold":["site-toolkit","exp-duke-energy","site-principles","exp-tiaa"]}
 {"id":"T08","split":"round1","type":"answer","question":"Model monitoring at TIAA","gold":["exp-tiaa"]}
-{"id":"T09","split":"round1","type":"answer","question":"Did he improve pipeline runtime under Dagster?","gold":["exp-diesel-laptops"]}
 {"id":"T10","split":"round1","type":"answer","question":"Cortex Analyst semantic layer","gold":["exp-attain-financial","cmapss-predictive-maintenance","site-toolkit","snowpark-customer-segmentation"]}
 {"id":"T11","split":"round1","type":"answer","question":"dbt semantic layer project","gold":["semantic-rca"]}
 {"id":"T12","split":"round1","type":"answer","question":"Where did he use Owen values?","gold":["semantic-rca"]}
@@ -94,11 +92,11 @@
 {"id":"W04","split":"test","type":"answer","question":"Does he know how to keep an LLM from hallucinating?","gold":["site-principles","michelin-rag","park-crowd-forecast","snowpark-customer-segmentation"]}
 {"id":"W05","split":"test","type":"answer","question":"What's his most impressive AI project?","gold":["michelin-rag","park-crowd-forecast","snowpark-customer-segmentation","cmapss-predictive-maintenance","site-intro"]}
 {"id":"W06","split":"test","type":"answer","question":"Has he dealt with imbalanced classification?","gold":["loan-default-prediction","cmapss-predictive-maintenance"]}
-{"id":"W07","split":"test","type":"answer","question":"Can he build production data pipelines?","gold":["exp-diesel-laptops","cmapss-predictive-maintenance","park-crowd-forecast","exp-duke-energy","site-toolkit"]}
+{"id":"W07","split":"test","type":"answer","question":"Can he build production data pipelines?","gold":["cmapss-predictive-maintenance","park-crowd-forecast","exp-duke-energy","site-toolkit"]}
 {"id":"W08","split":"test","type":"answer","question":"Has he worked at a large financial firm?","gold":["exp-tiaa","exp-attain-financial"]}
 {"id":"W09","split":"test","type":"answer","question":"Experience with recommendation systems?","gold":["exp-tiaa"]}
 {"id":"W10","split":"test","type":"answer","question":"How does he compare two models fairly?","gold":["site-principles","park-crowd-forecast","snowpark-customer-segmentation","michelin-rag","theme-park-event-extraction","loan-default-prediction"]}
-{"id":"W11","split":"test","type":"answer","question":"Has he worked with sensor or telemetry data?","gold":["exp-diesel-laptops","cmapss-predictive-maintenance","exp-duke-energy"]}
+{"id":"W11","split":"test","type":"answer","question":"Has he worked with sensor or telemetry data?","gold":["cmapss-predictive-maintenance","exp-duke-energy"]}
 {"id":"W12","split":"test","type":"answer","question":"Anything with named entity recognition?","gold":["theme-park-event-extraction"]}
 {"id":"W13","split":"test","type":"answer","question":"Did he work on demand or capacity planning?","gold":["park-crowd-forecast"]}
 {"id":"W14","split":"test","type":"answer","question":"What statistical methods does he use?","gold":["site-toolkit","site-principles","park-crowd-forecast","loan-default-prediction","michelin-rag"]}
