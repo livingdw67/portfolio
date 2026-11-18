@@ -1,4 +1,4 @@
-"""The hero demo: Segment Assistant answers replayed from its graded test runs.
+"""The first "Try it" demo: Segment Assistant answers replayed from its graded test runs.
 
 segment_demo.json is written by scripts/export_segment_demo.py from the snowpark-customer-segmentation repo's
 practice_eval/results. Every answer, plan, row, figure check and grade below was recorded when the Assistant
@@ -34,12 +34,11 @@ VERDICTS = {"answered-instead-of-declining": "answered instead of declining", "w
 
 CSS = """
 <style>
-.st-key-hero-demo { padding-top: 1.6rem; gap: .55rem; }
 .sa-where { font-size: .8rem; color: var(--muted); font-weight: 500; margin: 0; }
 .sa-title { font-family: var(--display); font-weight: 600; font-size: 1.35rem; line-height: 1.2; color: var(--ink);
   margin: .1rem 0 .2rem 0; }
 .sa-sub { color: var(--muted); font-size: .9rem; margin: 0 0 .35rem 0; line-height: 1.5; }
-.st-key-hero-demo [data-testid="stButtonGroup"] button p { font-size: .82rem; }
+.st-key-demo-segment [data-testid="stButtonGroup"] button p { font-size: .82rem; }
 .sa-q { display: flex; justify-content: flex-end; margin: .2rem 0 0 0; }
 .sa-q span { background: #1d3a4a; border: 1px solid #2f5a66; color: var(--ink); border-radius: 12px 12px 3px 12px;
   padding: .45rem .8rem; font-size: .93rem; max-width: 85%; }
@@ -55,8 +54,8 @@ CSS = """
 .sa-meta span.good { border-color: #2f6b68; color: var(--teal); }
 .sa-meta span.bad { border-color: #7a3f3b; color: #e5736b; }
 .sa-note { color: var(--muted); font-size: .84rem; margin: .1rem 0 0 0; }
-.st-key-hero-demo [data-testid="stExpander"] summary p { font-size: .88rem; }
-.st-key-hero-demo [data-testid="stPageLink"] p { font-size: .9rem; }
+.st-key-demo-segment [data-testid="stExpander"] summary p { font-size: .88rem; }
+.st-key-demo-segment [data-testid="stPageLink"] p { font-size: .9rem; }
 </style>
 """
 
@@ -131,17 +130,28 @@ def _analyst(rec: dict) -> None:
 @st.fragment  # a click reruns only this widget, not the page
 def segment_demo(tested_page=None) -> None:
     st.markdown(CSS, unsafe_allow_html=True)
-    st.markdown(
-        '<div class="sa-where">Replays of graded test runs · nothing here calls a model</div>'
-        '<div class="sa-title">Ask the Segment Assistant</div>'
-        '<div class="sa-sub">An LLM agent over a semantic layer for 4,261 customer segments. The model only picks '
-        "a calculation; tested code computes and checks every figure. Snowflake's Cortex Analyst got the same "
-        "questions.</div>",
-        unsafe_allow_html=True,
-    )
-    pick = st.pills("Pick a question", [d["id"] for d in DEMO], format_func=lambda i: LABELS.get(i, BY_ID[i]["question"]),
-                    default=DEMO[0]["id"], key="sa-pick", label_visibility="collapsed")
-    rec = BY_ID[pick or DEMO[0]["id"]]
+    intro, chat = st.columns([1, 1.6], gap="large")  # side by side in a wide tile; stacked on a phone
+    with intro:
+        st.markdown(
+            '<div class="sa-where">Replays of graded test runs · nothing here calls a model</div>'
+            '<div class="sa-title">Ask the Segment Assistant</div>'
+            '<div class="sa-sub">An LLM agent over a semantic layer for 4,261 customer segments. The model only picks '
+            "a calculation; tested code computes and checks every figure. Snowflake's Cortex Analyst got the same "
+            "questions.</div>",
+            unsafe_allow_html=True,
+        )
+        pick = st.pills("Pick a question", [d["id"] for d in DEMO],
+                        format_func=lambda i: LABELS.get(i, BY_ID[i]["question"]),
+                        default=DEMO[0]["id"], key="sa-pick", label_visibility="collapsed")
+        with st.container(horizontal=True, gap="medium"):
+            if tested_page is not None:
+                st.page_link(tested_page, label="How the 1,400-question test was run", icon=":material/arrow_forward:")
+            st.page_link(CODE, label="Code", icon=":material/code:")
+    with chat:
+        _conversation(BY_ID[pick or DEMO[0]["id"]])
+
+
+def _conversation(rec: dict) -> None:
     _turn(rec)
     follow = rec.get("follow_up")
     if follow:
@@ -157,7 +167,3 @@ def segment_demo(tested_page=None) -> None:
     if shown.get("analyst"):
         with st.expander("Same question to Cortex Analyst", icon=":material/compare_arrows:"):
             _analyst(shown)
-    with st.container(horizontal=True, gap="medium"):
-        if tested_page is not None:
-            st.page_link(tested_page, label="How the 1,400-question test was run", icon=":material/arrow_forward:")
-        st.page_link(CODE, label="Code", icon=":material/code:")
