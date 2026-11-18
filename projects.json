@@ -46,6 +46,8 @@
         "XGBoost"
       ],
       "homepage": "https://ask-the-fleet.streamlit.app",
+      "page": "fleet-architecture",
+      "page_label": "Architecture review",
       "also": [
         "Applied AI",
         "Analytics engineering"
