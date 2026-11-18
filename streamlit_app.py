@@ -27,7 +27,7 @@ from segment_demo import segment_demo
 # ---------------------------------------------------------------------------
 GITHUB_USER = "livingdw67"
 NAME = "Daniel Livingston"
-ROLE = "Principal Data Scientist"
+ROLE = "Senior Data Scientist"
 CREDENTIALS = ["M.S. Applied Statistics", "AWS Certified ML"]  # pills beside your name
 LOCATION = "Greer, SC"
 LINKEDIN = "https://www.linkedin.com/in/daniel-w-livingston"
@@ -38,8 +38,8 @@ RETRY_AFTER_FAILURE = dt.timedelta(minutes=15)  # pause before asking GitHub aga
 HEADLINE = "AI that shows its work."
 
 INTRO = (
-    "Twelve years building, deploying and monitoring production models, most recently as Principal Data Scientist "
-    "at Diesel Laptops. I design AI architecture and build it hands-on: semantic layers that reports, agents and MCP "
+    "Twelve years building, deploying and monitoring production models in finance and energy. "
+    "I design AI architecture and build it hands-on: semantic layers that reports, agents and MCP "
     "servers all consume, retrieval grounded in governed data, and agent orchestration with tools, state, failure "
     "handling and guardrails, tested the way you'd test any other claim."
 )
@@ -55,16 +55,13 @@ PRINCIPLES = [
 
 # (when, organisation, role, what) from the current resume
 EXPERIENCE = [
-    ("2026", "Diesel Laptops", "Principal Data Scientist (contract)",
-     "Deployed a classifier that separates sensor errors from physical coolant leaks, improving the diagnostic "
-     "product's accuracy by 16%, peer-reviewed graph neural network models, and cut pipeline runtime by 30% under Dagster."),
     ("2026", "Attain Financial", "Contract data scientist",
      "Designed a five-schema Snowflake architecture with isolated environments and audit logging, served a collections "
      "forecast from the Model Registry, and built a Cortex Analyst semantic layer for finance users."),
     ("2024 to 2025", "Duke Energy", "Contract data scientist",
      "Built a centralized feature store across smart meter, program and demographic data, cutting data preparation "
      "and model building time by 50%, and introduced control groups for enterprise models."),
-    ("2014 to 2023", "TIAA", "Senior Data Scientist, 2021 to 2023 · Senior Analyst, Customer Insights, 2016 to 2021",
+    ("2014 to 2023", "TIAA", "Senior Data Scientist, Enterprise Analytics, 2016 to 2023 · Contractor, 2014 to 2016",
      "Built the propensity models behind a recommendation system that drove $36M in incremental revenue in six months, "
      "an XGBoost churn model with SHAP explanations, and the model monitoring process that became the firm's standard."),
 ]
@@ -77,7 +74,7 @@ TOOLKIT = [
                                           "synthetic control, power analysis"),
     ("Applied AI", "LLM agents and tool orchestration, RAG with citations, MCP, text-to-SQL over semantic layers, "
                    "guardrails, LLM evaluation"),
-    ("Engineering", "Python, SQL, Git, pytest, GitHub Actions, Docker, FastAPI, Dagster, Kedro, Azure ML, AWS, SAS, R"),
+    ("Engineering", "Python, SQL, Git, pytest, GitHub Actions, Docker, FastAPI, Kedro, Azure ML, AWS, SAS, R"),
     ("Credentials", "M.S. Applied Statistics. AWS Certified Machine Learning, Associate (2024)"),
 ]
 
@@ -667,14 +664,19 @@ DEMOS = [
      "checked against its tools. Then try to get past its guardrails.",
      "Tool orchestration, failure handling, guardrails and evaluation.",
      "See the test runs", "agent-runs"),
+    ("ask", "Runs here · no AI model", "Ask about my work",
+     "Pick a question about what I've built and read answers quoted word for word from my public write-ups, each "
+     "with its source.",
+     "Retrieval with sources, and testing a feature before shipping it.",
+     "Pick a question", "ask"),
 ]
 
 
 def demos_section() -> None:
     st.markdown('<div id="demos"></div><div class="section-head"><h2>Try it</h2>'
-                "<p>Four working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
+                "<p>Five working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
                 unsafe_allow_html=True)
-    for row in (DEMOS[:2], DEMOS[2:]):
+    for row in (DEMOS[:2], DEMOS[2:4], DEMOS[4:]):
         cols = st.columns(len(row), gap="medium")
         for col, (key, where, title, what, shows, label, target) in zip(cols, row):
             with col, st.container(key=f"demo-{key}"):
@@ -753,7 +755,7 @@ def experience_section() -> None:
     )
     st.markdown(
         f"""<div class="section-head"><h2>Experience</h2>
-<p>Production models in finance, a utility and industrial diagnostics, measured in revenue, accuracy and hours saved.</p></div>
+<p>Production models in finance and a utility, measured in revenue and hours saved.</p></div>
 <div class="timeline">{items}</div>""",
         unsafe_allow_html=True,
     )
@@ -803,6 +805,7 @@ PAGES = {  # keys are the "page" values in projects.json
                                  title="Where should the empty containers go?", url_path="container-planner"),
     "fleet-architecture": st.Page(HERE / "app_pages" / "fleet_architecture.py",
                                   title="How the jet-engine fleet system fits together", url_path="fleet-architecture"),
+    "ask": st.Page(HERE / "app_pages" / "ask.py", title="Ask about my work", url_path="ask"),
 }
 current = st.navigation([HOME, *PAGES.values()], position="hidden")
 if current.url_path != HOME.url_path:
