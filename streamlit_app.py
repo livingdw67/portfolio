@@ -19,6 +19,7 @@ from pathlib import Path
 import requests
 import streamlit as st
 
+from ask_panel import ask_panel
 from diagrams import FLEET_SYSTEM, diagram
 from segment_demo import segment_demo
 
@@ -168,17 +169,38 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   margin: 0; padding: 0; max-width: 14ch;
 }
 .hero .rule { width: 64px; height: 3px; background: var(--amber); border-radius: 2px; margin: 1.3rem 0 1.2rem 0; }
-.hero .intro { font-size: 1.15rem; color: var(--ink); max-width: 36rem; margin: 0 0 1.75rem 0; }
-.principles { display: grid; gap: .9rem; margin: 0 0 2rem 0; max-width: 36rem; }
-.principles div { border-left: 2px solid var(--line); padding-left: 14px; }
-.principles dt { font-weight: 600; color: var(--ink); }
-.principles dd { margin: 0; color: var(--muted); font-size: .97rem; }
+.hero .intro { font-size: 1.15rem; color: var(--ink); max-width: 36rem; margin: 0 0 1.5rem 0; }
 .cta { display: flex; flex-wrap: wrap; gap: 10px; }
 .cta a { text-decoration: none; font-weight: 500; font-size: .97rem; padding: .62rem 1.05rem;
   border-radius: 6px; border: 1px solid var(--border); color: var(--ink); background: var(--surface); }
 .cta a.primary { background: var(--teal); border-color: var(--teal); color: var(--on-teal); font-weight: 600; }
 .cta a:hover { border-color: var(--teal); color: var(--ink); }
 .cta a.primary:hover { background: var(--teal-hover); color: var(--on-teal); }
+
+/* ---------- Ask the Fleet, beside the headline ---------- */
+.st-key-hero-fleet { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--teal);
+  border-radius: 10px; padding: 1.2rem 1.25rem 1.1rem 1.25rem; gap: .6rem; margin-top: 5.2rem; }
+.fl-where { display: flex; align-items: center; gap: 8px; font-size: .8rem; color: var(--muted); font-weight: 500; margin: 0; }
+.fl-where i { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex: none;
+  box-shadow: 0 0 0 3px rgba(95, 196, 192, .22); }
+.fl-title { font-family: var(--display); font-weight: 600; font-size: 1.65rem; line-height: 1.15; letter-spacing: -0.01em;
+  color: var(--ink); margin: .25rem 0 .5rem 0; padding: 0; }
+.fl-what { color: var(--ink); font-size: .95rem; margin: 0 0 1rem 0; }
+.fl-try { font-size: .72rem; color: var(--muted); font-weight: 600; letter-spacing: .06em; margin: 0 0 .45rem 0; }
+.fl-q { display: flex; justify-content: flex-end; margin: 0 0 .45rem 0; }
+.fl-q span { background: #1d3a4a; border: 1px solid #2f5a66; color: var(--ink); border-radius: 12px 12px 3px 12px;
+  padding: .4rem .8rem; font-size: .9rem; max-width: 88%; }
+.fl-for { color: var(--muted); font-size: .84rem; margin: .7rem 0 0 0; }
+.fl { padding-bottom: 1rem; }  /* room for the buttons Streamlit pulls up under markdown */
+.st-key-hero-fleet [data-testid="stCaptionContainer"] p { color: var(--muted); font-size: .82rem; }
+
+/* ---------- How I build: the principles, in a strip under the top ---------- */
+.how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem 2rem; margin: 3.25rem 0 0 0;
+  padding: 1.6rem 0 0 0; border-top: 1px solid var(--line); }
+.how div { margin: 0; }
+.how b { display: block; font-size: .78rem; color: var(--teal); font-weight: 600; letter-spacing: .06em; margin-bottom: .35rem; }
+.how dt { font-weight: 600; color: var(--ink); font-size: 1.05rem; margin: 0 0 .3rem 0; }
+.how dd { margin: 0; color: var(--muted); font-size: .95rem; line-height: 1.55; }
 
 /* ---------- Section headings ---------- */
 .section-head { margin: 5rem 0 1.25rem 0; }
@@ -280,7 +302,8 @@ div[role="dialog"] h1, div[role="dialog"] h2, div[role="dialog"] h3 { font-famil
 
 @media (max-width: 640px) {
   [data-testid="stMainBlockContainer"], .block-container { padding-left: 1rem; padding-right: 1rem; padding-top: 1.75rem; }
-  .st-key-hero-demo { padding-top: .5rem; }
+  .st-key-hero-fleet { margin-top: .25rem; }
+  .how { grid-template-columns: 1fr; margin-top: 2.5rem; }
   .toolkit { grid-template-columns: 1fr; }
   .toolkit dt { padding-bottom: .1rem; }
   .toolkit dd { border-top: none; padding-top: 0; }
@@ -558,12 +581,26 @@ def open_writeup(p: dict) -> None:
 # ---------------------------------------------------------------------------
 # Sections
 # ---------------------------------------------------------------------------
+# The live demo featured beside the headline
+FLEET = {
+    "where": "Live on Databricks · up to 50 questions a day",
+    "title": "Ask the Fleet",
+    "what": "Ask 709 NASA turbofan engines that were run until they failed a question in plain English. A Databricks "
+            "Genie space writes SQL against governed Unity Catalog metric views, and the answer comes straight from "
+            "Databricks.",
+    "examples": [  # from the app's own suggested questions
+        "Which engine lasted the longest, and for how many cycles?",
+        "What is the mean time to failure for each fault mode?",
+        "How many engines failed before 150 cycles?",
+    ],
+    "shows": "Semantic layers, text-to-SQL with guardrails, a public app on a budget.",
+    "app": "https://ask-the-fleet.streamlit.app",
+}
+
+
 def hero() -> None:
     left, right = st.columns([1.45, 1], gap="large")
     creds = "".join(f"<span>{html.escape(c)}</span>" for c in CREDENTIALS)
-    principles = "".join(
-        f"<div><dt>{html.escape(t)}</dt><dd>{html.escape(d)}</dd></div>" for t, d in PRINCIPLES
-    )
     with left:
         st.markdown(
             f"""
@@ -576,19 +613,45 @@ def hero() -> None:
   <h1>{html.escape(HEADLINE)}</h1>
   <div class="rule"></div>
   <p class="intro">{html.escape(INTRO)}</p>
-  <dl class="principles">{principles}</dl>
-  <div class="cta">
-    <a class="primary" href="#demos" target="_self">Try a demo</a>
-    <a href="#projects" target="_self">See the projects</a>
-    <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://github.com/{GITHUB_USER}" target="_blank" rel="noopener">GitHub</a>
-  </div>
 </div>
 """,
             unsafe_allow_html=True,
         )
-    with right, st.container(key="hero-demo"):
-        segment_demo(PAGES["power-test"])
+        ask_panel(PAGES["ask"])
+        st.markdown(
+            f"""<div class="hero"><div class="cta">
+  <a class="primary" href="#demos" target="_self">Try a demo</a>
+  <a href="#projects" target="_self">See the projects</a>
+  <a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a>
+  <a href="https://github.com/{GITHUB_USER}" target="_blank" rel="noopener">GitHub</a>
+</div></div>""",
+            unsafe_allow_html=True,
+        )
+    with right:
+        fleet_card()
+
+
+def fleet_card() -> None:
+    examples = "".join(f'<div class="fl-q"><span>{html.escape(q)}</span></div>' for q in FLEET["examples"])
+    with st.container(key="hero-fleet"):
+        st.markdown(
+            f"""<div class="fl"><p class="fl-where"><i></i>{html.escape(FLEET["where"])}</p>
+<h2 class="fl-title">{html.escape(FLEET["title"])}</h2>
+<p class="fl-what">{html.escape(FLEET["what"])}</p>
+<p class="fl-try">TRY ASKING</p>{examples}
+<p class="fl-for">Shows: {html.escape(FLEET["shows"])}</p></div>""",
+            unsafe_allow_html=True,
+        )
+        st.link_button("Ask it live", FLEET["app"], type="primary", icon=":material/open_in_new:", width="stretch")
+        if st.button("See how it's built", key="hero-fleet-review", icon=":material/account_tree:", width="stretch"):
+            st.switch_page(PAGES["fleet-architecture"])
+        st.caption("Allow a minute on the first question while the warehouse starts.")
+
+
+def principles_strip() -> None:
+    items = "".join(f"<div><b>{i:02d}</b><dt>{html.escape(t)}</dt><dd>{html.escape(d)}</dd></div>"
+                    for i, (t, d) in enumerate(PRINCIPLES, start=1))
+    st.markdown(f'<dl class="how">{items}</dl>', unsafe_allow_html=True)
 
 
 def card_html(p: dict, lead: bool = False) -> str:
@@ -628,7 +691,7 @@ def project_card(p: dict, lead: bool = False) -> None:
 
 
 def architecture_section() -> None:
-    """First section under the hero: one system end to end, with a button to its full review."""
+    """Under the principles: one system end to end, with a button to its full review."""
     st.markdown(
         '<div id="architecture"></div><div class="section-head"><h2>How one of these systems fits together</h2>'
         "<p>The jet-engine project end to end. One set of metric definitions serves a report, a plain-English question "
@@ -654,41 +717,33 @@ DEMOS = [
      "block bootstrap, the same gate the weekly Databricks job uses.",
      "Champion/challenger promotion and out-of-time validation.",
      "Open the model lab", "https://park-crowd-forecast.streamlit.app/"),
-    ("fleet", "Live on Databricks · 50 questions a day", "Ask 709 jet engines a question",
-     "Plain-English questions go to a Databricks Genie space that writes SQL against governed Unity Catalog metric "
-     "views of engine reliability. Allow a minute on the first question while the warehouse starts.",
-     "Semantic layers, text-to-SQL with guardrails, a public app on a budget.",
-     "Open Ask the Fleet", "https://ask-the-fleet.streamlit.app"),
     ("agent", "Runs here · replays recorded runs", "Step through an AI agent's tests",
      "Thirty graded runs of an agent that routes questions to specialists, calls an optimizer, and has every number "
      "checked against its tools. Then try to get past its guardrails.",
      "Tool orchestration, failure handling, guardrails and evaluation.",
      "See the test runs", "agent-runs"),
-    ("ask", "Runs here · no AI model", "Ask about my work",
-     "Pick a question about what I've built and read answers quoted word for word from my public write-ups, each "
-     "with its source.",
-     "Retrieval with sources, and testing a feature before shipping it.",
-     "Pick a question", "ask"),
 ]
 
 
 def demos_section() -> None:
     st.markdown('<div id="demos"></div><div class="section-head"><h2>Try it</h2>'
-                "<p>Five working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
+                "<p>Four more working demos. No sign-in, and nothing you click costs anyone money.</p></div>",
                 unsafe_allow_html=True)
-    for row in (DEMOS[:2], DEMOS[2:4], DEMOS[4:]):
-        cols = st.columns(len(row), gap="medium")
-        for col, (key, where, title, what, shows, label, target) in zip(cols, row):
-            with col, st.container(key=f"demo-{key}"):
-                st.markdown(f'<div class="demo"><p class="demo-where">{html.escape(where)}</p>'
-                            f'<h3 class="demo-title">{html.escape(title)}</h3><p class="demo-what">{html.escape(what)}</p>'
-                            f'<p class="demo-for">Shows: {html.escape(shows)}</p></div>', unsafe_allow_html=True)
-                if target in PAGES:
-                    # a key starting "demo-" would pick up the tile styling
-                    if st.button(label, key=f"open-demo-{key}", type="primary", width="stretch"):
-                        st.switch_page(PAGES[target])
-                else:
-                    st.link_button(label, target, type="primary", width="stretch")
+    with st.container(key="demo-segment"):  # replays of graded runs, the widest demo, across the top
+        segment_demo(PAGES["power-test"])
+    st.write("")
+    cols = st.columns(len(DEMOS), gap="medium")
+    for col, (key, where, title, what, shows, label, target) in zip(cols, DEMOS):
+        with col, st.container(key=f"demo-{key}"):
+            st.markdown(f'<div class="demo"><p class="demo-where">{html.escape(where)}</p>'
+                        f'<h3 class="demo-title">{html.escape(title)}</h3><p class="demo-what">{html.escape(what)}</p>'
+                        f'<p class="demo-for">Shows: {html.escape(shows)}</p></div>', unsafe_allow_html=True)
+            if target in PAGES:
+                # a key starting "demo-" would pick up the tile styling
+                if st.button(label, key=f"open-demo-{key}", type="primary", width="stretch"):
+                    st.switch_page(PAGES[target])
+            else:
+                st.link_button(label, target, type="primary", width="stretch")
 
 
 def projects_section() -> None:
@@ -784,6 +839,7 @@ def footer() -> None:
 
 def home_page() -> None:
     hero()
+    principles_strip()
     architecture_section()
     demos_section()
     projects_section()

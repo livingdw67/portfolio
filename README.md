@@ -23,19 +23,25 @@ A project can also have its own page inside the app, opened by a button on its c
 - `agent-runs` (`app_pages/agent_runs.py`): the park agent's 30 graded test runs, replayed from saved results, plus its input screen and number check to try. Its data, `agent_runs.json`, is written by `python scripts/export_agent_runs.py <path to park-crowd-forecast>`; rerun it after a new eval run.
 - `container-planner` (`app_pages/container_planner.py`): an illustrative empty-container repositioning plan. A demand forecast for 15 depots feeds a mixed-integer program (HiGHS through SciPy) that is solved in the app on every click.
 - `fleet-architecture` (`app_pages/fleet_architecture.py`): an architecture review of the C-MAPSS project: the whole system, the live demo's request path, the three builds (Snowflake, Databricks, Kedro), the design choices, and eight changes I'd make next. Code links are pinned to commit `b2bc04c`; update them and the text when the project changes. Opened from the architecture section and the Predictive Maintenance card.
-- `ask` (`app_pages/ask.py`): "Ask about my work". A visitor picks one of the questions in `TOPICS` (`ask_my_work.py`) and reads verbatim quotes from the featured READMEs and this site's own text, each pinned to its source. No model is called. Its data, `ask_corpus.json`, is written by `python scripts/export_ask_corpus.py`; rerun it after a featured README changes.
+- `ask` (`app_pages/ask.py`): "Ask about my work". A visitor picks one of the questions in `TOPICS` (`ask_my_work.py`) and reads verbatim quotes from the featured READMEs and this site's own text, each pinned to its source. No model is called. Its data, `ask_corpus.json`, is written by `python scripts/export_ask_corpus.py`; rerun it after a featured README changes. Opened from the Ask panel at the top of the home page.
+
+### Top of the page
+
+Beside the headline:
+- **Ask about my work** (`ask_panel.py`), under the intro: a few of the `ask` page's questions as chips (`CHIPS`), each answered with the first two verbatim quotes and their sources. A link opens the `ask` page on the same question, with every question and source. It shares `ask_my_work.py` and `ask_corpus.json` with that page, so no model is called.
+- **Ask the Fleet** (`FLEET` and `fleet_card()` in `streamlit_app.py`), on the right: the live Databricks app, with three of its own suggested questions, a button to the app and one to the `fleet-architecture` page.
+
+Under them, `PRINCIPLES` shows as a numbered strip.
 
 ### Architecture section
 
-The first section under the hero shows the C-MAPSS system diagram, with buttons to the `fleet-architecture` page and the live Ask the Fleet app. The diagrams are SVG files in `assets/` (`fleet_system.svg`, `fleet_demo_path.svg`) with their own colours and fonts, drawn as images by `diagrams.py` so Streamlit's styles don't touch them. On narrow screens they scroll sideways rather than shrink.
+After the principles, the C-MAPSS system diagram, with buttons to the `fleet-architecture` page and the live Ask the Fleet app. The diagrams are SVG files in `assets/` (`fleet_system.svg`, `fleet_demo_path.svg`) with their own colours and fonts, drawn as images by `diagrams.py` so Streamlit's styles don't touch them. On narrow screens they scroll sideways rather than shrink.
 
-### Hero demo
+### Demos strip ("Try it")
 
-Beside the headline, "Ask the Segment Assistant" (`segment_demo.py`) replays seven recorded, graded Segment Assistant answers, each with its route, plan, code's fixes to the plan, rows and figure check, and Cortex Analyst's answer to the same question. One follow-up shows the conversation state. Nothing calls a model. Its data, `segment_demo.json`, is written by `python scripts/export_segment_demo.py <path to snowpark-customer-segmentation>`; the questions are picked in that script.
+First, a wide tile with "Ask the Segment Assistant" (`segment_demo.py`): it replays seven recorded, graded Segment Assistant answers, each with its route, plan, code's fixes to the plan, rows and figure check, and Cortex Analyst's answer to the same question. One follow-up shows the conversation state. Nothing calls a model. Its data, `segment_demo.json`, is written by `python scripts/export_segment_demo.py <path to snowpark-customer-segmentation>`; the questions are picked in that script.
 
-### Demos strip
-
-`DEMOS` in `streamlit_app.py` lists the five tiles under the hero ("Try it"). A tile's target is either a key in `PAGES`, which opens in the app, or a URL, which opens the live app.
+Then `DEMOS` in `streamlit_app.py`, three tiles in a row. A tile's target is either a key in `PAGES`, which opens in the app, or a URL, which opens the live app.
 
 Domains with their own colour: `Applied AI`, `Energy & industry`, `Finance`, `Customer analytics`. `Analytics engineering` is light slate. A repo with no curated domain, and no keyword match, shows as `Data science` (also slate).
 
